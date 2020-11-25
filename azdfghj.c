@@ -5,4 +5,5 @@
 
 void main() {
     printf("Hello world");
+    printf("salut c'est martin");
 }
