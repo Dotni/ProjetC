@@ -9,40 +9,10 @@ date : 30/11/2020 */
 
 #include <stdio.h>
 #include <string.h>
-
-///////////////////////////////////
-/////Définition des structures/////
-///////////////////////////////////
-
-//définition d'un séjour
-typedef struct sejour{
-	short formule;						//1 pour tente , 2 pour caravane, 3 pour bungalow
-	short nbPersonne;					//nombre de personnes pour qui
-	char date[11];						//sous le format dd/mm/yyyy
-	float prix;							//prix du séjour
-	short electricite;					//1 si il faut de l'électricité, 0 si non
-	struct sejour *nxtSej;
-}sejour;
-
-//définition du client
-typedef struct client {
-	char nom[30];						//nom du client
-	struct sejour sej;					//pour la liste chainée des séjours du client
-	struct client *nxtClient;			//pour la liste chainée des clients
-}client;
-
-//définition d'un emplacement
-typedef struct emplacement{
-	short type;							//1 pour tente , 2 pour caravane, 3 pour bungalow
-	short elec;							//1 s'il y a la possibilité d'avoir l'électricité, 0 si non
-	float taille;						//taille de l'emplacement 
-	float prix;							//prix de l'emplacement
-}emplacement;
-
-//défintion des employés 					A REVOIR PLUS TARD
-typedef struct employe{
-	char nom[30];						//nom de l'employé
-}employe;
+#include "emplacement.h"
+#include "sejour.h"
+#include "client.h"
+#include "employe.h"
 
 void main(){
 	client i;
