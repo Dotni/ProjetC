@@ -1,3 +1,5 @@
+#include "emplacement.h"
+
 //définition d'un séjour
 typedef struct sejour{
 	short formule;						//1 pour tente , 2 pour caravane, 3 pour bungalow
@@ -6,4 +8,5 @@ typedef struct sejour{
 	float prix;							//prix du séjour
 	short electricite;					//1 si il faut de l'électricité, 0 si non
 	struct sejour *nxtSej;
+	struct emplacement place;
 }sejour;

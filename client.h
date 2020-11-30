@@ -1,3 +1,5 @@
+#include "sejour.h"
+
 //définition du client
 typedef struct client {
 	char nom[30];						//nom du client
