@@ -13,6 +13,19 @@ date : 30/11/2020 */
 
 #include <stdio.h>
 
+//définition du client
+	typedef struct client {
+		char nom[30];
+		struct cl *nxt;
+	}cl;
+
+
+
+
 main(){
+	
+	
+	
+	
 	
 }
