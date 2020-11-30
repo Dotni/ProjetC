@@ -33,17 +33,21 @@ typedef struct sejour{
 	short nb_pers;				//nombre de personnes pour qui
 	char date[11];				//sous le format dd/mm/yyyy
 	float prix;					//prix du séjour
-	bool elec;					//1 si il faut de l'électricité, 0 si non
+	short elec;					//1 si il faut de l'électricité, 0 si non
 }sej;
 
 //définition d'un emplacement
 typedef struct emplacement{
 	short type;					//1 pour tente , 2 pour caravane, 3 pour bungalow
-	bool elec;					//1 s'il y a la possibilité d'avoir l'électricité, 0 si non
+	short elec;					//1 s'il y a la possibilité d'avoir l'électricité, 0 si non
 	float taille;				//taille de l'emplacement 
 	float prix;					//prix de l'emplacement
-}empl;
+}empla;
 
+//défintion des employés 					A REVOIR PLUS TARD
+typedef struct employe{
+	char nom[30];				//nom de l'employé
+}emple;
 
 main(){
 	
