@@ -1,6 +1,6 @@
 #ifndef EMPLACEMENT_H
 #define EMPLACEMENT_H
-
+//e
 //définition d'un emplacement
 typedef struct emplacement{
 	short type;							//1 pour tente , 2 pour caravane, 3 pour bungalow 				1d
