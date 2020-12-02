@@ -13,22 +13,18 @@ date : 30/11/2020
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
-/*#include "emplacement.h"
+#include "emplacement.h"
 #include "sejour.h"
 #include "client.h"
-#include "employe.h"*/
+#include "employe.h"
 
 void main(){
-	
 	//déclaration des variables
 	int choixMP, choixM;
-	
 	
 	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
 	
 	//ouverture des fichiers
-	
-	
 	/////////////////////////////////////////////////////
 	//////////////définition des fonctions///////////////
 	/////////////////////////////////////////////////////
@@ -41,8 +37,6 @@ void main(){
 	int intro();											//fonction intro
 	int menu();												//fonction menu
 	
-
-
 	intro();
 }
 
@@ -57,8 +51,6 @@ char * Accent(const char * mess) {
 void sdl(){
 	printf("||                                                                                            ||\n");
 }
-
-
 
 int intro(){
 		int choix=0;
@@ -97,13 +89,9 @@ int intro(){
 			printf("||  Votre choix :                                                                             ||\n");
 			scanf("%d",&choix);	
 		}
-		
 		system("cls");
-		
 		return choix;
 }
-
-
 
 int menu(){
 	printf("niquel");
