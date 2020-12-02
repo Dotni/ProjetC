@@ -2,7 +2,7 @@
 #define SEJOUR_H
 
 #include "emplacement.h"
-//s
+
 //définition d'un séjour
 typedef struct sejour{
 	short formule;						//1 pour tente , 2 pour caravane, 3 pour bungalow

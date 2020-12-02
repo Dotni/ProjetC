@@ -13,25 +13,22 @@ date : 30/11/2020
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
-#include "emplacement.h"
-#include "sejour.h"
-#include "client.h"
-#include "employe.h"
+#include "structures/emplacement.h"
+#include "structures/sejour.h"
+#include "structures/client.h"
+#include "structures/employe.h"
 
 void main(){
-	
-	
 	//déclaration des variables
 	int choixMP, choixM;
+	int tmp; // je sais pas à quoi correspond choix mp et choix m
 	
 	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
 	
 	//ouverture des fichiers
-	
-	
-	/*-------------------------------------------------*/
-	/*------------définition des fonctions-------------*/
-	/*-------------------------------------------------*/
+	/////////////////////////////////////////////////////
+	//////////////définition des fonctions///////////////
+	/////////////////////////////////////////////////////
 	
 	//fonctions utiles
 	char * accent(const char *);							//permet d'afficher les accents
@@ -40,8 +37,25 @@ void main(){
 	void sdl();												//saut de ligne
 	int intro();											//fonction intro
 	int menu();												//fonction menu
+	void quitter();											//quitter la gestion
+	void modeEmploi();										// accéder au mode d'emploi du projet
 	
-	intro();
+	tmp = intro();
+	
+	switch(tmp) {
+		case 1: // accéder au menu principal
+			menu();
+			break;
+		case 2: // accéder au mode d'emploi
+			modeEmploi();
+			break;
+		case 3: // quitter
+			quitter();
+			break;
+		default: // sécurité, ne devrait pas arriver puisque le choix est déjà contrôlé dans la fonction intro
+			quitter();
+			break;
+	}
 }
 
 //permet d'afficher les accents
@@ -99,4 +113,12 @@ int intro(){
 
 int menu(){
 	printf("niquel");
+}
+
+void quitter() {
+	printf("%s", Accent("A très vite !"));
+}
+
+void modeEmploi() {
+	printf("mode emploi");
 }
