@@ -20,8 +20,7 @@ date : 30/11/2020
 
 void main(){
 	//déclaration des variables
-	int choixMP, choixM;
-	int tmp; // je sais pas à quoi correspond choix mp et choix m
+	int choixMP, choixIntro;
 	
 	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
 	
@@ -40,9 +39,9 @@ void main(){
 	void quitter();											//quitter la gestion
 	void modeEmploi();										// accéder au mode d'emploi du projet
 	
-	tmp = intro();
+	choixIntro = intro();
 	
-	switch(tmp) {
+	switch(choixIntro) {
 		case 1: // accéder au menu principal
 			menu();
 			break;
