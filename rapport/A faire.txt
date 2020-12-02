@@ -3,16 +3,23 @@
 			- 	modif(tout et un a la fois) un emplacement 
 			-	calculer personne max (en fonction de la taille)
 
-2)sÃ©jour		- 	calculer son prix(ne pas oublier taxe de sÃ©jour,0.4 euros car entre 0.2 et 0.6 selon wiki)
+2)séjour		- 	calculer son prix(ne pas oublier taxe de séjour,0.4 euros car entre 0.2 et 0.6 selon wiki)
 			- 	(trouver emplacement possible pour ) maybe en faire un ou deux mais pas tous car temps
 			
 
-3)client		-	rÃ©server
+3)client		-	réserver
 			-	partir (et donc payer)
 			- 	payer (et f
 			-	annuler (non car au jour le jour)
 
-4)employÃ©		-	ajouter/supprimer
+4)employé		-	ajouter/supprimer
 			-	modif le salaire
 			-	payer
-			
+
+
+menu principal :
+	est-ce que les clients dans clients.txt sont les clients déjà présents dans le camping ? 
+		si oui :
+			ils peuvent "se connecter" et réserver un jour en plus ou partir
+		si non :
+			utilité ? 

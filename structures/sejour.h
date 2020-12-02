@@ -2,7 +2,7 @@
 #define SEJOUR_H
 
 #include "emplacement.h"
-//s
+
 //définition d'un séjour
 typedef struct sejour{
 	short id							//id du séjour
