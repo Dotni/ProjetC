@@ -1,3 +1,5 @@
+#ifndef CLIENT_H
+#define CLIENT_H
 #include "sejour.h"
 
 //définition du client
@@ -7,3 +9,4 @@ typedef struct client {
 	struct sejour sej;					//pour la liste chainée des séjours du client
 	struct client *nxtClient;			//pour la liste chainée des clients
 }client;
+#endif

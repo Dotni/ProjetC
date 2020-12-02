@@ -1,3 +1,6 @@
+#ifndef SEJOUR_H
+#define SEJOUR_H
+
 #include "emplacement.h"
 
 //définition d'un séjour
@@ -10,3 +13,4 @@ typedef struct sejour{
 	struct sejour *nxtSej;
 	struct emplacement place;
 }sejour;
+#endif
