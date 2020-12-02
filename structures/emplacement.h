@@ -3,6 +3,7 @@
 //e
 //définition d'un emplacement
 typedef struct emplacement{
+	char id[5];							//id de l'emplacement
 	short type;							//1 pour tente , 2 pour caravane, 3 pour bungalow 				1d
 	short electricite;					//1 s'il y a la possibilité d'avoir l'électricité, 0 si non		1d
 	float taille;						//taille de l'emplacement 										2d
