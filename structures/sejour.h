@@ -5,12 +5,12 @@
 
 //définition d'un séjour
 typedef struct sejour{
-	short id							//id du séjour
 	short formule;						//1 pour tente , 2 pour caravane, 3 pour bungalow
 	short nbPersonne;					//nombre de personnes pour qui
-	char date[9];						//sous le format ddmmyyyy
-	float prix;							//prix du séjours
-	struct sejour *nxtSej;				//pour la liste chainnée
-	struct emplacement place;           //emplacement attribué au séjour
+	char date[11];						//sous le format dd/mm/yyyy
+	float prix;							//prix du séjour
+	short electricite;					//1 si il faut de l'électricité, 0 si non
+	struct sejour *nxtSej;
+	struct emplacement place;
 }sejour;
 #endif
