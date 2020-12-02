@@ -19,15 +19,19 @@ date : 30/11/2020
 #include "employe.h"
 
 void main(){
+	
+	
 	//déclaration des variables
 	int choixMP, choixM;
 	
 	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
 	
 	//ouverture des fichiers
-	/////////////////////////////////////////////////////
-	//////////////définition des fonctions///////////////
-	/////////////////////////////////////////////////////
+	
+	
+	/*-------------------------------------------------*/
+	/*------------définition des fonctions-------------*/
+	/*-------------------------------------------------*/
 	
 	//fonctions utiles
 	char * accent(const char *);							//permet d'afficher les accents
