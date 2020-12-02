@@ -13,6 +13,7 @@ date : 30/11/2020
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
+#include <ctype.h>
 #include "structures/emplacement.h"
 #include "structures/sejour.h"
 #include "structures/client.h"
@@ -34,16 +35,39 @@ void main(){
 	
 	//fonctions graphiques
 	void sdl();												//saut de ligne
-	int intro();											//fonction intro
-	int menu();												//fonction menu
+	int intro();
+	int menuEmplacement();											//fonction intro
+	int menuPrincipal();												//fonction menu
 	void modeEmploi();										// accéder au mode d'emploi du projet
 	
 	do{
 		choixIntro = intro();
 		switch(choixIntro) {
 			case 1: // accéder au menu principal
-				menu();
+			
+				do{
+					choixMP=menuPrincipal();
+					switch(choixMP){
+						case 1: 
+							printf("case 1");
+							break;
+						case 2:
+							printf("case 2");
+							break;
+						case 3:
+							printf("case 3");
+							break;
+							
+						case 4:
+							printf("case 4");
+							break;		
+					}
+						
+				}while(choixMP!=5);
 				break;
+				
+				
+				
 			case 2: // accéder au mode d'emploi
 				modeEmploi();
 				break;
@@ -67,6 +91,7 @@ void sdl(){
 
 int intro(){
 		int choix=0,ret=1;
+		char tmp;
 		
 		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROGRAMME DE GESTION D'UN CAMPING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
@@ -84,9 +109,13 @@ int intro(){
 		printf("||  3.  Quitter le programme                                                                  ||\n");
 		sdl();sdl();
 		printf("||  Votre choix :                                                                             ||\n");
-		scanf("%d",&choix);
+		scanf("%c",&tmp);
 		
-		while(choix<1||choix>3){
+		if(isdigit(tmp)>0){
+			choix=atoi(tmp-'0');
+		}
+		
+		while(isdigit(tmp)==0||choix<1||choix>3){
 			system("cls");
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
@@ -100,13 +129,16 @@ int intro(){
 			printf("||  3.  Quitter le programme                                                                  ||\n");
 			sdl();sdl();
 			printf("||  Votre choix :                                                                             ||\n");
-			scanf("%d",&choix);	
+			scanf("%c",&tmp);	
+			if(isdigit(tmp)>0){
+				choix=(int)tmp;
+			}
 		}
 		system("cls");
 		return choix;
 }
 
-int menu(){
+int menuPrincipal(){
 	
 	int choix=0;
 	
@@ -121,12 +153,11 @@ int menu(){
 	printf("||  3.  Employe                                                                               ||\n");
 	printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
 	printf("||  5.  Retour                                                                                ||\n");
-	printf("||  6.  Quitter                                                                               ||\n");
 	sdl();sdl();
 	printf("||  Votre choix :                                                                             ||\n");
 	scanf("%d",&choix);
 		
-	while(choix<1||choix>6){
+	while(choix<1||choix>5){
 		system("cls");
 		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		printf("||                              Veuillez entrer un nombre valide!                             ||\n");
@@ -139,13 +170,60 @@ int menu(){
 		printf("||  3.  Employe                                                                               ||\n");
 		printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
 		printf("||  5.  Retour                                                                                ||\n");
-		printf("||  6.  Quitter                                                                               ||\n");
 		sdl();sdl();
 		printf("||  Votre choix :                                                                             ||\n");
 		scanf("%d",&choix);
 	}
 	system("cls");
 	return choix;		
+}
+
+int menuEmplacement(){
+	int choix=0;
+	
+	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Menu Emplacement %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+	sdl();sdl();
+	printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+	sdl();sdl();
+	printf ("%s",Accent("||  1.  Emplacement                                                                           ||\n"));
+	printf("||  2.  Client                                                                                ||\n");
+	printf("||  3.  Employe                                                                               ||\n");
+	printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
+	printf("||  5.  Retour                                                                                ||\n");
+	sdl();sdl();
+	printf("||  Votre choix :                                                                             ||\n");
+	scanf("%d",&choix);
+		
+	while(choix<1||choix>5){
+		system("cls");
+		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		sdl();sdl();
+		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		sdl();sdl();
+		printf ("%s",Accent("||  1.  Emplacement                                                                           ||\n"));
+		printf("||  2.  Client                                                                                ||\n");
+		printf("||  3.  Employe                                                                               ||\n");
+		printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
+		printf("||  5.  Retour                                                                                ||\n");
+		sdl();sdl();
+		printf("||  Votre choix :                                                                             ||\n");
+		scanf("%d",&choix);
+	}
+	system("cls");
+	return choix;		
+}
+
+int menuClient(){
+}
+
+int menuEmploye(){
+}
+
+int menuSejour(){
 }
 
 void modeEmploi() {
