@@ -12,13 +12,24 @@ date : 30/11/2020
 
 #include <stdio.h>
 #include <string.h>
-#include "emplacement.h"
+/*#include "emplacement.h"
 #include "sejour.h"
 #include "client.h"
-#include "employe.h"
+#include "employe.h"*/
 
 void main(){
-	client i;
-	strcpy(i.nom,"ok");
-	printf("%5s",i.nom);
+	
+	void intro();
+	int menu();
+
+}
+
+void intro(){
+		printf("ok");
+}
+
+
+
+int menu(){
+	printf("niquel");
 }

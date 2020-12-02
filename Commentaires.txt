@@ -1,0 +1,5 @@
+1) Faut-il que les changements effectués dans le programme soient sauvegardées? normalement oui
+Donc nous devons A CHAQUE FOIS QUE LE PROGRAMME SE LANCE lire toutes les données, fermer les fichiers
+et les rouvrir en mode écriture si nous voulons les modifier.
+
+2) Problème avec les headers
