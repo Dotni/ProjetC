@@ -32,6 +32,9 @@ void main(){
 	
 	//fonctions utiles
 	char * accent(const char *);							//permet d'afficher les accents
+	int lire(char *, int);
+	int verifier(char[]);
+	void viderBuffer();
 	
 	//fonctions graphiques
 	void sdl();												//saut de ligne
@@ -44,7 +47,6 @@ void main(){
 		choixIntro = intro();
 		switch(choixIntro) {
 			case 1: // accéder au menu principal
-			
 				do{
 					choixMP=menuPrincipal();
 					switch(choixMP){
@@ -62,12 +64,8 @@ void main(){
 							printf("case 4");
 							break;		
 					}
-						
 				}while(choixMP!=5);
 				break;
-				
-				
-				
 			case 2: // accéder au mode d'emploi
 				modeEmploi();
 				break;
@@ -78,24 +76,19 @@ void main(){
 }
 
 //permet d'afficher les accents
-char * Accent(const char * mess) {
+char * Accent(const char * message) {
       static char retour [80];
-      CharToOem (mess,retour); // API Windows
+      CharToOem (message, retour); // API Windows
       return retour;
    }
 
-//saut de ligne
-void sdl(){
+void sdl(){ //saut de ligne
 	printf("||                                                                                            ||\n");
 }
 
 int intro(){
-		int choix=0,ret=1;
-		char stTemp[2];
- 
-		
-		
-		char tmp;
+		int choix = 0,ret = 1;
+		char tmp[2];
 		
 		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROGRAMME DE GESTION D'UN CAMPING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
@@ -113,14 +106,10 @@ int intro(){
 		printf("||  3.  Quitter le programme                                                                  ||\n");
 		sdl();sdl();
 		printf("||  Votre choix :                                                                             ||\n");
-		scanf("%c",&tmp);
-		sprintf(stTemp,"%c",tmp);
-		choix = atoi(stTemp);
-		if(isdigit(tmp)>0){
-			//choix=atoi(tmp-'0');
-		}
+		choix = lire(tmp, 2);
+		printf("test apres    %d\n", choix);
 		
-		while(isdigit(tmp)==0||choix<1||choix>3){
+		while(choix<1||choix>3){
 			//system("cls");
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
@@ -135,16 +124,15 @@ int intro(){
 			sdl();sdl();
 			printf("||  Votre choix :                                                                             ||\n");
 			scanf("%c",&tmp);	
-			if(isdigit(tmp)>0){
+			/*if(isdigit(tmp)>0){
 				//choix=(int)tmp;
-			}
+			}*/
 		}
 		//system("cls");
 		return choix;
 }
 
 int menuPrincipal(){
-	
 	int choix=0;
 	
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
@@ -236,3 +224,61 @@ void modeEmploi() {
 	sdl();
 	sdl();
 }
+
+int verifier(char saisie[]) { // vérifier que la saisie est correcte
+	int ok = 1, i = 0;
+	while(saisie[i] != '\0') {
+		if (!isdigit(saisie[i])) {
+			printf("pas un nombre\n");
+			return 0;
+		}
+		i++;
+	}
+	return ok;
+}
+
+void viderBuffer(){
+    int c = 0;
+    while (c != '\n' && c != EOF){
+        c = getchar();
+    }
+}
+
+int lire(char *chaine, int longueur){
+    char *positionln = NULL;
+ 	
+    // On lit le texte saisi au clavier
+	if (fgets(chaine, longueur, stdin) != NULL) {
+        positionln = strchr(chaine, '\n'); 
+        if (positionln != NULL) {
+            *positionln = '\0'; // On remplace ce caractère par \0
+        }
+        else {
+        	viderBuffer();
+		}
+		if(verifier(chaine) == 0) {
+ 			return 0;
+		}
+        return atoi(chaine);
+    }
+    else{
+    	viderBuffer();
+        return 0; // On renvoie 0 s'il y a eu une erreur
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
