@@ -8,8 +8,8 @@
 			
 
 3)client		-	réserver
-			-	partir (et donc payer)
-			- 	payer (et f
+			-	partir (et donc payer et donc on le vire de la bdd)
+			- 	payer (fonction)
 			-	annuler (non car au jour le jour)
 
 4)employé		-	ajouter/supprimer

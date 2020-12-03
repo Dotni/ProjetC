@@ -21,7 +21,7 @@ date : 30/11/2020
 
 void main(){
 	//déclaration des variables
-	int choixMP, choixIntro;
+	int choixMP, choixIntro,choixEmplacement,choixClient,choixEmploye,choixSejour;
 	
 	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
 	
@@ -41,7 +41,9 @@ void main(){
 	int intro();
 	int menuEmplacement();											//fonction intro
 	int menuPrincipal();												//fonction menu
-	void modeEmploi();										// accéder au mode d'emploi du projet
+	int modeEmploi();										// accéder au mode d'emploi du projet
+	
+	
 	
 	do{
 		choixIntro = intro();
@@ -51,17 +53,18 @@ void main(){
 					choixMP=menuPrincipal();
 					switch(choixMP){
 						case 1: 
-							printf("case 1");
+							choixEmplacement=menuEmplacement();
+							affichageListeEmplacement();
+							system("PAUSE");
 							break;
 						case 2:
-							printf("case 2");
+							choixClient=menuClient();
 							break;
 						case 3:
-							printf("case 3");
+							choixEmploye=menuEmploye();
 							break;
-							
 						case 4:
-							printf("case 4");
+							choixSejour=menuSejour();
 							break;		
 					}
 				}while(choixMP!=5);
@@ -87,33 +90,32 @@ void sdl(){ //saut de ligne
 }
 
 int intro(){
-		int choix = 0,ret = 1;
+		int choix = 0;
+		short first=0;
 		char tmp[2];
 		
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROGRAMME DE GESTION D'UN CAMPING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-		sdl();sdl();
-		printf("||                   --------------------------------------------------------                 ||\n");
-		printf("||                   || Bienvenue dans le programme de gestion du camping! ||                 ||\n");
-		printf("||                   --------------------------------------------------------                 ||\n");
-		sdl();sdl();
-		printf("||                                   Que souhaitez-vous faire?                                ||\n");
-		printf ("%s",Accent("||                         (entrez le numéro correspondant à votre choix)                     ||\n"));
-		sdl();sdl();
-		printf ("%s",Accent("||  1.  Accéder au menu principal                                                             ||\n"));
-		printf("||  2.  Mode d'emploi                                                                         ||\n");
-		printf("||  3.  Quitter le programme                                                                  ||\n");
-		sdl();sdl();
-		printf("||  Votre choix :                                                                             ||\n");
-		choix = lire(tmp, 2);
-		printf("test apres    %d\n", choix);
-		
-		while(choix<1||choix>3){
-			//system("cls");
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		//on effectue cette boucle tant que l'utilisateur n'a pas fait de choix valide
+		do{
+			//si l'utilisateur n'a pas fait d'erreur
+			if(first==0){
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROGRAMME DE GESTION D'UN CAMPING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				sdl();sdl();
+				printf("||                   --------------------------------------------------------                 ||\n");
+				printf("||                   || Bienvenue dans le programme de gestion du camping! ||                 ||\n");
+				printf("||                   --------------------------------------------------------                 ||\n");
+				first=1;					//permet de dire que ce n'est pas la premiere fois qu'on passe dans la boucle	
+			}
+			//si l'utilisateur a fait une erreur
+			else{
+				system("cls");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			}
+			
+			//code commun (peut importe si l'utilisateur a fait une erreur ou pas)
 			sdl();sdl();
 			printf("||                                   Que souhaitez-vous faire?                                ||\n");
 			printf ("%s",Accent("||                         (entrez le numéro correspondant à votre choix)                     ||\n"));
@@ -123,38 +125,36 @@ int intro(){
 			printf("||  3.  Quitter le programme                                                                  ||\n");
 			sdl();sdl();
 			printf("||  Votre choix :                                                                             ||\n");
-			scanf("%c",&tmp);	
-			/*if(isdigit(tmp)>0){
-				//choix=(int)tmp;
-			}*/
-		}
-		//system("cls");
+			choix = lire(tmp, 2);
+		}while(choix<1||choix>3);
+		
+		system("cls");
 		return choix;
 }
 
 int menuPrincipal(){
 	int choix=0;
+	short first=0;
+	char tmp[2];
 	
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Menu Principal %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	sdl();sdl();
-	printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
-	sdl();sdl();
-	printf ("%s",Accent("||  1.  Emplacement                                                                           ||\n"));
-	printf("||  2.  Client                                                                                ||\n");
-	printf("||  3.  Employe                                                                               ||\n");
-	printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
-	printf("||  5.  Retour                                                                                ||\n");
-	sdl();sdl();
-	printf("||  Votre choix :                                                                             ||\n");
-	scanf("%d",&choix);
+	//on effectue cette boucle tant que l'utilisateur n'a pas fait de choix valide
+	do{
+		//si l'utilisateur n'a pas fait d'erreur
+		if(first==0){
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Menu Principal %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			first=1;	
+		}
+		//si l'utilisateur a fait une erreur
+		else{
+			system("cls");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		}
 		
-	while(choix<1||choix>5){
-		system("cls");
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-		printf("||                              Veuillez entrer un nombre valide!                             ||\n");
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		//code commun (peut importe si l'utilisateur a fait une erreur ou pas)
 		sdl();sdl();
 		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
 		sdl();sdl();
@@ -165,64 +165,157 @@ int menuPrincipal(){
 		printf("||  5.  Retour                                                                                ||\n");
 		sdl();sdl();
 		printf("||  Votre choix :                                                                             ||\n");
-		scanf("%d",&choix);
-	}
+		choix = lire(tmp, 2);
+	}while(choix<1||choix>5);
 	system("cls");
 	return choix;		
 }
 
 int menuEmplacement(){
 	int choix=0;
+	short first=0;
+	char tmp[2];
 	
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Menu Emplacement %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	sdl();sdl();
-	printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
-	sdl();sdl();
-	printf ("%s",Accent("||  1.  Emplacement                                                                           ||\n"));
-	printf("||  2.  Client                                                                                ||\n");
-	printf("||  3.  Employe                                                                               ||\n");
-	printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
-	printf("||  5.  Retour                                                                                ||\n");
-	sdl();sdl();
-	printf("||  Votre choix :                                                                             ||\n");
-	scanf("%d",&choix);
-		
-	while(choix<1||choix>5){
-		system("cls");
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-		printf("||                              Veuillez entrer un nombre valide!                             ||\n");
-		printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+	do{
+		if(first==0){
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Menu Emplacement %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			first=1;	
+		}
+		else{
+			system("cls");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		}
 		sdl();sdl();
 		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
 		sdl();sdl();
-		printf ("%s",Accent("||  1.  Emplacement                                                                           ||\n"));
-		printf("||  2.  Client                                                                                ||\n");
-		printf("||  3.  Employe                                                                               ||\n");
-		printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
+		printf ("%s",Accent("||  1.  Liste des emplacements                                                                ||\n"));
+		printf("||  2.  Ajouter un emplacement                                                                ||\n");
+		printf("||  3.  Supprimer un emplacement                                                              ||\n");
+		printf ("%s",Accent("||  4.  Modifier un emplacement                                                               ||\n"));	
 		printf("||  5.  Retour                                                                                ||\n");
 		sdl();sdl();
 		printf("||  Votre choix :                                                                             ||\n");
-		scanf("%d",&choix);
-	}
+		choix = lire(tmp, 2);
+		
+	}while(choix<1||choix>5);
 	system("cls");
 	return choix;		
 }
 
 int menuClient(){
+	int choix=0;
+	short first=0;
+	char tmp[2];
+	
+	do{
+		if(first==0){
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Menu Client %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			first=1;	
+		}
+		else{
+			system("cls");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		}
+		sdl();sdl();
+		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		sdl();sdl();
+		printf ("%s",Accent("||  1.  Liste des clients                                                                     ||\n"));
+		printf("||  2.  Ajouter un client                                                                     ||\n");
+		printf ("%s",Accent("||  3.  Effectuer une réservation                                                             ||\n"));
+		printf ("%s",Accent("||  4.  Modifier une réservation                                                              ||\n"));	
+		printf("||  5.  Retour                                                                                ||\n");
+		sdl();sdl();
+		printf("||  Votre choix :                                                                             ||\n");
+		choix = lire(tmp, 2);
+		
+	}while(choix<1||choix>5);
+	system("cls");
+	return choix;	
 }
 
 int menuEmploye(){
+	int choix=0;
+	short first=0;
+	char tmp[2];
+	
+	do{
+		if(first==0){
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf ("%s",Accent("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Menu employé %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n"));
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			first=1;	
+		}
+		else{
+			system("cls");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		}
+		sdl();sdl();
+		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		sdl();sdl();
+		printf ("%s",Accent("||  1.  Liste des employés                                                                    ||\n"));
+		printf ("%s",Accent("||  2.  Ajouter un employé                                                                    ||\n"));
+		printf ("%s",Accent("||  3.  Supprimer un employé                                                                  ||\n"));
+		printf ("%s",Accent("||  4.  Ajouter une journée/demi journée de travail à un employé                              ||\n"));
+		printf ("%s",Accent("||  5.  Modifier le salaire d'un employé                                                      ||\n"));
+		printf ("%s",Accent("||  6.  Payer Les employés                                                                    ||\n"));	
+		printf("||  7.  Retour                                                                                ||\n");
+		sdl();sdl();
+		printf("||  Votre choix :                                                                             ||\n");
+		choix = lire(tmp, 2);
+		
+	}while(choix<1||choix>7);
+	system("cls");
+	return choix;	
 }
 
 int menuSejour(){
+	int choix=0;
+	short first=0;
+	char tmp[2];
+	
+	do{
+		if(first==0){
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf ("%s",Accent("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Menu Séjour %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n"));
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			first=1;	
+		}
+		else{
+			system("cls");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		}
+		sdl();sdl();
+		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		sdl();sdl();
+		printf ("%s",Accent("||  1.  Liste des séjours                                                                     ||\n"));
+		printf ("%s",Accent("||  1.  Liste des emplacements disponibles                                                    ||\n"));
+		printf("||  3.  Retour                                                                                ||\n");
+		sdl();sdl();
+		printf("||  Votre choix :                                                                             ||\n");
+		choix = lire(tmp, 2);
+		
+	}while(choix<1||choix>3);
+	system("cls");
+	return choix;
 }
 
-void modeEmploi() {
+int modeEmploi() {
 	printf("On le fera en dernier c'est que de l'affichage\n");
 	sdl();
 	sdl();
+	return 0;
 }
 
 int verifier(char saisie[]) { // vérifier que la saisie est correcte
