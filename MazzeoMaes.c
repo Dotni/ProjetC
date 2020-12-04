@@ -359,19 +359,3 @@ int lire(char *chaine, int longueur){
         return 0; // On renvoie 0 s'il y a eu une erreur
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
