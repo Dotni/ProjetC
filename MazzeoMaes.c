@@ -18,6 +18,7 @@ date : 30/11/2020
 #include "structures/sejour.h"
 #include "structures/client.h"
 #include "structures/employe.h"
+#include "structures/emplacement.c"
 
 void main(){
 	//déclaration des variables
@@ -53,7 +54,7 @@ void main(){
 						case 1: 
 							choixEmplacement=menuEmplacement();
 							affichageListeEmplacement();
-							//printf("%2d",tailleEmplacement);
+							printf("%2d",tailleEmplacement);
 							system("PAUSE");
 							break;
 						case 2:
