@@ -1,8 +1,8 @@
 /********************************************************************************************
 *****************************Projet C : gestion d'un camping*********************************
 *********************************************************************************************
-Nom : Mazzeo  			Prenom : Florian
-Nom : Maes    			Prenom : Martin
+Nom : Mazzeo  			Prenom : Florian       Classe : 2BIa1
+Nom : Maes    			Prenom : Martin        Classe : 2BIa1
 
 nom fichier : MazzeoMaes.c
 date : 30/11/2020 
@@ -26,10 +26,8 @@ void main(){
 	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
 	
 	//ouverture des fichiers
-	/////////////////////////////////////////////////////
-	//////////////définition des fonctions///////////////
-	/////////////////////////////////////////////////////
 	
+	//définition des fonctions
 	//fonctions utiles
 	char * accent(const char *);							//permet d'afficher les accents
 	int lire(char *, int);
