@@ -53,7 +53,7 @@ void main(){
 						case 1: 
 							choixEmplacement=menuEmplacement();
 							affichageListeEmplacement();
-							printf("%2d",tailleEmplacement);
+							//printf("%2d",tailleEmplacement);
 							system("PAUSE");
 							break;
 						case 2:

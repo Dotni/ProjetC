@@ -12,7 +12,8 @@ typedef struct emplacement{
 }emplacement;
 
 const int tailleEmplacement=30;
-emplacement empl[30];
+static emplacement empl[30];
+
 
 
 void affichageListeEmplacement();
