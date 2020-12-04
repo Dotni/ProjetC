@@ -55,6 +55,7 @@ void main(){
 						case 1: 
 							choixEmplacement=menuEmplacement();
 							affichageListeEmplacement();
+							printf("%2d",tailleEmplacement);
 							system("PAUSE");
 							break;
 						case 2:
@@ -300,7 +301,7 @@ int menuSejour(){
 		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
 		sdl();sdl();
 		printf ("%s",Accent("||  1.  Liste des séjours                                                                     ||\n"));
-		printf ("%s",Accent("||  1.  Liste des emplacements disponibles                                                    ||\n"));
+		printf ("%s",Accent("||  2.  Liste des emplacements disponibles                                                    ||\n"));
 		printf("||  3.  Retour                                                                                ||\n");
 		sdl();sdl();
 		printf("||  Votre choix :                                                                             ||\n");
