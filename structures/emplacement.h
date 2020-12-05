@@ -11,6 +11,7 @@ typedef struct emplacement{
 
 void affichageListeEmplacement();
 void nouvelEmplacement();
+void supprimerEmplacement();
 int lectureEmplacements();
 void viderEmplacements();
 void switchMenuEmplacement(int,int,emplacement[]);

@@ -26,9 +26,6 @@ void affichageListeEmplacement(emplacement empl[],int tailleEmplacement){
 	lectureEmplacements(empl,tailleEmplacement);
 	int i=1;
 	char x = 253;
-	printf("==========================================================\n");
-	printf("=============== Liste des emplacements ===================\n");
-	printf("==========================================================\n");
 	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
 	printf("||----|----------|------|-------------|-----------------||\n");
 	
@@ -165,7 +162,7 @@ void nouvelEmplacement(emplacement empl[],int tailleEmplacement){
 	
 	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
 	printf("||----|----------|------|-------------|-----------------||\n");
-	printf("|| %2d | ",nouvEmpl.id);//%04.2f %05.2f%\n"empl[i].taille,empl[i].prix);	
+	printf("|| %2d | ",nouvEmpl.id);	
 	if(nouvEmpl.type==1){
 		printf("  tente  | ");
 	}
@@ -218,10 +215,103 @@ void nouvelEmplacement(emplacement empl[],int tailleEmplacement){
 	}	
 }
 
+void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
+	int nb=lectureEmplacements(empl,tailleEmplacement);
+	int i,choix,choix2;
+	char tmp[3];
+	char tmp2[2];
+	char x = 253;
+	
+	system("cls");
+	printf("========================================================\n");
+	printf("============= Suppression d'un emplacement =============\n");
+	printf("========================================================\n\n");
+	affichageListeEmplacement(empl,tailleEmplacement);
+	
+	printf ("%s",Accent("Entrez l'id de l'emplacement que vous souhaitez supprimer\n\n"));
+	printf("Votre choix : ");
+	
+	i=0;
+	do{
+		if(i!=0){
+			printf("Veuillez entrer un nombre correct! Votre choix : ");
+		}
+		choix = lire(tmp, 3);
+		i++;
+	}while(choix<1||choix>nb);
+	
+	
+	system("cls");
+	printf("========================================================\n");
+	printf("============= Suppression d'un emplacement =============\n");
+	printf("========================================================\n\n");
+	printf("Confirmez-vous la suppression de l'emplacement suivant?\n\n");
+	
+	
+	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
+	printf("||----|----------|------|-------------|-----------------||\n");
+	printf("|| %2d | ",empl[choix].id);	
+	if(empl[choix].type==1){
+		printf("  tente  | ");
+	}
+	else{
+		if(empl[choix].type==2){printf("caravane | ");}
+		else{ printf("bungalow | ");}
+	}
+	
+	if(empl[choix].electricite==0){ printf(" non | "); }
+	else{ printf(" oui | ");  }
+	
+	printf("   %05.2f    |     %06.2f      ||\n",empl[choix].taille,empl[choix].prix);
+	
+	
+	
+	printf("\n\n1 : non \n");
+	printf("2 : oui \n");
+	printf("Votre choix :");
+	
+	i=0;
+	do{
+		if(i!=0){
+			printf("Veuillez entrer un nombre correct! Votre choix :");
+		}
+		choix2 = lire(tmp2, 2);
+		i++;
+	}while(choix2<1||choix2>2);
+	
+	if(choix2==2){
+		
+		for(i=choix+1;i<=nb;i++){
+			empl[i]=empl[i-1];
+		}
+		nb-1;
+		FILE *fEmplacement;
+		fEmplacement = fopen("data/emplacements.dat","w");
+		for(i=1;i<nb;i++){
+			fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f\n",empl[i].id,empl[i].type,empl[i].electricite,empl[i].taille,empl[i].prix);
+			
+		}
+		fclose(fEmplacement);
+		system("cls");
+		printf ("%s",Accent("Emplacement supprimé avec succès!\n"));
+		system("PAUSE");
+		system("cls");
+	}
+	else{
+		system("cls");
+		printf ("%s",Accent("Emplacement non supprimé!\n"));
+		system("PAUSE");
+		system("cls");
+	}	
+	
+}
 
 void switchMenuEmplacement(int choix,int taille, emplacement empl[]){
 	switch(choix){
 		case 1 : 
+			printf("==========================================================\n");
+			printf("=============== Liste des emplacements ===================\n");
+			printf("==========================================================\n");
 			affichageListeEmplacement(empl,taille);
 			system("PAUSE");
 			system("cls");
@@ -231,7 +321,7 @@ void switchMenuEmplacement(int choix,int taille, emplacement empl[]){
 			system("cls");
 			break;
 		case 3:
-			
+			supprimerEmplacement(empl,taille);
 			break;
 		case 4:
 			
