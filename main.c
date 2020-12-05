@@ -14,6 +14,7 @@ date : 30/11/2020
 #include <string.h>
 #include <windows.h>
 #include <ctype.h>
+#include "structures/util.h"
 #include "structures/emplacement.h"
 #include "structures/sejour.h"
 #include "structures/client.h"
@@ -21,29 +22,22 @@ date : 30/11/2020
 
 
 void main(){
+	
+	//déclaration des constantes
+	const int tailleEmpl=50;
+	
+	
 	//déclaration des variables
 	int choixMP, choixIntro,choixEmplacement,choixClient,choixEmploye,choixSejour;
-	emplacement empl[30];
+	emplacement empl[tailleEmpl];
 	
-	FILE *Fclient, *Femplacement, *Femploye, *Fsejour;
-	
-	//ouverture des fichiers
-	
-	//définition des fonctions
-	//fonctions utiles
-	char * accent(const char *);							//permet d'afficher les accents
-	int lire(char *, int);
-	int verifier(char[]);
-	void viderBuffer();
 	
 	//fonctions graphiques
-	void sdl();												//saut de ligne
 	int intro();
 	int menuEmplacement();											//fonction intro
 	int menuPrincipal();												//fonction menu
 	int modeEmploi();										// accéder au mode d'emploi du projet
-	
-	
+
 	
 	do{
 		choixIntro = intro();
@@ -53,10 +47,11 @@ void main(){
 					choixMP=menuPrincipal();
 					switch(choixMP){
 						case 1: 
-							choixEmplacement=menuEmplacement();
-							affichageListeEmplacement(empl);
-							//printf("%2d",tailleEmplacement);
-							system("PAUSE");
+							do{
+								choixEmplacement=menuEmplacement();
+								switchMenuEmplacement(choixEmplacement,tailleEmpl,empl);
+							}while(choixEmplacement!=5);
+							
 							break;
 						case 2:
 							choixClient=menuClient();
@@ -79,16 +74,7 @@ void main(){
 	}while(choixIntro!=3);
 }
 
-//permet d'afficher les accents
-char * Accent(const char * message) {
-      static char retour [80];
-      CharToOem (message, retour); // API Windows
-      return retour;
-   }
 
-void sdl(){ //saut de ligne
-	printf("||                                                                                            ||\n");
-}
 
 int intro(){
 		int choix = 0;
@@ -124,8 +110,8 @@ int intro(){
 			printf ("%s",Accent("||  1.  Accéder au menu principal                                                             ||\n"));
 			printf("||  2.  Mode d'emploi                                                                         ||\n");
 			printf("||  3.  Quitter le programme                                                                  ||\n");
-			sdl();sdl();
-			printf("||  Votre choix :                                                                             ||\n");
+			sdl();
+			printf("||  Votre choix :  ");
 			choix = lire(tmp, 2);
 		}while(choix<1||choix>3);
 		
@@ -159,13 +145,13 @@ int menuPrincipal(){
 		sdl();sdl();
 		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
 		sdl();sdl();
-		printf ("%s",Accent("||  1.  Emplacement                                                                           ||\n"));
-		printf("||  2.  Client                                                                                ||\n");
-		printf("||  3.  Employe                                                                               ||\n");
-		printf ("%s",Accent("||  4.  Séjour                                                                                ||\n"));	
+		printf ("%s",Accent("||  1.  Menu emplacement                                                                      ||\n"));
+		printf("||  2.  Menu client                                                                           ||\n");
+			printf ("%s",Accent("||  3.  Menu employé                                                                          ||\n"));
+		printf ("%s",Accent("||  4.  Menu séjour                                                                           ||\n"));	
 		printf("||  5.  Retour                                                                                ||\n");
-		sdl();sdl();
-		printf("||  Votre choix :                                                                             ||\n");
+		sdl();
+		printf("||  Votre choix :  ");
 		choix = lire(tmp, 2);
 	}while(choix<1||choix>5);
 	system("cls");
@@ -193,13 +179,13 @@ int menuEmplacement(){
 		sdl();sdl();
 		printf ("%s",Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
 		sdl();sdl();
-		printf ("%s",Accent("||  1.  Liste des emplacements                                                                ||\n"));
+		printf ("%s",Accent("||  1.  Afficher la liste des emplacements                                                    ||\n"));
 		printf("||  2.  Ajouter un emplacement                                                                ||\n");
 		printf("||  3.  Supprimer un emplacement                                                              ||\n");
 		printf ("%s",Accent("||  4.  Modifier un emplacement                                                               ||\n"));	
 		printf("||  5.  Retour                                                                                ||\n");
-		sdl();sdl();
-		printf("||  Votre choix :                                                                             ||\n");
+		sdl();
+		printf("||  Votre choix :   ");
 		choix = lire(tmp, 2);
 		
 	}while(choix<1||choix>5);
@@ -233,8 +219,8 @@ int menuClient(){
 		printf ("%s",Accent("||  3.  Effectuer une réservation                                                             ||\n"));
 		printf ("%s",Accent("||  4.  Modifier une réservation                                                              ||\n"));	
 		printf("||  5.  Retour                                                                                ||\n");
-		sdl();sdl();
-		printf("||  Votre choix :                                                                             ||\n");
+		sdl();
+		printf("||  Votre choix :  ");
 		choix = lire(tmp, 2);
 		
 	}while(choix<1||choix>5);
@@ -270,8 +256,8 @@ int menuEmploye(){
 		printf ("%s",Accent("||  5.  Modifier le salaire d'un employé                                                      ||\n"));
 		printf ("%s",Accent("||  6.  Payer Les employés                                                                    ||\n"));	
 		printf("||  7.  Retour                                                                                ||\n");
-		sdl();sdl();
-		printf("||  Votre choix :                                                                             ||\n");
+		sdl();
+		printf("||  Votre choix :   \n");
 		choix = lire(tmp, 2);
 		
 	}while(choix<1||choix>7);
@@ -303,8 +289,8 @@ int menuSejour(){
 		printf ("%s",Accent("||  1.  Liste des séjours                                                                     ||\n"));
 		printf ("%s",Accent("||  2.  Liste des emplacements disponibles                                                    ||\n"));
 		printf("||  3.  Retour                                                                                ||\n");
-		sdl();sdl();
-		printf("||  Votre choix :                                                                             ||\n");
+		sdl();
+		printf("||  Votre choix :  ");
 		choix = lire(tmp, 2);
 		
 	}while(choix<1||choix>3);
@@ -319,44 +305,4 @@ int modeEmploi() {
 	return 0;
 }
 
-int verifier(char saisie[]) { // vérifier que la saisie est correcte
-	int ok = 1, i = 0;
-	while(saisie[i] != '\0') {
-		if (!isdigit(saisie[i])) {
-			printf("pas un nombre\n");
-			return 0;
-		}
-		i++;
-	}
-	return ok;
-}
 
-void viderBuffer(){
-    int c = 0;
-    while (c != '\n' && c != EOF){
-        c = getchar();
-    }
-}
-
-int lire(char *chaine, int longueur){
-    char *positionln = NULL;
- 	
-    // On lit le texte saisi au clavier
-	if (fgets(chaine, longueur, stdin) != NULL) {
-        positionln = strchr(chaine, '\n'); 
-        if (positionln != NULL) {
-            *positionln = '\0'; // On remplace ce caractère par \0
-        }
-        else {
-        	viderBuffer();
-		}
-		if(verifier(chaine) == 0) {
- 			return 0;
-		}
-        return atoi(chaine);
-    }
-    else{
-    	viderBuffer();
-        return 0; // On renvoie 0 s'il y a eu une erreur
-    }
-}

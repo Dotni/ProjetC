@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = main.o structures/client.o structures/emplacement.o
-LINKOBJ  = main.o structures/client.o structures/emplacement.o
+OBJ      = main.o structures/client.o structures/emplacement.o structures/sejour.o structures/util.o
+LINKOBJ  = main.o structures/client.o structures/emplacement.o structures/sejour.o structures/util.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -32,3 +32,9 @@ structures/client.o: structures/client.c
 
 structures/emplacement.o: structures/emplacement.c
 	$(CC) -c structures/emplacement.c -o structures/emplacement.o $(CFLAGS)
+
+structures/sejour.o: structures/sejour.c
+	$(CC) -c structures/sejour.c -o structures/sejour.o $(CFLAGS)
+
+structures/util.o: structures/util.c
+	$(CC) -c structures/util.c -o structures/util.o $(CFLAGS)
