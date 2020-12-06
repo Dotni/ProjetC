@@ -46,10 +46,10 @@ void affichageListeEmplacement(emplacement empl[], int tailleEmplacement){
 		}
 		
 		if(empl[i].electricite == 0){ 
-			printf(" Non | ");
+			printf("     Non    | ");
 		}
 		else{ 
-			printf(" Oui | ");  
+			printf("     Oui    | ");  
 		}
 		printf("   %5.2f    |     %06.2f      ||\n", empl[i].taille, empl[i].prix);
 		i++; 
@@ -179,10 +179,10 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	}
 	
 	if(nouvEmpl.electricite == 0){
-		printf(" Non | "); 
+		printf("     Non    | "); 
 	}
 	else{ 
-		printf(" Oui | "); 
+		printf("     Oui    | "); 
 	}
 	printf("   %5.2f    |     %06.2f      ||\n",nouvEmpl.taille,nouvEmpl.prix);
 	printf("\n\n1 : Non \n");
@@ -269,10 +269,10 @@ void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
 	}
 	
 	if(empl[choix].electricite == 0){
-		printf(" Non | ");
+		printf("     Non    | ");
 	}
 	else{
-		printf(" Oui | ");
+		printf("     Oui    | ");
 	}
 	printf("   %5.2f    |     %06.2f      ||\n", empl[choix].taille, empl[choix].prix);
 	printf("\n\n1 : Non \n");
@@ -360,10 +360,10 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 	}
 	
 	if(empl[choix].electricite == 0){
-		printf(" Non | ");
+		printf("     Non    | ");
 	}
 	else{
-		printf(" Oui | ");
+		printf("     Oui    | ");
 	}
 	printf("   %5.2f    |     %06.2f      ||\n", empl[choix].taille, empl[choix].prix);
 	
@@ -485,10 +485,10 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		}
 		
 		if(empl[indice].electricite == 0){
-			printf(" Non | ");
+			printf("     Non    | ");
 		}
 		else{
-			printf(" Oui | ");
+			printf("     Oui    | ");
 		}
 		
 		printf("   %5.2f    |     %06.2f      ||\n\n", empl[indice].taille, empl[indice].prix);
@@ -510,10 +510,10 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		}
 		
 		if(nouvEmpl.electricite == 0){
-			printf(" Non | ");
+			printf("     Non | ");
 		}
 		else{
-			printf(" Oui | ");
+			printf("     Oui | ");
 		}
 		printf("   %5.2f    |     %06.2f      ||\n\n", nouvEmpl.taille, nouvEmpl.prix);
 		printf("1 : Non \n");

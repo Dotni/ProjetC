@@ -57,6 +57,7 @@ void main(){
 							break;
 						case 4:
 							choixSejour = menuSejour();
+							switchMenuSejour(choixSejour);
 							break;		
 					}
 				} while(choixMP != 5);
@@ -131,7 +132,7 @@ int menuPrincipal(){
 		
 		//code commun (peut importe si l'utilisateur a fait une erreur ou pas)
 		sdl();sdl();
-		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix.                                              ||\n"));
 		sdl();sdl();
 		printf ("%s", Accent("||  1.  Menu emplacement                                                                      ||\n"));
 		printf("||  2.  Menu client                                                                           ||\n");
@@ -165,7 +166,7 @@ int menuEmplacement(){
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		}
 		sdl();sdl();
-		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix.                                              ||\n"));
 		sdl();sdl();
 		printf ("%s", Accent("||  1.  Afficher la liste des emplacements                                                    ||\n"));
 		printf("||  2.  Ajouter un emplacement                                                                ||\n");
@@ -199,7 +200,7 @@ int menuClient(){
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		}
 		sdl();sdl();
-		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix.                                              ||\n"));
 		sdl();sdl();
 		printf ("%s", Accent("||  1.  Liste des clients                                                                     ||\n"));
 		printf("||  2.  Ajouter un client                                                                     ||\n");
@@ -234,7 +235,7 @@ int menuEmploye(){
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		}
 		sdl();sdl();
-		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix.                                              ||\n"));
 		sdl();sdl();
 		printf ("%s", Accent("||  1.  Liste des employés                                                                    ||\n"));
 		printf ("%s", Accent("||  2.  Ajouter un employé                                                                    ||\n"));
@@ -271,7 +272,7 @@ int menuSejour(){
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 		}
 		sdl();sdl();
-		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix                                               ||\n"));
+		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix.                                              ||\n"));
 		sdl();sdl();
 		printf ("%s", Accent("||  1.  Liste des séjours                                                                     ||\n"));
 		printf ("%s", Accent("||  2.  Liste des emplacements disponibles                                                    ||\n"));
@@ -293,5 +294,5 @@ int modeEmploi() {
 }
 
 void quitter() {
-	printf("Fermeture du logiciel. A bientôt!");
+	printf("%s", Accent("Fermeture du logiciel. A bientôt!"));
 }
