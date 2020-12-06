@@ -12,6 +12,9 @@ typedef struct sejour{
 	struct emplacement *place;
 }sejour;
 
+void afficherListeSejours();
+void afficherEmplacementsLibres();
+int lectureSejours();
 void switchMenuSejour(int);
 
 #endif
