@@ -17,7 +17,8 @@ int lectureSejours(int tailleMax, sejour sejours[]) {
 	FILE *fSejour;
 	fSejour = fopen("data/sejour.dat", "r");
 	while(!feof(fSejour)) {
-		fscanf(fSejour, "%3d %1d %1d %2d %2d %4d", &sejours[nbSejours].id, &sejours[nbSejours].formule, &jour, &mois, &annee, &sejours[nbSejours].prix);
+		fscanf(fSejour, "%3d %1d %1d %2d %2d %4d", &sejours[nbSejours].id, &sejours[nbSejours].formule, &jour, &mois, &annee, &sejours[nbSejours].prix); // a terminer
+		// organisation de sejour.dat ? à quoi correspond le 3eme nombre ?
 		// conversion entier -> char pour créer la date
 		itoa(jour, tmpJour, 10);
 		itoa(mois, tmpMois, 10);
