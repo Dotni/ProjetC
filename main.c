@@ -23,12 +23,12 @@ date : 30/11/2020
 
 void main(){
 	//déclaration des constantes
-	const int tailleEmpl = 50, tailleSejours = 50;
+	const int tailleEmpl = 50;
 	
 	//déclaration des variables
 	int choixMP, choixIntro,choixEmplacement,choixClient,choixEmploye,choixSejour;
 	emplacement empl[tailleEmpl];
-	sejour sejours[tailleSejours];
+	sejour sejours;
 	
 	//fonctions graphiques
 	int intro();
