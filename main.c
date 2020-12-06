@@ -59,7 +59,7 @@ void main(){
 						case 4:
 							do {
 								choixSejour = menuSejour();
-								switchMenuSejour(choixSejour);
+								switchMenuSejour(choixSejour, tailleSejours, sejours);
 							} while(choixSejour != 3); // 3 = retour au menu principal
 							break;		
 					}
