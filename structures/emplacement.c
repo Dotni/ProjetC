@@ -2,66 +2,67 @@
 #include "emplacement.h"
 #include "util.h"
 
-void viderEmplacements(emplacement empl[],int tailleEmplacement){
+void viderEmplacements(emplacement empl[], int tailleEmplacement){
 	int i;
-	for (i=1;i<tailleEmplacement;i++){
-		empl[i].id=0;
+	for (i = 1 ; i < tailleEmplacement ; i++){
+		empl[i].id = 0;
 	}
 }
 
-
-int lectureEmplacements(emplacement empl[],int tailleEmplacement){
-	viderEmplacements(empl,tailleEmplacement);
+int lectureEmplacements(emplacement empl[], int tailleEmplacement){
+	viderEmplacements(empl, tailleEmplacement);
 	FILE *fEmplacement;
 	fEmplacement = fopen("data/emplacements.dat","r");
-	int i=1;
+	int i = 1;
 	while(!feof(fEmplacement)){
-		fscanf(fEmplacement,"%2d%1d%1d%5f%6f",&empl[i].id,&empl[i].type,&empl[i].electricite,&empl[i].taille,&empl[i].prix);
+		fscanf(fEmplacement, "%2d %1d %1d %5f %6f", &empl[i].id, &empl[i].type, &empl[i].electricite, &empl[i].taille, &empl[i].prix);
 		i++;
 	}
 	fclose(fEmplacement);
-	return i-1;
+	return i - 1;
 }
 
-
-void affichageListeEmplacement(emplacement empl[],int tailleEmplacement){
-	lectureEmplacements(empl,tailleEmplacement);
-	int i=1;
+void affichageListeEmplacement(emplacement empl[], int tailleEmplacement){
+	lectureEmplacements(empl, tailleEmplacement);
+	int i = 1;
 	char x = 253;
-	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
-	printf("||----|----------|------|-------------|-----------------||\n");
+	printf("%s", Accent("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x));
+	printf("||----|----------|-------------|-------------|-----------------||\n");
 	
-	while(empl[i].id!=0){
-		printf("|| %2d | ",empl[i].id);//%04.2f %05.2f%\n"empl[i].taille,empl[i].prix);
+	while(empl[i].id != 0){
+		printf("|| %2d | ", empl[i].id);//%04.2f %05.2f%\n"empl[i].taille,empl[i].prix);
 		
-		if(empl[i].type==1){
-			printf("  tente  | ");
+		if(empl[i].type == 1){
+			printf("  Tente  | ");
 		}
 		else{
-			if(empl[i].type==2){printf("caravane | ");}
-			else{ printf("bungalow | ");}
+			if(empl[i].type == 2){
+				printf("Caravane | ");
+			}
+			else{
+				printf("Bungalow | ");
+			}
 		}
 		
-		if(empl[i].electricite==0){ printf(" non | "); }
-		else{ printf(" oui | ");  }
-		
-		printf("   %05.2f    |     %06.2f      ||\n",empl[i].taille,empl[i].prix);
-		
+		if(empl[i].electricite == 0){ 
+			printf(" Non | ");
+		}
+		else{ 
+			printf(" Oui | ");  
+		}
+		printf("   %5.2f    |     %06.2f      ||\n", empl[i].taille, empl[i].prix);
 		i++; 
 	}
 	printf("||------------------------------------------------------||\n");
 }
 
-
-void nouvelEmplacement(emplacement empl[],int tailleEmplacement){
-	
+void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	//permet de récupérer le nombre d'emplacements et de remplir empl[]
-	int nb=lectureEmplacements(empl,tailleEmplacement);
+	int nb = lectureEmplacements(empl, tailleEmplacement);
 	int i;
 	
-	//Traitement d'erreur s'il y a trop d'emplacements
-	if(nb>=tailleEmplacement-1){
-		printf ("%s",Accent("Impossible d'ajouter un emplacement, la liste est déja complète!\n"));
+	if(nb >= tailleEmplacement - 1){ //Traitement d'erreur s'il y a trop d'emplacements
+		printf ("%s", accent("Impossible d'ajouter un emplacement, la liste est déja complète!\n"));
 		system("PAUSE");
 		system("cls");
 		return;
@@ -70,7 +71,7 @@ void nouvelEmplacement(emplacement empl[],int tailleEmplacement){
 	//s'il y a de la place on continue.
 	//attention que les id doivent etre triés pour éviter que deux emplacement aient le meme id
 	emplacement nouvEmpl;
-	nouvEmpl.id=empl[nb-1].id + 1;
+	nouvEmpl.id = empl[nb - 1].id + 1;
 	int choix;
 	char tmp[7];
 	char x = 253;
@@ -80,80 +81,79 @@ void nouvelEmplacement(emplacement empl[],int tailleEmplacement){
 	printf("==================================================\n");
 	//on demande à l'utilisateur ce qu'il doit entrer
 	
-	
 	//type
 	printf("Type de l'emplacement ?\n\n");
-	printf("1 : tente \n");
-	printf("2 : caravane \n");
-	printf("3 : bungalow \n\n");
+	printf("1 : Tente \n");
+	printf("2 : Caravane \n");
+	printf("3 : Bungalow \n\n");
 	printf("Votre choix : ");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix : ");
 		}
 		choix = lire(tmp, 2);
 		i++;
-	}while(choix<1||choix>3);
-	nouvEmpl.type=choix;
+	}while(choix < 1 || choix > 3);
+	nouvEmpl.type = choix;
 	
 	//elec
 	system("cls");
 	printf("==================================================\n");
 	printf("============= Ajout d'un emplacement =============\n");
 	printf("==================================================\n");
-	printf ("%s",Accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
-	printf("1 : non \n");
-	printf("2 : oui \n");
+	printf ("%s", accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
+	printf("1 : Non \n");
+	printf("2 : Oui \n");
 	printf("Votre choix : ");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix : ");
 		}
 		choix = lire(tmp, 2);
 		i++;
-	}while(choix<1||choix>2);
-	nouvEmpl.electricite =choix-1;
+	}while(choix < 1 || choix > 2);
+	nouvEmpl.electricite = choix - 1;
 	
 	//taille
 	system("cls");
 	printf("==================================================\n");
 	printf("============= Ajout d'un emplacement =============\n");
 	printf("==================================================\n");
-	printf ("%s",Accent("Quelle est la superficie de l'emplacement (en m"));
-	printf("%c)?\n\n",x);
+	printf ("%s", accent("Quelle est la superficie de l'emplacement (en m"));
+	printf("%c) (compris entre 0.01 et 99.99)?\n\n", x);
 	printf("Superficie : ");
 	
 	i=0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 99.99) Votre choix : ");
 		}
 		valeur = lireFloat(tmp, 6);
 		i++;
-	}while(valeur>99.99||valeur<=0);
-	nouvEmpl.taille=valeur;
+	}while(valeur > 99.99 || valeur <= 0);
+	nouvEmpl.taille = valeur;
 	
 	//prix
 	system("cls");
 	printf("==================================================\n");
 	printf("============= Ajout d'un emplacement =============\n");
 	printf("==================================================\n");
-	printf ("%s",Accent("Quel est le prix de l'emplacement(en euros)?\n\n",x));
+	printf ("%s", Accent("Quel est le prix de l'emplacement(en euros)?\n\n", x));
 	printf("prix : ");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 999.99) Votre choix : ");
 		}
 		valeur = lireFloat(tmp, 7);
 		i++;
-	}while(valeur>999.99||valeur<=0);
-	nouvEmpl.prix=valeur;
+	}while(valeur > 999.99 || valeur <= 0);
+	nouvEmpl.prix = valeur;
 	
 	system("cls");
 	printf("==================================================\n");
@@ -161,66 +161,66 @@ void nouvelEmplacement(emplacement empl[],int tailleEmplacement){
 	printf("==================================================\n\n");
 	printf("Confirmez-vous l'ajout de l'emplacement suivant?\n\n");
 	
-	
-	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
-	printf("||----|----------|------|-------------|-----------------||\n");
-	printf("|| %2d | ",nouvEmpl.id);	
-	if(nouvEmpl.type==1){
-		printf("  tente  | ");
+	printf("%s", Accent("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x));
+	printf("||----|----------|-------------|-------------|-----------------||\n");
+	printf("|| %2d | ", nouvEmpl.id);	
+	if(nouvEmpl.type == 1){
+		printf("  Tente  | ");
 	}
 	else{
-		if(nouvEmpl.type==2){printf("caravane | ");}
-		else{ printf("bungalow | ");}
+		if(nouvEmpl.type == 2){
+			printf("Caravane | ");
+		}
+		else{ 
+			printf("Bungalow | ");
+		}
 	}
 	
-	if(nouvEmpl.electricite==0){ printf(" non | "); }
-	else{ printf(" oui | ");  }
-	
-	printf("   %05.2f    |     %06.2f      ||\n",nouvEmpl.taille,nouvEmpl.prix);
-	
-	
-	
-	printf("\n\n1 : non \n");
-	printf("2 : oui \n");
+	if(nouvEmpl.electricite == 0){
+		printf(" Non | "); 
+	}
+	else{ 
+		printf(" Oui | "); 
+	}
+	printf("   %5.2f    |     %06.2f      ||\n",nouvEmpl.taille,nouvEmpl.prix);
+	printf("\n\n1 : Non \n");
+	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix :");
 		}
 		choix = lire(tmp, 2);
 		i++;
-	}while(choix<1||choix>2);
+	}while(choix < 1 || choix > 2);
 	
-	
-	if(choix==2){
+	if(choix == 2){
 		FILE *fEmplacement;
 		fEmplacement = fopen("data/emplacements.dat","w");
-		for(i=1;i<nb;i++){
-			fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f\n",empl[i].id,empl[i].type,empl[i].electricite,empl[i].taille,empl[i].prix);
-			
+		for(i = 1 ; i < nb ; i++){
+			fprintf(fEmplacement, "%2d %1d %1d %5.2f %6.2f\n", empl[i].id, empl[i].type, empl[i].electricite, empl[i].taille, empl[i].prix);
 		}
-		fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f",nouvEmpl.id,nouvEmpl.type,nouvEmpl.electricite,nouvEmpl.taille,nouvEmpl.prix);
+		fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f", nouvEmpl.id, nouvEmpl.type, nouvEmpl.electricite, nouvEmpl.taille, nouvEmpl.prix);
 		
 		fclose(fEmplacement);
 		system("cls");
-		printf ("%s",Accent("Emplacement ajouté avec succès!\n"));
+		printf ("%s", accent("Emplacement ajouté avec succès!\n"));
 		system("PAUSE");
 		system("cls");
 	}
 	else{
 		system("cls");
-		printf ("%s",Accent("Emplacement non ajouté!\n"));
+		printf ("%s", accent("Emplacement non ajouté!\n"));
 		system("PAUSE");
 		system("cls");
 	}	
 }
 
-
 void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
-	int nb=lectureEmplacements(empl,tailleEmplacement);
-	int i,choix,choix2;
+	int nb = lectureEmplacements(empl, tailleEmplacement);
+	int i, choix, choix2;
 	char tmp[3];
 	char tmp2[2];
 	char x = 253;
@@ -229,90 +229,90 @@ void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
 	printf("========================================================\n");
 	printf("============= Suppression d'un emplacement =============\n");
 	printf("========================================================\n\n");
-	affichageListeEmplacement(empl,tailleEmplacement);
+	affichageListeEmplacement(empl, tailleEmplacement);
 	
-	printf ("%s",Accent("Entrez l'id de l'emplacement que vous souhaitez supprimer\n\n"));
+	printf ("%s", accent("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n"));
 	printf("Votre choix : ");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix : ");
 		}
 		choix = lire(tmp, 3);
 		i++;
-	}while(choix<1||choix>nb);
+	}while(choix < 1 || choix > nb - 1);
 	
 	
 	system("cls");
 	printf("========================================================\n");
 	printf("============= Suppression d'un emplacement =============\n");
-	printf("========================================================\n\n");
+	printf("========================================================\n");
 	printf("Confirmez-vous la suppression de l'emplacement suivant?\n\n");
 	
 	
-	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
-	printf("||----|----------|------|-------------|-----------------||\n");
-	printf("|| %2d | ",empl[choix].id);	
-	if(empl[choix].type==1){
-		printf("  tente  | ");
+	printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x);
+	printf("||----|----------|-------------|-------------|-----------------||\n");
+	printf("|| %2d | ", empl[choix].id);	
+	if(empl[choix].type == 1){
+		printf("  Tente  | ");
 	}
 	else{
-		if(empl[choix].type==2){printf("caravane | ");}
-		else{ printf("bungalow | ");}
+		if(empl[choix].type == 2){
+			printf("Caravane | ");
+		}
+		else{
+			printf("Bungalow | ");
+		}
 	}
 	
-	if(empl[choix].electricite==0){ printf(" non | "); }
-	else{ printf(" oui | ");  }
-	
-	printf("   %05.2f    |     %06.2f      ||\n",empl[choix].taille,empl[choix].prix);
-	
-	
-	
-	printf("\n\n1 : non \n");
-	printf("2 : oui \n");
+	if(empl[choix].electricite == 0){
+		printf(" Non | ");
+	}
+	else{
+		printf(" Oui | ");
+	}
+	printf("   %5.2f    |     %06.2f      ||\n", empl[choix].taille, empl[choix].prix);
+	printf("\n\n1 : Non \n");
+	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix :");
 		}
 		choix2 = lire(tmp2, 2);
 		i++;
-	}while(choix2<1||choix2>2);
+	}while(choix2 < 1 || choix2 > 2);
 	
-	if(choix2==2){
-		
-		for(i=choix+1;i<=nb;i++){
-			empl[i]=empl[i-1];
+	if(choix2 == 2){
+		for(i = choix + 1 ; i <= nb ; i++){
+			empl[i] = empl[i - 1];
 		}
-		nb-1;
+		nb--;
 		FILE *fEmplacement;
 		fEmplacement = fopen("data/emplacements.dat","w");
-		for(i=1;i<nb;i++){
-			fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f\n",empl[i].id,empl[i].type,empl[i].electricite,empl[i].taille,empl[i].prix);
-			
+		for(i = 1 ; i < nb ; i++){
+			fprintf(fEmplacement, "%2d %1d %1d %5.2f %6.2f\n", empl[i].id, empl[i].type, empl[i].electricite, empl[i].taille, empl[i].prix);
 		}
 		fclose(fEmplacement);
 		system("cls");
-		printf ("%s",Accent("Emplacement supprimé avec succès!\n"));
+		printf ("%s", accent("Emplacement supprimé avec succès!\n"));
 		system("PAUSE");
 		system("cls");
 	}
 	else{
 		system("cls");
-		printf ("%s",Accent("Emplacement non supprimé!\n"));
+		printf ("%s", accent("Emplacement non supprimé!\n"));
 		system("PAUSE");
 		system("cls");
 	}	
-	
 }
 
-
-void modifierEmplacement(emplacement empl[],int tailleEmplacement){
-	int nb=lectureEmplacements(empl,tailleEmplacement);
-	int i,choix,choix2;
+void modifierEmplacement(emplacement empl[], int tailleEmplacement){
+	int nb = lectureEmplacements(empl, tailleEmplacement);
+	int i, choix, choix2;
 	char tmp[3];
 	char tmp2[2];
 	char tmp3[7];
@@ -322,248 +322,259 @@ void modifierEmplacement(emplacement empl[],int tailleEmplacement){
 	printf("========================================================\n");
 	printf("============= Modification d'un emplacement ============\n");
 	printf("========================================================\n\n");
-	affichageListeEmplacement(empl,tailleEmplacement);
+	affichageListeEmplacement(empl, tailleEmplacement);
 	
-	printf ("%s",Accent("Entrez l'id de l'emplacement que vous souhaitez modifier\n\n"));
+	printf ("%s", accent("Entrez l'id de l'emplacement que vous souhaitez modifier.\n\n"));
 	printf("Votre choix : ");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix : ");
 		}
 		choix = lire(tmp, 3);
 		i++;
-	}while(choix<1||choix>nb);
-	
+	}while(choix < 1 || choix > nb - 1);
 	
 	system("cls");
 	printf("========================================================\n");
 	printf("============= Modification d'un emplacement ============\n");
 	printf("========================================================\n\n");
-	printf("Confirmez-vous la modification de l'emplacement suivant?\n\n");
+	printf("%s", accent("Confirmez-vous la séléction de l'emplacement suivant pour modifications?\n\n"));
 	
-	
-	printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
-	printf("||----|----------|------|-------------|-----------------||\n");
-	printf("|| %2d | ",empl[choix].id);	
-	if(empl[choix].type==1){
-		printf("  tente  | ");
+	printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n",x);
+	printf("||----|----------|-------------|-------------|-----------------||\n");
+	printf("|| %2d | ", empl[choix].id);	
+	if(empl[choix].type == 1){
+		printf("  Tente  | ");
 	}
 	else{
-		if(empl[choix].type==2){printf("caravane | ");}
-		else{ printf("bungalow | ");}
+		if(empl[choix].type == 2){
+			printf("Caravane | ");
+		}
+		else{
+			printf("Bungalow | ");
+		}
 	}
 	
-	if(empl[choix].electricite==0){ printf(" non | "); }
-	else{ printf(" oui | ");  }
+	if(empl[choix].electricite == 0){
+		printf(" Non | ");
+	}
+	else{
+		printf(" Oui | ");
+	}
+	printf("   %5.2f    |     %06.2f      ||\n", empl[choix].taille, empl[choix].prix);
 	
-	printf("   %05.2f    |     %06.2f      ||\n",empl[choix].taille,empl[choix].prix);
-	
-	
-	int indice=choix;
-	printf("\n\n1 : non \n");
-	printf("2 : oui \n");
+	int indice = choix;
+	printf("\n\n1 : Non \n");
+	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	i=0;
+	i = 0;
 	do{
-		if(i!=0){
+		if(i != 0){
 			printf("Veuillez entrer un nombre correct! Votre choix :");
 		}
 		choix2 = lire(tmp2, 2);
 		i++;
-	}while(choix2<1||choix2>2);
+	}while(choix2 < 1 || choix2 > 2);
 	
-	if(choix2==2){
+	if(choix2 == 2){
 		system("cls");
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
 		//type
 		printf("Type de l'emplacement ?\n\n");
-		printf("1 : tente \n");
-		printf("2 : caravane \n");
-		printf("3 : bungalow \n\n");
+		printf("1 : Tente \n");
+		printf("2 : Caravane \n");
+		printf("3 : Bungalow \n\n");
 		printf("Votre choix : ");
 		float valeur;
 		emplacement nouvEmpl;
-		nouvEmpl.id=empl[indice].id;
-		
+		nouvEmpl.id = empl[indice].id;
 		
 		i=0;
 		do{
-			if(i!=0){
+			if(i != 0){
 				printf("Veuillez entrer un nombre correct! Votre choix : ");
 			}
 			choix = lire(tmp, 2);
 			i++;
-		}while(choix<1||choix>3);
-		nouvEmpl.type=choix;
+		}while(choix < 1 || choix > 3);
+		nouvEmpl.type = choix;
 		
 		//elec
 		system("cls");
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s",Accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
-		printf("1 : non \n");
-		printf("2 : oui \n");
+		printf ("%s", Accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
+		printf("1 : Non \n");
+		printf("2 : Oui \n");
 		printf("Votre choix : ");
 		
-		i=0;
+		i = 0;
 		do{
-			if(i!=0){
+			if(i != 0){
 				printf("Veuillez entrer un nombre correct! Votre choix : ");
 			}
 			choix = lire(tmp, 2);
 			i++;
-		}while(choix<1||choix>2);
-		nouvEmpl.electricite =choix-1;
+		}while(choix < 1 || choix > 2);
+		nouvEmpl.electricite = choix - 1;
 		
 		//taille
 		system("cls");
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s",Accent("Quelle est la superficie de l'emplacement (en m"));
-		printf("%c)?\n\n",x);
+		printf ("%s", accent("Quelle est la superficie de l'emplacement (en m"));
+		printf("%c)?\n\n", x);
 		printf("Superficie : ");
 		
-		i=0;
+		i = 0;
 		do{
-			if(i!=0){
+			if(i != 0){
 				printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 99.99) Votre choix : ");
 			}
 			valeur = lireFloat(tmp3, 6);
 			i++;
-		}while(valeur>99.99||valeur<=0);
-		nouvEmpl.taille=valeur;
+		}while(valeur > 99.99 || valeur <= 0);
+		nouvEmpl.taille = valeur;
 		
 		//prix
 		system("cls");
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s",Accent("Quel est le prix de l'emplacement(en euros)?\n\n",x));
+		printf ("%s", Accent("Quel est le prix de l'emplacement(en euros)?\n\n", x));
 		printf("prix : ");
 		
-		i=0;
+		i = 0;
 		do{
-			if(i!=0){
+			if(i != 0){
 				printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 999.99) Votre choix : ");
 			}
 			valeur = lireFloat(tmp3, 7);
 			i++;
-		}while(valeur>999.99||valeur<=0);
-		nouvEmpl.prix=valeur;
+		}while(valeur > 999.99 || valeur <= 0);
+		nouvEmpl.prix = valeur;
 		
 		system("cls");
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s",Accent("Voulez-vous remplacer cet emplacement \n\n"));
+		printf ("%s", accent("Voulez-vous remplacer cet emplacement \n\n"));
 		
-		printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
-		printf("||----|----------|------|-------------|-----------------||\n");
-		printf("|| %2d | ",empl[indice].id);	
-		if(empl[indice].type==1){
-			printf("  tente  | ");
+		printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n",x);
+		printf("||----|----------|-------------|-------------|-----------------||\n");
+		printf("|| %2d | ", empl[indice].id);	
+		if(empl[indice].type == 1){
+			printf("  Tente  | ");
 		}
 		else{
-			if(empl[indice].type==2){printf("caravane | ");}
-			else{ printf("bungalow | ");}
+			if(empl[indice].type == 2){
+				printf("Caravane | ");
+			}
+			else{
+				printf("Bungalow | ");
+			}
 		}
 		
-		if(empl[indice].electricite==0){ printf(" non | "); }
-		else{ printf(" oui | ");  }
-		
-		printf("   %05.2f    |     %06.2f      ||\n\n",empl[indice].taille,empl[indice].prix);
-		
-		printf ("%s",Accent("par celui-ci ? \n\n"));
-		
-		printf("|| Id |   Type   | Elec | taille (m%c) | prix (en euros) ||\n",x);
-		printf("||----|----------|------|-------------|-----------------||\n");
-		printf("|| %2d | ",nouvEmpl.id);	
-		if(nouvEmpl.type==1){
-			printf("  tente  | ");
+		if(empl[indice].electricite == 0){
+			printf(" Non | ");
 		}
 		else{
-			if(nouvEmpl.type==2){printf("caravane | ");}
-			else{ printf("bungalow | ");}
+			printf(" Oui | ");
 		}
 		
-		if(nouvEmpl.electricite==0){ printf(" non | "); }
-		else{ printf(" oui | ");  }
+		printf("   %5.2f    |     %06.2f      ||\n\n", empl[indice].taille, empl[indice].prix);
+		printf ("%s", accent("par celui-ci ? \n\n"));
 		
-		printf("   %05.2f    |     %06.2f      ||\n\n",nouvEmpl.taille,nouvEmpl.prix);
+		printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x);
+		printf("||----|----------|-------------|-------------|-----------------||\n");
+		printf("|| %2d | ", nouvEmpl.id);	
+		if(nouvEmpl.type == 1){
+			printf("  Tente  | ");
+		}
+		else{
+			if(nouvEmpl.type == 2){
+				printf("Caravane | ");
+			}
+			else{
+				printf("Bungalow | ");
+			}
+		}
 		
-		printf("1 : non \n");
-		printf("2 : oui \n");
+		if(nouvEmpl.electricite == 0){
+			printf(" Non | ");
+		}
+		else{
+			printf(" Oui | ");
+		}
+		printf("   %5.2f    |     %06.2f      ||\n\n", nouvEmpl.taille, nouvEmpl.prix);
+		printf("1 : Non \n");
+		printf("2 : Oui \n");
 		printf("Votre choix : ");
 		
-		i=0;
+		i = 0;
 		do{
-			if(i!=0){
+			if(i != 0){
 				printf("Veuillez entrer un nombre correct! Votre choix : ");
 			}
 			choix = lire(tmp, 2);
 			i++;
-		}while(choix<1||choix>2);
+		}while(choix < 1 || choix > 2);
 		
-		if(choix==2){
-			empl[indice]=nouvEmpl;
+		if(choix == 2){
+			empl[indice] = nouvEmpl;
 		
 			FILE *fEmplacement;
 			fEmplacement = fopen("data/emplacements.dat","w");
-			for(i=1;i<nb;i++){
-				fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f\n",empl[i].id,empl[i].type,empl[i].electricite,empl[i].taille,empl[i].prix);
+			for(i = 1 ; i < nb ; i++){
+				fprintf(fEmplacement, "%2d %1d %1d %5.2f %6.2f\n", empl[i].id, empl[i].type, empl[i].electricite, empl[i].taille, empl[i].prix);
 			}
 			fclose(fEmplacement);
 			system("cls");
-			printf ("%s",Accent("Emplacement modifié avec succès!\n"));
+			printf ("%s", accent("Emplacement modifié avec succès!\n"));
 			system("PAUSE");
 			system("cls");
 		}
 		else{
 			system("cls");
-			printf ("%s",Accent("Emplacement non modifié!\n"));
+			printf ("%s", accent("Emplacement non modifié!\n"));
 			system("PAUSE");
 			system("cls");
 		}
 	}
 	else{
 		system("cls");
-		printf ("%s",Accent("Emplacement non modifié!\n"));
+		printf ("%s", accent("Emplacement non modifié!\n"));
 		system("PAUSE");
 		system("cls");
 	}	
-	
 }
 
-
-
-void switchMenuEmplacement(int choix,int taille, emplacement empl[]){
+void switchMenuEmplacement(int choix, int taille, emplacement empl[]){
 	switch(choix){
 		case 1 : 
 			printf("==========================================================\n");
 			printf("=============== Liste des emplacements ===================\n");
 			printf("==========================================================\n");
-			affichageListeEmplacement(empl,taille);
+			affichageListeEmplacement(empl, taille);
 			system("PAUSE");
 			system("cls");
 			break;
 		case 2 :
-			nouvelEmplacement(empl,taille);
+			nouvelEmplacement(empl, taille);
 			system("cls");
 			break;
 		case 3:
-			supprimerEmplacement(empl,taille);
+			supprimerEmplacement(empl, taille);
 			break;
 		case 4:
-			modifierEmplacement(empl,taille);
+			modifierEmplacement(empl, taille);
 			break;
 	}
 }
-
-

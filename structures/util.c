@@ -18,7 +18,7 @@ int verifier(char saisie[]) { // vérifier que la saisie est correcte
 	int ok = 1, i = 0;
 	while(saisie[i] != '\0') {
 		if (!isdigit(saisie[i])) {
-			printf("pas un nombre\n");
+			printf("Votre saisie n'est pas un nombre, veuillez entrer un nombre correct.\n");
 			return 0;
 		}
 		i++;
@@ -28,21 +28,19 @@ int verifier(char saisie[]) { // vérifier que la saisie est correcte
 
 float verifierFloat(char saisie[]) { // vérifier que la saisie est correcte
 	float ok = 1;
-	int i = 0,nb=0;
+	int i = 0, nb = 0;
 	while(saisie[i] != '\0') {
-		if (!isdigit(saisie[i])&&saisie[i]!='.') {
-			printf("pas un nombre\n");
+		if (!isdigit(saisie[i])&&saisie[i] != '.') {
+			printf("Votre saisie n'est pas un nombre, veuillez entrer un nombre correct.\n");
 			return 0;	
 		}
 		if(saisie[i]=='.'){
 			nb++;
 			if(nb>1){
-				printf("pas un nombre\n");
+				printf("Votre saisie n'est pas un nombre, veuillez entrer un nombre correct.\n");
 				return 0;
 			}
 		}
-		
-		
 		i++;
 	}
 	return ok;
@@ -80,9 +78,8 @@ int lire(char *chaine, int longueur){
 
 float lireFloat(char *chaine, int longueur){
     char *positionln = NULL;
- 	
-    // On lit le texte saisi au clavier
-	if (fgets(chaine, longueur, stdin) != NULL) {
+
+	if (fgets(chaine, longueur, stdin) != NULL) { // On lit le texte saisi au clavier
         positionln = strchr(chaine, '\n'); 
         if (positionln != NULL) {
             *positionln = '\0'; // On remplace ce caractère par \0
