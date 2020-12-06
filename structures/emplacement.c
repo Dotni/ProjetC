@@ -26,7 +26,8 @@ void affichageListeEmplacement(emplacement empl[], int tailleEmplacement){
 	lectureEmplacements(empl, tailleEmplacement);
 	int i = 1;
 	char x = 253;
-	printf("%s", Accent("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x));
+	printf("%s", Accent("|| Id |   Type   | Electricité "));
+	printf("| Taille (m%c) | Prix (en euros) ||\n", x);
 	printf("||----|----------|-------------|-------------|-----------------||\n");
 	
 	while(empl[i].id != 0){
@@ -62,7 +63,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	int i;
 	
 	if(nb >= tailleEmplacement - 1){ //Traitement d'erreur s'il y a trop d'emplacements
-		printf ("%s", accent("Impossible d'ajouter un emplacement, la liste est déja complète!\n"));
+		printf ("%s", Accent("Impossible d'ajouter un emplacement, la liste est déja complète!\n"));
 		system("PAUSE");
 		system("cls");
 		return;
@@ -103,7 +104,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("==================================================\n");
 	printf("============= Ajout d'un emplacement =============\n");
 	printf("==================================================\n");
-	printf ("%s", accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
+	printf ("%s", Accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
 	printf("1 : Non \n");
 	printf("2 : Oui \n");
 	printf("Votre choix : ");
@@ -123,7 +124,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("==================================================\n");
 	printf("============= Ajout d'un emplacement =============\n");
 	printf("==================================================\n");
-	printf ("%s", accent("Quelle est la superficie de l'emplacement (en m"));
+	printf ("%s", Accent("Quelle est la superficie de l'emplacement (en m"));
 	printf("%c) (compris entre 0.01 et 99.99)?\n\n", x);
 	printf("Superficie : ");
 	
@@ -142,7 +143,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("==================================================\n");
 	printf("============= Ajout d'un emplacement =============\n");
 	printf("==================================================\n");
-	printf ("%s", Accent("Quel est le prix de l'emplacement(en euros)?\n\n", x));
+	printf ("Quel est le prix de l'emplacement(en euros)?\n\n", x);
 	printf("prix : ");
 	
 	i = 0;
@@ -161,7 +162,8 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("==================================================\n\n");
 	printf("Confirmez-vous l'ajout de l'emplacement suivant?\n\n");
 	
-	printf("%s", Accent("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x));
+	printf("%s", Accent("|| Id |   Type   | Electricité "));
+	printf("| Taille (m%c) | Prix (en euros) ||\n", x);
 	printf("||----|----------|-------------|-------------|-----------------||\n");
 	printf("|| %2d | ", nouvEmpl.id);	
 	if(nouvEmpl.type == 1){
@@ -206,13 +208,13 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 		
 		fclose(fEmplacement);
 		system("cls");
-		printf ("%s", accent("Emplacement ajouté avec succès!\n"));
+		printf ("%s", Accent("Emplacement ajouté avec succès!\n"));
 		system("PAUSE");
 		system("cls");
 	}
 	else{
 		system("cls");
-		printf ("%s", accent("Emplacement non ajouté!\n"));
+		printf ("%s", Accent("Emplacement non ajouté!\n"));
 		system("PAUSE");
 		system("cls");
 	}	
@@ -231,7 +233,7 @@ void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
 	printf("========================================================\n\n");
 	affichageListeEmplacement(empl, tailleEmplacement);
 	
-	printf ("%s", accent("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n"));
+	printf ("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n");
 	printf("Votre choix : ");
 	
 	i = 0;
@@ -298,13 +300,13 @@ void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
 		}
 		fclose(fEmplacement);
 		system("cls");
-		printf ("%s", accent("Emplacement supprimé avec succès!\n"));
+		printf ("%s", Accent("Emplacement supprimé avec succès!\n"));
 		system("PAUSE");
 		system("cls");
 	}
 	else{
 		system("cls");
-		printf ("%s", accent("Emplacement non supprimé!\n"));
+		printf ("%s", Accent("Emplacement non supprimé!\n"));
 		system("PAUSE");
 		system("cls");
 	}	
@@ -324,7 +326,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("========================================================\n\n");
 	affichageListeEmplacement(empl, tailleEmplacement);
 	
-	printf ("%s", accent("Entrez l'id de l'emplacement que vous souhaitez modifier.\n\n"));
+	printf ("Entrez l'id de l'emplacement que vous souhaitez modifier.\n\n");
 	printf("Votre choix : ");
 	
 	i = 0;
@@ -340,7 +342,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("========================================================\n");
 	printf("============= Modification d'un emplacement ============\n");
 	printf("========================================================\n\n");
-	printf("%s", accent("Confirmez-vous la séléction de l'emplacement suivant pour modifications?\n\n"));
+	printf("%s", Accent("Confirmez-vous la séléction de l'emplacement suivant pour modifications?\n\n"));
 	
 	printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n",x);
 	printf("||----|----------|-------------|-------------|-----------------||\n");
@@ -429,7 +431,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s", accent("Quelle est la superficie de l'emplacement (en m"));
+		printf ("%s", Accent("Quelle est la superficie de l'emplacement (en m"));
 		printf("%c)?\n\n", x);
 		printf("Superficie : ");
 		
@@ -448,7 +450,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s", Accent("Quel est le prix de l'emplacement(en euros)?\n\n", x));
+		printf ("Quel est le prix de l'emplacement(en euros)?\n\n");
 		printf("prix : ");
 		
 		i = 0;
@@ -465,7 +467,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		printf("========================================================\n");
 		printf("============= Modification d'un emplacement ============\n");
 		printf("========================================================\n\n");
-		printf ("%s", accent("Voulez-vous remplacer cet emplacement \n\n"));
+		printf ("Voulez-vous remplacer cet emplacement \n\n");
 		
 		printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n",x);
 		printf("||----|----------|-------------|-------------|-----------------||\n");
@@ -490,7 +492,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		}
 		
 		printf("   %5.2f    |     %06.2f      ||\n\n", empl[indice].taille, empl[indice].prix);
-		printf ("%s", accent("par celui-ci ? \n\n"));
+		printf ("par celui-ci ? \n\n");
 		
 		printf("|| Id |   Type   | Electricité | Taille (m%c) | Prix (en euros) ||\n", x);
 		printf("||----|----------|-------------|-------------|-----------------||\n");
@@ -537,20 +539,20 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 			}
 			fclose(fEmplacement);
 			system("cls");
-			printf ("%s", accent("Emplacement modifié avec succès!\n"));
+			printf ("%s", Accent("Emplacement modifié avec succès!\n"));
 			system("PAUSE");
 			system("cls");
 		}
 		else{
 			system("cls");
-			printf ("%s", accent("Emplacement non modifié!\n"));
+			printf ("%s", Accent("Emplacement non modifié!\n"));
 			system("PAUSE");
 			system("cls");
 		}
 	}
 	else{
 		system("cls");
-		printf ("%s", accent("Emplacement non modifié!\n"));
+		printf ("%s", Accent("Emplacement non modifié!\n"));
 		system("PAUSE");
 		system("cls");
 	}	
