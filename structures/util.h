@@ -8,5 +8,6 @@ int verifier(char[]);					//vérification d'entrée
 float lireFloat(char *, int);					//lecture d'entrées
 float verifierFloat(char[]);					//vérification d'entrée
 void viderBuffer();						//vider buffer
-
+void affichageTitre(char [], int);
+void affichageTypeEmplacement(int);
 #endif

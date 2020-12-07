@@ -3,9 +3,14 @@
 #include "emplacement.h"
 #include "util.h"
 
+
+//déclaration des constantes
+const int tailleEmplacement = 50;
+int tailleTitre = 65;
+emplacement empl[50];
 //permet d'initialiser tous les ID du tableau a 0
 //En effet, l'affichage des id ne se fait que pour les ID dont la valeur est différente de 0
-void viderEmplacements(emplacement empl[], int tailleEmplacement){
+void viderEmplacements(){
 	int i;
 	for (i = 1 ; i < tailleEmplacement ; i++){
 		empl[i].id = 0;
@@ -13,9 +18,9 @@ void viderEmplacements(emplacement empl[], int tailleEmplacement){
 }
 
 //permet de lire les emplacements et de les stocker dans un tableau
-int lectureEmplacements(emplacement empl[], int tailleEmplacement){
+int lectureEmplacements(){
 	//on oublie pas de "vider" le tableau pour ne pas afficher des éléments qui ont été supprimés mais qui sont tjrs en mémoire
-	viderEmplacements(empl, tailleEmplacement);
+	viderEmplacements();
 	FILE *fEmplacement;
 	fEmplacement = fopen("data/emplacements.dat","r");
 	int i = 1;
@@ -27,30 +32,6 @@ int lectureEmplacements(emplacement empl[], int tailleEmplacement){
 	
 	//on retourne le nombre d'éléments du tableau
 	return i - 1;
-}
-
-//affiche le titre global de la fenetre
-void affichageTitreListeEmplacement(char titre[]){
-	//longueur totale du titre = 65
-	//espace des deux cotés du titre 65-2=63  
-	//taille totale - taille du titre = taille des  "="
-	//taille des "=" /2 = taille des égals a gauche
-	//comme ca peut etre un nombre impair, taille des égals a gauche n'est pas forcément égal a taille des égals a droite
-	//donc on le recalcule avec la formule 61-taille des égals a gauche - taille du titre;
-	int taille = strlen(titre);
-	int gauche = (63 - taille) / 2;
-	int droite = 63 - gauche - taille ;
-	int i;
-	system("cls");
-	printf("=================================================================\n");
-	for(i = 1 ; i <= gauche ; i++){
-		printf("=");
-	}
-	printf(" %s ",titre);
-	for(i = 1 ; i <= droite ; i++){
-		printf("=");
-	}
-	printf("\n=================================================================\n\n");
 }
 
 //affiche le titre des colonnes
@@ -67,15 +48,7 @@ void affichageUnEmplacement(emplacement empl){
 	printf("|| %2d | ", empl.id);
 	
 	//affichage du type
-	if(empl.type == 1){
-		printf("  Tente  | ");
-	}
-	else if(empl.type == 2){
-		printf("Caravane | ");
-	}
-	else{
-		printf("Bungalow | ");
-	}
+	affichageTypeEmplacement(empl.type);
 	
 	//affichage de l'électricité
 	if(empl.electricite == 0){ 
@@ -90,13 +63,13 @@ void affichageUnEmplacement(emplacement empl){
 }
 
 //affiche la liste complète des emplacements
-void affichageListeEmplacement(emplacement empl[], int tailleEmplacement){
+void affichageListeEmplacement(){
 	
 	//on lit les emplacements
-	lectureEmplacements(empl, tailleEmplacement);
+	lectureEmplacements();
 	
 	//affichages des éléments non dynamiques
-	affichageTitreListeEmplacement("Liste des emplacements");
+	affichageTitre("Liste des emplacements",tailleTitre);
 	affichageTitreColonnes();
 	
 	//affichage des emplacements
@@ -108,7 +81,7 @@ void affichageListeEmplacement(emplacement empl[], int tailleEmplacement){
 	printf("||-------------------------------------------------------------||\n");
 }
 
-void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
+void nouvelEmplacement(){
 	//permet de récupérer le nombre d'emplacements et de remplir empl[]
 	int nb = lectureEmplacements(empl, tailleEmplacement);
 	int i;
@@ -131,7 +104,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	int choix;
 	char tmp[7];
 	float valeur;
-	affichageTitreListeEmplacement("Ajout d'un emplacement");
+	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	//on demande à l'utilisateur ce qu'il doit entrer
 	
 	//type
@@ -152,7 +125,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	nouvEmpl.type = choix;
 	
 	//elec
-	affichageTitreListeEmplacement("Ajout d'un emplacement");
+	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	printf ("%s", Accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
 	printf("1 : Non \n");
 	printf("2 : Oui \n");
@@ -169,7 +142,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	nouvEmpl.electricite = choix - 1;
 	
 	//taille
-	affichageTitreListeEmplacement("Ajout d'un emplacement");
+	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	printf ("%s", Accent("Quelle est la superficie de l'emplacement (en m"));
 	printf("%c) (compris entre 0.01 et 99.99)?\n\n", x);
 	printf("Superficie : ");
@@ -185,7 +158,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	nouvEmpl.taille = valeur;
 	
 	//prix
-	affichageTitreListeEmplacement("Ajout d'un emplacement");
+	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	printf ("Quel est le prix de l'emplacement(en euros)(compris entre 0.01 et 999.99)?\n\n", x);
 	printf("prix : ");
 	
@@ -199,7 +172,7 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	}while(valeur > 999.99 || valeur <= 0.01);
 	nouvEmpl.prix = valeur;
 	
-	affichageTitreListeEmplacement("Ajout d'un emplacement");
+	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	printf("Confirmez-vous l'ajout de l'emplacement suivant?\n\n");
 	affichageTitreColonnes();
 	affichageUnEmplacement(nouvEmpl);
@@ -238,14 +211,14 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	}	
 }
 
-void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
+void supprimerEmplacement(){
 	int nb = lectureEmplacements(empl, tailleEmplacement);
 	int i, choix, choix2;
 	char tmp[3];
 	char tmp2[2];
 	char x = 253;
 	
-	affichageTitreListeEmplacement("Suppression d'un emplacement");
+	affichageTitre("Suppression d'un emplacement",tailleTitre);
 	affichageListeEmplacement(empl, tailleEmplacement);
 	
 	printf ("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n");
@@ -261,7 +234,7 @@ void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
 	}while(choix < 1 || choix > nb );
 	
 	
-	affichageTitreListeEmplacement("Suppression d'un emplacement");
+	affichageTitre("Suppression d'un emplacement",tailleTitre);
 	printf("Confirmez-vous la suppression de l'emplacement suivant?\n\n");
 	affichageTitreColonnes();
 	affichageUnEmplacement(empl[choix]);
@@ -302,7 +275,7 @@ void supprimerEmplacement(emplacement empl[],int tailleEmplacement){
 	}	
 }
 
-void modifierEmplacement(emplacement empl[], int tailleEmplacement){
+void modifierEmplacement(){
 	int nb = lectureEmplacements(empl, tailleEmplacement);
 	int i, choix, choix2;
 	char tmp[4];
@@ -310,7 +283,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 	char tmp3[7];
 	char x = 253;
 	
-	affichageTitreListeEmplacement("Modification d'un emplacement");
+	affichageTitre("Modification d'un emplacement",tailleTitre);
 	affichageListeEmplacement(empl, tailleEmplacement);
 	
 	printf ("Entrez l'id de l'emplacement que vous souhaitez modifier.\n\n");
@@ -325,7 +298,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		i++;
 	}while(choix < 1 || choix > nb );
 	
-	affichageTitreListeEmplacement("Modification d'un emplacement");
+	affichageTitre("Modification d'un emplacement",tailleTitre);
 	printf("%s", Accent("Confirmez-vous la séléction de l'emplacement suivant pour modifications?\n\n"));
 	affichageTitreColonnes();
 	affichageUnEmplacement(empl[choix]);
@@ -345,7 +318,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 	}while(choix2 < 1 || choix2 > 2);
 	
 	if(choix2 == 2){
-		affichageTitreListeEmplacement("Modification d'un emplacement");
+		affichageTitre("Modification d'un emplacement",tailleTitre);
 		//type
 		printf("Type de l'emplacement ?\n\n");
 		printf("1 : Tente \n");
@@ -367,7 +340,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		nouvEmpl.type = choix;
 		
 		//elec
-		affichageTitreListeEmplacement("Modification d'un emplacement");
+		affichageTitre("Modification d'un emplacement",tailleTitre);
 		printf ("%s", Accent("L'emplacement possède-t-il un accès à l'électricité ?\n\n"));
 		printf("1 : Non \n");
 		printf("2 : Oui \n");
@@ -384,7 +357,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		nouvEmpl.electricite = choix - 1;
 		
 		//taille
-		affichageTitreListeEmplacement("Modification d'un emplacement");
+		affichageTitre("Modification d'un emplacement",tailleTitre);
 		printf ("%s", Accent("Quelle est la superficie de l'emplacement (en m"));
 		printf("%c)?\n\n", x);
 		printf("Superficie : ");
@@ -400,7 +373,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		nouvEmpl.taille = valeur;
 		
 		//prix
-		affichageTitreListeEmplacement("Modification d'un emplacement");
+		affichageTitre("Modification d'un emplacement",tailleTitre);
 		printf ("Quel est le prix de l'emplacement(en euros)?\n\n");
 		printf("prix : ");
 		
@@ -414,7 +387,7 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 		}while(valeur > 999.99 || valeur <= 0);
 		nouvEmpl.prix = valeur;
 		
-		affichageTitreListeEmplacement("Modification d'un emplacement");
+		affichageTitre("Modification d'un emplacement",tailleTitre);
 		printf ("Voulez-vous remplacer cet emplacement \n\n");
 		affichageTitreColonnes();
 		affichageUnEmplacement(empl[indice]);
@@ -463,22 +436,28 @@ void modifierEmplacement(emplacement empl[], int tailleEmplacement){
 	}	
 }
 
-void switchMenuEmplacement(int choix, int taille, emplacement empl[]){
+emplacement * getEmplacement(int id){
+	lectureEmplacements(empl, tailleEmplacement);
+	return &(empl[id]);
+}
+
+
+void switchMenuEmplacement(int choix){
 	switch(choix){
 		case 1 : 
-			affichageListeEmplacement(empl, taille);
+			affichageListeEmplacement();
 			system("PAUSE");
 			system("cls");
 			break;
 		case 2 :
-			nouvelEmplacement(empl, taille);
+			nouvelEmplacement();
 			system("cls");
 			break;
 		case 3:
-			supprimerEmplacement(empl, taille);
+			supprimerEmplacement();
 			break;
 		case 4:
-			modifierEmplacement(empl, taille);
+			modifierEmplacement();
 			break;
 	}
 }

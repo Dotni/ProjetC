@@ -22,12 +22,9 @@ date : 30/11/2020
 
 
 void main(){
-	//déclaration des constantes
-	const int tailleEmpl = 50;
 	
 	//déclaration des variables
 	int choixMP, choixIntro,choixEmplacement,choixClient,choixEmploye,choixSejour;
-	emplacement empl[tailleEmpl];
 	sejour sejours;
 	
 	//fonctions graphiques
@@ -47,7 +44,7 @@ void main(){
 						case 1: 
 							do{
 								choixEmplacement = menuEmplacement();
-								switchMenuEmplacement(choixEmplacement, tailleEmpl, empl);
+								switchMenuEmplacement(choixEmplacement);
 							} while(choixEmplacement != 5); // 5 = retour au menu principal
 							break;
 						case 2:

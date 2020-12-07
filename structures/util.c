@@ -97,3 +97,50 @@ float lireFloat(char *chaine, int longueur){
         return 0; // On renvoie 0 s'il y a eu une erreur
     }
 }
+
+
+//affiche le titre global de la fenetre
+void affichageTitre(char titre[], int tailleTitre){
+	//longueur totale du titre = 65
+	//espace des deux cotés du titre 65-2=63  
+	//taille totale - taille du titre = taille des  "="
+	//taille des "=" /2 = taille des égals a gauche
+	//comme ca peut etre un nombre impair, taille des égals a gauche n'est pas forcément égal a taille des égals a droite
+	//donc on le recalcule avec la formule 61-taille des égals a gauche - taille du titre;
+	int taille = strlen(titre);
+	int gauche = (tailleTitre - taille) / 2;
+	int droite = tailleTitre - gauche - taille ;
+	int i;
+	system("cls");
+	for(i = 0 ; i <= tailleTitre+1 ; i++){
+		printf("=");
+	}
+	printf("\n");
+	for(i = 1 ; i <= gauche ; i++){
+		printf("=");
+	}
+	printf(" %s ",titre);
+	for(i = 1 ; i <= droite ; i++){
+		printf("=");
+	}
+	printf("\n");
+	for(i = 0 ; i <= tailleTitre+1 ; i++){
+		printf("=");
+	}
+	printf("\n\n");
+}
+
+void affichageTypeEmplacement(int i){
+	//affichage du type
+	if(i == 1){
+		printf("  Tente  | ");
+	}
+	else if(i == 2){
+		printf("Caravane | ");
+	}
+	else{
+		printf("Bungalow | ");
+	}
+}
+
+

@@ -14,6 +14,7 @@ void nouvelEmplacement();
 void supprimerEmplacement();
 int lectureEmplacements();
 void viderEmplacements();
-void switchMenuEmplacement(int, int, emplacement[]);
+void switchMenuEmplacement(int);
+emplacement * getEmplacement(int);
 
 #endif
