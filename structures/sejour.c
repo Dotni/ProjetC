@@ -75,7 +75,6 @@ void afficherListeSejours() {
 		sejourCourant = sejourCourant->nxtSej;
 	}
 	printf("||================================================||\n");
-	system("pause");
 }
 
 void afficherEmplacementsLibres() {
@@ -87,10 +86,14 @@ void switchMenuSejour(int choix) {
 		case 1:
 			// liste des séjours
 			afficherListeSejours();
+			system("pause");
+			system("cls");
 			break;
 		case 2: 
 			// emplacements libre
 			afficherEmplacementsLibres();
+			system("pause");
+			system("cls");
 			break;
 	}
 }
