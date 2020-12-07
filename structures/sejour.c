@@ -49,14 +49,17 @@ int lectureSejours(sejour *sejourCourant) {
 	return nbSejours - 1; // retrun incorrect, corriger. enfin quand je pourrais compiler
 }
 
+void affichertitresColonnes() {
+	printf("| ID | Formule  | Personnes |    Date    |   Prix  |\n");
+	printf("||---|----------|-----------|------------|--------||\n");
+}
+
 void afficherListeSejours() {
 	int nb, i;
 	system("cls"); // on vide la console
 	printf("====================================================\n");
 	printf("%s", Accent("============== Liste des séjours ===================\n"));
 	printf("====================================================\n");
-	printf("| ID | Formule  | Personnes |    Date    |   Prix  |\n");
-	printf("||---|----------|-----------|------------|--------||\n");
 	nb = lectureSejours(sejourCourant);
 	sejourCourant = premierSejour;
 	for(i = 1 ; i < nb ; i++) {
