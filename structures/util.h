@@ -10,4 +10,6 @@ float verifierFloat(char[]);					//vérification d'entrée
 void viderBuffer();						//vider buffer
 void affichageTitre(char [], int);
 void affichageTypeEmplacement(int);
+int fchoixEntier(int, int, int);
+float choixReel(float , float ,int );
 #endif

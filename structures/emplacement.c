@@ -114,15 +114,7 @@ void nouvelEmplacement(){
 	printf("3 : Bungalow \n\n");
 	printf("Votre choix : ");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix : ");
-		}
-		choix = lire(tmp, 2);
-		i++;
-	}while(choix < 1 || choix > 3);
-	nouvEmpl.type = choix;
+	nouvEmpl.type = choixEntier(1,3,1);
 	
 	//elec
 	affichageTitre("Ajout d'un emplacement",tailleTitre);
@@ -131,15 +123,7 @@ void nouvelEmplacement(){
 	printf("2 : Oui \n");
 	printf("Votre choix : ");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix : ");
-		}
-		choix = lire(tmp, 2);
-		i++;
-	}while(choix < 1 || choix > 2);
-	nouvEmpl.electricite = choix - 1;
+	nouvEmpl.electricite = choixEntier(1,2,1) - 1;
 	
 	//taille
 	affichageTitre("Ajout d'un emplacement",tailleTitre);
@@ -147,30 +131,14 @@ void nouvelEmplacement(){
 	printf("%c) (compris entre 0.01 et 99.99)?\n\n", x);
 	printf("Superficie : ");
 	
-	i=0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 99.99) Votre choix : ");
-		}
-		valeur = lireFloat(tmp, 6);
-		i++;
-	}while(valeur > 99.99 || valeur <= 0);
-	nouvEmpl.taille = valeur;
+	nouvEmpl.taille = choixReel(0.0,99.99,5);
 	
 	//prix
 	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	printf ("Quel est le prix de l'emplacement(en euros)(compris entre 0.01 et 999.99)?\n\n", x);
 	printf("prix : ");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 999.99) Votre choix : ");
-		}
-		valeur = lireFloat(tmp, 7);
-		i++;
-	}while(valeur > 999.99 || valeur <= 0.01);
-	nouvEmpl.prix = valeur;
+	nouvEmpl.prix = choixReel(0.01,999.99,6);
 	
 	affichageTitre("Ajout d'un emplacement",tailleTitre);
 	printf("Confirmez-vous l'ajout de l'emplacement suivant?\n\n");
@@ -180,14 +148,7 @@ void nouvelEmplacement(){
 	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix :");
-		}
-		choix = lire(tmp, 2);
-		i++;
-	}while(choix < 1 || choix > 2);
+	choix=choixEntier(1,2,1);
 	
 	if(choix == 2){
 		FILE *fEmplacement;
@@ -224,15 +185,7 @@ void supprimerEmplacement(){
 	printf ("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n");
 	printf("Votre choix : ");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix : ");
-		}
-		choix = lire(tmp, 3);
-		i++;
-	}while(choix < 1 || choix > nb );
-	
+	choix=choixEntier(1,nb,2);
 	
 	affichageTitre("Suppression d'un emplacement",tailleTitre);
 	printf("Confirmez-vous la suppression de l'emplacement suivant?\n\n");
@@ -242,14 +195,7 @@ void supprimerEmplacement(){
 	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix :");
-		}
-		choix2 = lire(tmp2, 2);
-		i++;
-	}while(choix2 < 1 || choix2 > 2);
+	choix2=choixEntier(1,2,1);
 	
 	if(choix2 == 2){
 		for(i = choix + 1 ; i <= nb ; i++){
@@ -289,17 +235,10 @@ void modifierEmplacement(){
 	printf ("Entrez l'id de l'emplacement que vous souhaitez modifier.\n\n");
 	printf("Votre choix : ");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix : ");
-		}
-		choix = lire(tmp, 4);
-		i++;
-	}while(choix < 1 || choix > nb );
+	choix = choixEntier(1,nb,2);
 	
 	affichageTitre("Modification d'un emplacement",tailleTitre);
-	printf("%s", Accent("Confirmez-vous la séléction de l'emplacement suivant pour modifications?\n\n"));
+	printf("%s", Accent("Confirmez-vous la sélection de l'emplacement suivant pour modifications?\n\n"));
 	affichageTitreColonnes();
 	affichageUnEmplacement(empl[choix]);
 	
@@ -308,14 +247,7 @@ void modifierEmplacement(){
 	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	i = 0;
-	do{
-		if(i != 0){
-			printf("Veuillez entrer un nombre correct! Votre choix :");
-		}
-		choix2 = lire(tmp2, 2);
-		i++;
-	}while(choix2 < 1 || choix2 > 2);
+	choix2=choixEntier(1,2,1);
 	
 	if(choix2 == 2){
 		affichageTitre("Modification d'un emplacement",tailleTitre);
@@ -328,16 +260,7 @@ void modifierEmplacement(){
 		float valeur;
 		emplacement nouvEmpl;
 		nouvEmpl.id = empl[indice].id;
-		
-		i=0;
-		do{
-			if(i != 0){
-				printf("Veuillez entrer un nombre correct! Votre choix : ");
-			}
-			choix = lire(tmp, 2);
-			i++;
-		}while(choix < 1 || choix > 3);
-		nouvEmpl.type = choix;
+		nouvEmpl.type = choix2=choixEntier(1,3,1);;
 		
 		//elec
 		affichageTitre("Modification d'un emplacement",tailleTitre);
@@ -346,15 +269,7 @@ void modifierEmplacement(){
 		printf("2 : Oui \n");
 		printf("Votre choix : ");
 		
-		i = 0;
-		do{
-			if(i != 0){
-				printf("Veuillez entrer un nombre correct! Votre choix : ");
-			}
-			choix = lire(tmp, 2);
-			i++;
-		}while(choix < 1 || choix > 2);
-		nouvEmpl.electricite = choix - 1;
+		nouvEmpl.electricite = choixEntier(1,2,1)- 1;
 		
 		//taille
 		affichageTitre("Modification d'un emplacement",tailleTitre);
@@ -362,30 +277,13 @@ void modifierEmplacement(){
 		printf("%c)?\n\n", x);
 		printf("Superficie : ");
 		
-		i = 0;
-		do{
-			if(i != 0){
-				printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 99.99) Votre choix : ");
-			}
-			valeur = lireFloat(tmp3, 6);
-			i++;
-		}while(valeur > 99.99 || valeur <= 0);
-		nouvEmpl.taille = valeur;
+		nouvEmpl.taille = choixReel(0.0,99.99,5);
 		
 		//prix
 		affichageTitre("Modification d'un emplacement",tailleTitre);
 		printf ("Quel est le prix de l'emplacement(en euros)?\n\n");
 		printf("prix : ");
-		
-		i = 0;
-		do{
-			if(i != 0){
-				printf("Veuillez entrer un nombre correct! (compris entre 0.01 et 999.99) Votre choix : ");
-			}
-			valeur = lireFloat(tmp3, 7);
-			i++;
-		}while(valeur > 999.99 || valeur <= 0);
-		nouvEmpl.prix = valeur;
+		nouvEmpl.prix = nouvEmpl.taille = choixReel(0.0,999.99,6);
 		
 		affichageTitre("Modification d'un emplacement",tailleTitre);
 		printf ("Voulez-vous remplacer cet emplacement \n\n");
@@ -398,14 +296,7 @@ void modifierEmplacement(){
 		printf("2 : Oui \n");
 		printf("Votre choix : ");
 		
-		i = 0;
-		do{
-			if(i != 0){
-				printf("Veuillez entrer un nombre correct! Votre choix : ");
-			}
-			choix = lire(tmp, 2);
-			i++;
-		}while(choix < 1 || choix > 2);
+		choix=choixEntier(1,2,1);
 		
 		if(choix == 2){
 			empl[indice] = nouvEmpl;
