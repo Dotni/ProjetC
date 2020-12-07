@@ -38,16 +38,16 @@ void affichageTitreListeEmplacement(char titre[]){
 	//comme ca peut etre un nombre impair, taille des égals a gauche n'est pas forcément égal a taille des égals a droite
 	//donc on le recalcule avec la formule 61-taille des égals a gauche - taille du titre;
 	int taille = strlen(titre);
-	int gauche = (63-taille)/2;
-	int droite = 63-gauche-taille ;
+	int gauche = (63 - taille) / 2;
+	int droite = 63 - gauche - taille ;
 	int i;
 	system("cls");
 	printf("=================================================================\n");
-	for(i=1;i<=gauche;i++){
+	for(i = 1 ; i <= gauche ; i++){
 		printf("=");
 	}
 	printf(" %s ",titre);
-	for(i=1;i<=droite;i++){
+	for(i = 1 ; i <= droite ; i++){
 		printf("=");
 	}
 	printf("\n=================================================================\n\n");
@@ -127,8 +127,8 @@ void nouvelEmplacement(emplacement empl[], int tailleEmplacement){
 	//s'il y a de la place on continue.
 	//attention que les id doivent etre triés pour éviter que deux emplacement aient le meme id
 	emplacement nouvEmpl;
-	nouvEmpl.id = empl[nb-1].id + 1;
-	printf("%2d %2d",nb,empl[nb-1].id);
+	nouvEmpl.id = empl[nb - 1].id + 1;
+	printf("%2d %2d", nb, empl[nb - 1].id);
 	system("PAUSE");
 	int choix;
 	char tmp[7];
