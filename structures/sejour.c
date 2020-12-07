@@ -58,7 +58,6 @@ void afficherListeSejours() {
 	printf("| ID | Formule  | Personnes |    Date    |   Prix  |\n");
 	printf("||---|----------|-----------|------------|--------||\n");
 	nb = lectureSejours(sejourCourant);
-	//printf("%d %d %d %s %6.2f\n", sejours[j].id, sejours[j].formule, sejours[j].nbPersonnes, sejours[j].date, sejours[j].prix); 
 	sejourCourant = premierSejour;
 	for(i = 1 ; i < nb ; i++) {
 		printf("|| %d ", sejourCourant->id);

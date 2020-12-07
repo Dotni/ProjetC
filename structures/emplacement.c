@@ -70,13 +70,11 @@ void affichageUnEmplacement(emplacement empl){
 	if(empl.type == 1){
 		printf("  Tente  | ");
 	}
+	else if(empl.type == 2){
+		printf("Caravane | ");
+	}
 	else{
-		if(empl.type == 2){
-			printf("Caravane | ");
-		}
-		else{
-			printf("Bungalow | ");
-		}
+		printf("Bungalow | ");
 	}
 	
 	//affichage de l'électricité
