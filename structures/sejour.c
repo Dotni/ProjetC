@@ -3,8 +3,10 @@
 #include <stdlib.h>
 #include "sejour.h"
 #include "emplacement.h"
+#include "util.h"
 
 sejour *premierSejour, *sejourCourant, *sejourSuivant, *sejourIntercale;
+char date[11];
 
 void viderSejours(){
 	printf("sdfg");
@@ -13,6 +15,7 @@ void viderSejours(){
 int lectureSejours(sejour *sejourCourant) {
 	int nbSejours = 1, jour, mois, annee, idSuivant, idEmplacement, i;
 	char tmpJour[3], tmpMois[3], tmpAnnee[5], tmpDate[11];
+	emplacement *empl;// pour lier l'emplacement du séjour
 	
 	FILE *fSejour;
 	fSejour = fopen("data/sejour.dat", "r");
@@ -21,7 +24,10 @@ int lectureSejours(sejour *sejourCourant) {
 	premierSejour = sejourCourant;
 	
 	while(!feof(fSejour)) {
-		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", &sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, &jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement); 
+		// ignorer le caractère
+		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", &sejourCourant->id, &sejourCourant->nbPersonnes, &jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement); 
+		empl = getEmplacement(idEmplacement);
+		sejourCourant->place = empl;
 		// conversion entier -> char pour créer la date
 		itoa(jour, tmpJour, 10); // on copie tmpJour dans jour, en suivant la base 10
 		itoa(mois, tmpMois, 10);
@@ -79,8 +85,37 @@ void afficherListeSejours() {
 	printf("||================================================||\n");
 }
 
-void afficherEmplacementsLibres() {
-	printf("liste des emplacements libres");
+void afficherEmplacementsLibres(char date[]) {
+	printf("liste des emplacements libres pour %s", date);
+	/*int nbSej, nbEmpl, i, j;
+	emplacement *empl;
+	nbSej = lectureSejours(sejourCourant);
+	nbEmpl = lectureEmplacements();
+	sejourCourant = premierSejour;
+	for(i = 1 ; i < nbSej ; i++) {
+		for(j = 1 ; j <= nbEmpl ; j++) {
+			empl = getEmplacement(j);
+			if(sejourCourant->place->id == empl->id) {
+				
+			}
+		}
+		sejourCourant = sejourCourant->nxtSej;
+	}*/
+}
+
+char* demanderDate() {
+	char date[11];
+	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+	printf("%s", Accent("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Date recherchée %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n"));
+	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+	sdl();sdl();
+	printf("|| Entrez la date pour laquelle vous rechercher un emplacement libre (jj/mm/aaaa) : ");
+	lireDate(date, 12);
+	// à faire : variante de lire, adapté pour la date
+	// créer fonction vérifier date
+	// vérifier
+	printf("\n%s\n", date);
+	system("pause");
 }
 
 void switchMenuSejour(int choix) {
@@ -93,7 +128,8 @@ void switchMenuSejour(int choix) {
 			break;
 		case 2: 
 			// emplacements libre
-			afficherEmplacementsLibres();
+			strcpy(date, demanderDate());
+			afficherEmplacementsLibres(date);
 			system("pause");
 			system("cls");
 			break;

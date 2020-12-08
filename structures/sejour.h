@@ -15,9 +15,10 @@ typedef struct sejour{
 }sejour;
 
 void afficherListeSejours();
-void afficherEmplacementsLibres();
+void afficherEmplacementsLibres(char[]);
 int lectureSejours(sejour*);
 void viderSejours();
 void switchMenuSejour(int);
+char* demanderdate();
 
 #endif
