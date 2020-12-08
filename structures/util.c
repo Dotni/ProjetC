@@ -49,13 +49,13 @@ float verifierFloat(char saisie[]) { // vérifier que la saisie est correcte
 void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait une chaine depuis une autre
 	int i, j, longueur = strlen(chaine);
   
-	if(debut > longueur || fin < 0 || fin > longueur){ // vérification des bornes
+	if(debut > longueur || fin < 0 || fin > longueur) { // vérification des bornes
 		return;
 	}
-	for(i = debut, j = 0 ; i <= fin ; i++, j++){
+	for(i = debut, j = 0 ; i <= fin ; i++, j++) {
 		sousChaine[j] = chaine[i];
 	}
-	//sousChaine[fin + 1] = '\0';
+	sousChaine[fin + 1] = '\0';
 }
 
 int verifierDate(char saisie[]) { // vérifier la saisie de date
