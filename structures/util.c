@@ -143,6 +143,9 @@ void affichageTypeEmplacement(int i){
 	}
 }
 
+//permet de gérer le choix d'un nombre entier entre une borne inférieure (inf) et une borne supérieure (sup)
+//renvoie la valeur rentrée par l'utilisateur
+//la taille permet de dire les x premiers caractères qu'on doit prendre en compte
 int choixEntier(int inf, int sup,int taille){
 	char tmp[taille+1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
 	int i = 0,choix;
@@ -151,13 +154,14 @@ int choixEntier(int inf, int sup,int taille){
 			printf("Veuillez entrer un nombre correct! (compris entre %d et %d)\n Votre choix :",inf,sup);
 		}
 		choix = lire(tmp, taille+1);
-		printf("%2d",choix);
 		i++;
 	}while(choix < inf || choix > sup);
 	return choix;
 }
 
-
+//permet de gérer le choix d'un nombre Reel entre une borne inférieure (inf) et une borne supérieure (sup)
+//renvoie la valeur rentrée par l'utilisateur
+//la taille permet de dire les x premiers caractères qu'on doit prendre en compte
 float choixReel(float inf, float sup,int taille){
 	char tmp[taille+1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
 	int i = 0;

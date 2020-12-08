@@ -8,6 +8,7 @@
 const int tailleEmplacement = 50;
 int tailleTitre = 65;
 emplacement empl[50];
+
 //permet d'initialiser tous les ID du tableau a 0
 //En effet, l'affichage des id ne se fait que pour les ID dont la valeur est différente de 0
 void viderEmplacements(){
@@ -31,7 +32,7 @@ int lectureEmplacements(){
 	fclose(fEmplacement);
 	
 	//on retourne le nombre d'éléments du tableau
-	return i - 1;
+	return i - 2;
 }
 
 //affiche le titre des colonnes
@@ -59,7 +60,7 @@ void affichageUnEmplacement(emplacement empl){
 	}
 	
 	//affichage de la taille et du prix
-	printf("   %5.2f    |     %06.2f      ||\n", empl.taille, empl.prix);
+	printf("   %5.2f    |     %6.2f      ||\n", empl.taille, empl.prix);
 }
 
 //affiche la liste complète des emplacements
@@ -98,8 +99,8 @@ void nouvelEmplacement(){
 	//s'il y a de la place on continue.
 	//attention que les id doivent etre triés pour éviter que deux emplacement aient le meme id
 	emplacement nouvEmpl;
-	nouvEmpl.id = empl[nb - 1].id + 1;
-	printf("%2d %2d", nb, empl[nb - 1].id);
+	nouvEmpl.id = empl[nb].id + 1;
+	//printf("%2d %2d", nb, empl[nb].id);            //était utile lors du problème d'indice lors d'ajout
 	system("PAUSE");
 	int choix;
 	char tmp[7];
@@ -153,10 +154,10 @@ void nouvelEmplacement(){
 	if(choix == 2){
 		FILE *fEmplacement;
 		fEmplacement = fopen("data/emplacements.dat","w");
-		for(i = 1 ; i <nb ; i++){
+		for(i = 1 ; i <=nb ; i++){
 			fprintf(fEmplacement, "%2d %1d %1d %5.2f %6.2f\n", empl[i].id, empl[i].type, empl[i].electricite, empl[i].taille, empl[i].prix);
 		}
-		fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f", nouvEmpl.id, nouvEmpl.type, nouvEmpl.electricite, nouvEmpl.taille, nouvEmpl.prix);
+		fprintf(fEmplacement,"%2d %1d %1d %5.2f %6.2f\n", nouvEmpl.id, nouvEmpl.type, nouvEmpl.electricite, nouvEmpl.taille, nouvEmpl.prix);
 		
 		fclose(fEmplacement);
 		system("cls");
@@ -175,22 +176,44 @@ void nouvelEmplacement(){
 void supprimerEmplacement(){
 	int nb = lectureEmplacements(empl, tailleEmplacement);
 	int i, choix, choix2;
-	char tmp[3];
-	char tmp2[2];
-	char x = 253;
 	
 	affichageTitre("Suppression d'un emplacement",tailleTitre);
 	affichageListeEmplacement(empl, tailleEmplacement);
 	
 	printf ("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n");
 	printf("Votre choix : ");
+	printf("%2d",nb);
 	
-	choix=choixEntier(1,nb,2);
+	char tmp[3];		
+	i = 0;
+	int j,ok;
+	do{
+		ok=0;
+		if(i != 0){
+			printf("Veuillez entrer un ID valide! Votre choix : ");
+		}
+		choix = lire(tmp, 3);
+		i++;
+		for(j=1;j<=nb;j++){
+			if(empl[j].id==choix){
+				ok=1;
+			}
+		}
+	}while(choix < 1 || choix > empl[nb].id || ok==0);
+
 	
 	affichageTitre("Suppression d'un emplacement",tailleTitre);
 	printf("Confirmez-vous la suppression de l'emplacement suivant?\n\n");
 	affichageTitreColonnes();
-	affichageUnEmplacement(empl[choix]);
+	
+	//for pour trouver celui dont l'id est ok
+	for(j=1;j<=nb;j++){
+		if(empl[j].id==choix){
+			ok=j;
+		}
+	}
+	
+	affichageUnEmplacement(empl[ok]); 
 	printf("\n\n1 : Non \n");
 	printf("2 : Oui \n");
 	printf("Votre choix :");
@@ -198,8 +221,9 @@ void supprimerEmplacement(){
 	choix2=choixEntier(1,2,1);
 	
 	if(choix2 == 2){
-		for(i = choix + 1 ; i <= nb ; i++){
-			empl[i] = empl[i - 1];
+		for(i = choix + 1 ; i <= nb+1 ; i++){
+			if(empl[i].id!=0)
+			empl[i-1] = empl[i];
 		}
 		nb--;
 		FILE *fEmplacement;
@@ -224,9 +248,6 @@ void supprimerEmplacement(){
 void modifierEmplacement(){
 	int nb = lectureEmplacements(empl, tailleEmplacement);
 	int i, choix, choix2;
-	char tmp[4];
-	char tmp2[2];
-	char tmp3[7];
 	char x = 253;
 	
 	affichageTitre("Modification d'un emplacement",tailleTitre);
@@ -300,7 +321,6 @@ void modifierEmplacement(){
 		
 		if(choix == 2){
 			empl[indice] = nouvEmpl;
-		
 			FILE *fEmplacement;
 			fEmplacement = fopen("data/emplacements.dat","w");
 			for(i = 1 ; i < nb ; i++){
