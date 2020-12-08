@@ -6,6 +6,7 @@ char * Accent(const char *);			//permet d'afficher les accents
 int lire(char *, int);					//lecture d'entrées
 int verifier(char[]);					//vérification d'entrée
 float lireFloat(char *, int);					//lecture d'entrées
+char * lireDate(char *, int);
 float verifierFloat(char[]);					//vérification d'entrée
 void viderBuffer();						//vider buffer
 void affichageTitre(char [], int);
