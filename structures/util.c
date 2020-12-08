@@ -47,9 +47,14 @@ float verifierFloat(char saisie[]) { // vérifier que la saisie est correcte
 }
 
 int verifierDate(char saisie[]) { // vérifier la saisie de date
-	int ok = 1;
-	
-	return ok;
+	char temp[11], cJour[3], cMois[3], cAnnee[5];
+	int jour, mois, annee;
+	strcpy(tmp, date);
+	strcpy(cjour, tmp[0:3]);
+	if(strlen(saisie) == 11) {
+		if()
+	}
+	return 0;
 }
 
 void viderBuffer(){
