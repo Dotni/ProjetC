@@ -9,13 +9,18 @@ sejour *premierSejour, *sejourCourant, *sejourSuivant, *sejourIntercale;
 char date[11];
 
 void viderSejours(){
-	printf("sdfg");
+	while(sejourCourant->nxtSej != NULL) {
+		sejourCourant->id = 0;
+		sejourCourant = sejourCourant->nxtSej;
+	}
 }
 
 int lectureSejours(sejour *sejourCourant) {
 	int nbSejours = 1, jour, mois, annee, idSuivant, idEmplacement, i;
 	char tmpJour[3], tmpMois[3], tmpAnnee[5], tmpDate[11];
 	emplacement *empl;// pour lier l'emplacement du séjour
+	
+	viderSejours();
 	
 	FILE *fSejour;
 	fSejour = fopen("data/sejour.dat", "r");
