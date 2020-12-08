@@ -14,4 +14,5 @@ void affichageTitre(char [], int);
 void affichageTypeEmplacement(int);
 int fchoixEntier(int, int, int);
 float choixReel(float , float ,int );
+void extraire(int, int, char*, char*)
 #endif

@@ -114,12 +114,12 @@ char* demanderDate() {
 	printf("%s", Accent("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Date recherchée %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n"));
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	sdl();sdl();
-	printf("|| Entrez la date pour laquelle vous rechercher un emplacement libre (jj/mm/aaaa) : ");
+	printf("|| Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
 	lireDate(date, 12);
 	// à faire : variante de lire, adapté pour la date
 	// créer fonction vérifier date
 	// vérifier
-	printf("\n%s\n", date);
+	printf("%s\n", date);
 	system("pause");
 }
 

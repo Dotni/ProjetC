@@ -46,14 +46,30 @@ float verifierFloat(char saisie[]) { // vérifier que la saisie est correcte
 	return ok;
 }
 
-int verifierDate(char saisie[]) { // vérifier la saisie de date
-	char temp[11], cJour[3], cMois[3], cAnnee[5];
-	int jour, mois, annee;
-	strcpy(tmp, date);
-	strcpy(cjour, tmp[0:3]);
-	if(strlen(saisie) == 11) {
-		if()
+void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait une chaine depuis une autre
+	int i, j, longueur = strlen(chaine);
+  
+	if(debut > longueur || fin < 0 || fin > longueur){ // vérification des bornes
+		return;
 	}
+	for(i = debut, j = 0 ; i <= fin ; i++, j++){
+		sousChaine[j] = chaine[i];
+	}
+	//sousChaine[fin + 1] = '\0';
+}
+
+int verifierDate(char saisie[]) { // vérifier la saisie de date
+	char cJour[3], cMois[3], cAnnee[5];
+	int jour, mois, annee;
+	extraire(0, 1, saisie, cJour);
+	extraire(3, 4, saisie, cMois);
+	extraire(6, 9, saisie, cAnnee);
+	printf("%s\n", cJour);
+	printf("%s\n", cMois);
+	printf("%s\n", cAnnee);
+	/*if(strlen(saisie) == 11) {
+		if()
+	}*/
 	return 0;
 }
 
