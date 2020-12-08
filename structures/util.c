@@ -30,13 +30,13 @@ float verifierFloat(char saisie[]) { // vérifier que la saisie est correcte
 	float ok = 1;
 	int i = 0, nb = 0;
 	while(saisie[i] != '\0') {
-		if (!isdigit(saisie[i])&&saisie[i] != '.') {
+		if (!isdigit(saisie[i]) && saisie[i] != '.') {
 			printf("Votre saisie n'est pas un nombre, veuillez entrer un nombre correct.\n");
 			return 0;	
 		}
-		if(saisie[i]=='.'){
+		if(saisie[i] == '.'){
 			nb++;
-			if(nb>1){
+			if(nb > 1){
 				printf("Votre saisie n'est pas un nombre, veuillez entrer un nombre correct.\n");
 				return 0;
 			}
@@ -127,7 +127,6 @@ float lireFloat(char *chaine, int longueur){
     }
 }
 
-
 //affiche le titre global de la fenetre
 void affichageTitre(char titre[], int tailleTitre){
 	//longueur totale du titre = 65
@@ -141,7 +140,7 @@ void affichageTitre(char titre[], int tailleTitre){
 	int droite = tailleTitre - gauche - taille ;
 	int i;
 	system("cls");
-	for(i = 0 ; i <= tailleTitre+1 ; i++){
+	for(i = 0 ; i <= tailleTitre + 1 ; i++){
 		printf("=");
 	}
 	printf("\n");
@@ -153,7 +152,7 @@ void affichageTitre(char titre[], int tailleTitre){
 		printf("=");
 	}
 	printf("\n");
-	for(i = 0 ; i <= tailleTitre+1 ; i++){
+	for(i = 0 ; i <= tailleTitre + 1 ; i++){
 		printf("=");
 	}
 	printf("\n\n");
@@ -173,33 +172,29 @@ void affichageTypeEmplacement(int i){
 }
 
 int choixEntier(int inf, int sup,int taille){
-	char tmp[taille+1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
-	int i = 0,choix;
+	char tmp[taille + 1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
+	int i = 0, choix;
 	do{
 		if(i != 0){
 			printf("Veuillez entrer un nombre correct! (compris entre %d et %d)\n Votre choix :",inf,sup);
 		}
-		choix = lire(tmp, taille+1);
+		choix = lire(tmp, taille + 1);
 		printf("%2d",choix);
 		i++;
 	}while(choix < inf || choix > sup);
 	return choix;
 }
 
-
 float choixReel(float inf, float sup,int taille){
-	char tmp[taille+1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
+	char tmp[taille + 1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
 	int i = 0;
 	float choix;
 	do{
 		if(i != 0){
 			printf("Veuillez entrer un nombre correct! (compris entre %6.2f et %6.2f)\n Votre choix :",inf,sup);
 		}
-		choix = lireFloat(tmp, taille+1);
+		choix = lireFloat(tmp, taille + 1);
 		i++;
 	}while(choix < inf || choix > sup);
 	return choix;
 }
-
-
-
