@@ -46,6 +46,12 @@ float verifierFloat(char saisie[]) { // vérifier que la saisie est correcte
 	return ok;
 }
 
+int verifierDate(char saisie[]) { // vérifier la saisie de date
+	int ok = 1;
+	
+	return ok;
+}
+
 void viderBuffer(){
     int c = 0;
     while (c != '\n' && c != EOF){
@@ -77,7 +83,26 @@ int lire(char *chaine, int longueur){
 }
 
 char * lireDate(char *chaine, int longueur) {
-	return chaine;
+	char *positionln = NULL;
+ 	
+    // On lit le texte saisi au clavier
+	if (fgets(chaine, longueur, stdin) != NULL) {
+        positionln = strchr(chaine, '\n'); 
+        if (positionln != NULL) {
+            *positionln = '\0'; // On remplace ce caractère par \0
+        }
+        else {
+        	viderBuffer();
+		}
+		if(verifierDate(chaine) == 0) {
+ 			return 0;
+		}
+        return chaine;
+    }
+    else{
+    	viderBuffer();
+        return 0; // On renvoie 0 s'il y a eu une erreur
+    }
 }
 
 float lireFloat(char *chaine, int longueur){
