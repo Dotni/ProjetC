@@ -63,7 +63,7 @@ int lectureSejours(sejour *sejourCourant) {
 	return nbSejours - 1; // retrun incorrect, corriger. enfin quand je pourrais compiler
 }
 
-void afficherTitresColonnes() {
+void afficherTitresColonnesSejour() {
 	printf("| ID | Formule  | Personnes |    Date    |   Prix  |\n");
 	printf("||---|----------|-----------|------------|--------||\n");
 }
@@ -74,7 +74,7 @@ void afficherListeSejours() {
 	affichageTitre(Accent("Liste des séjours"), tailleTitreSejour);
 	nb = lectureSejours(sejourCourant); // lecture des séjours
 	sejourCourant = premierSejour;
-	afficherTitresColonnes(); // titres
+	afficherTitresColonnesSejour(); // titres
 	// affichage de la liste des séjours
 	for(i = 1 ; i < nb ; i++) {
 		printf("|| %d | ", sejourCourant->id);
@@ -87,7 +87,7 @@ void afficherListeSejours() {
 
 void afficherEmplacementsLibres(char date[]) {
 	// un emplacement est libre si il n'est pas lié à un séjour pour la date donnée ou si il n'est lié à aucun séjour
-	/*int i, j, nbSej, nbEmpl, afficher;
+	int i, j, nbSej, nbEmpl, afficher;
 	int max = 1; // cette variable va placer les indices des emplacelents dans le tableau dédié, elle servira ensuite de limite à la boucle for d'affichage
 	emplacement *empl;
 	
@@ -95,7 +95,8 @@ void afficherEmplacementsLibres(char date[]) {
 	nbSej = lectureSejours(sejourCourant); // récupération du nombre de séjours
 	nbEmpl = lectureEmplacements(); // récupération du nombre d'emplacements
 	
-	int listeOccupes[nbEmpl + 1] = {0}; // car il y aura forcément moins ou autant d'emplacements libres qu'il y a d'emplacements
+	int listeOccupes[nbEmpl + 1]; // car il y aura forcément moins ou autant d'emplacements libres qu'il y a d'emplacements
+	memset(listeOccupes, 0, nbEmpl + 1);
 	// le tableau va stocker les id des emplacelents libre pour pouvooir les afficher
 	
 	sejourCourant = premierSejour;
@@ -113,14 +114,17 @@ void afficherEmplacementsLibres(char date[]) {
 	
 	// affichage des emplacements libres
 	for(i = 1 ; i < max ; i++) {
-		afficher = 0;
+		afficher = 1;
 		for(j = 1 ; j < max ; j++) {
 			if(listeOccupes[j] == i) {
-				
+				afficher = 0; // l'emplacement avec l'id j fait partie des emplacements occupés, on ne l'affche pas
 			}
 		}
+		if(afficher == 1) {
+			
+		}
 	}
-	system("pause");*/
+	system("pause");
 }
 
 void demanderDate() {
