@@ -9,11 +9,6 @@ typedef struct emplacement{
 	float prix;							//prix de l'emplacement											3d
 }emplacement;
 
-void affichageListeEmplacement();
-void nouvelEmplacement();
-void supprimerEmplacement();
-int lectureEmplacements();
-void viderEmplacements();
 void switchMenuEmplacement(int);
 emplacement * getEmplacement(int);
 

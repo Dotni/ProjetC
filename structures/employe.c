@@ -5,7 +5,7 @@
 #include "util.h"
 
 employe *premierEmpl, *courantEmpl, *suivantEmpl, *intercaleEmpl;
-int tailleTitreEmploye=102;
+int tailleTitreEmploye=106;
 
 void viderEmploye(employe *first){
 	// on libère la mémoire allouée pour "vider" la liste des employés
@@ -51,13 +51,13 @@ int lectureEmploye() {
 }
 
 void afficherTitresColonnesEmploye() {
-	printf ("%s", Accent("|| ID |             Nom               |             Prénom            | Salaire(/h) | Heures prestées ||\n"));
-	printf("||----|-------------------------------|-------------------------------|-------------|-----------------||\n");
+	printf ("%s", Accent("|| ID |             Nom               |             Prénom            | Salaire(euro/h) | Heures prestées ||\n"));
+	printf("||----|-------------------------------|-------------------------------|-----------------|-----------------||\n");
 }
 
 //affiche un seul employé
 void affichageUnEmploye(employe *empl){
-	printf("|| %02d | %-29s | %-29s |    %5.2f    |       %3d       ||\n", empl->id,empl->nom,empl->prenom,empl->salaireParHeure,empl->nbHeures);
+	printf("|| %02d | %-29s | %-29s |      %5.2f      |       %3d       ||\n", empl->id,empl->nom,empl->prenom,empl->salaireParHeure,empl->nbHeures);
 }
 
 void afficherListeEmploye(){
@@ -70,10 +70,8 @@ void afficherListeEmploye(){
 		affichageUnEmploye(e);
 		e = e->nxtEmpl; 
 	}
-	printf("||====================================================================================================||\n");
+	printf("||========================================================================================================||\n");
 }
-
-
 
 void ajouterEmploye(){
 	system("cls");
@@ -89,9 +87,6 @@ void ajouterEmploye(){
 	for(i = 1 ; i < nb-1 ; i++) {
 		courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 	}
-	
-	printf("%2d %2d",nb,courantEmpl->id);
-	system("PAUSE");
 	tmp->id=courantEmpl->id + 1;
 	
 	affichageTitre(Accent("Ajout d'un employé"),tailleTitreEmploye);
@@ -107,7 +102,7 @@ void ajouterEmploye(){
 	system("PAUSE");
 	
 	affichageTitre(Accent("Ajout d'un employé"),tailleTitreEmploye);
-	printf ("%s", Accent(" Salaire horaire de l'employé : "));
+	printf ("%s", Accent(" Salaire horaire de l'employé (en euros): "));
 	float x = choixReel(0.0,99.99,5);
 	tmp->salaireParHeure = x; 
 	
@@ -123,20 +118,36 @@ void ajouterEmploye(){
 	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	//choix=choixEntier(1,2,1);
+	int choix=choixEntier(1,2,1);	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	if(choix==2){
+		tmp->nxtEmpl = NULL;
+		courantEmpl->nxtEmpl = tmp;
+		nb++;
+		
+		FILE *fEmploye;
+		fEmploye = fopen("data/employes.dat","w");
+		courantEmpl = premierEmpl;
+		for(i = 1 ; i <nb ; i++){
+			fprintf(fEmploye, "%2d %-29s %-29s %5.2f %03d\n", courantEmpl->id, courantEmpl->nom, courantEmpl->prenom, courantEmpl->salaireParHeure, courantEmpl->nbHeures);
+			courantEmpl = courantEmpl->nxtEmpl;
+		}
+		fclose(fEmploye);
+		
+		printf ("%s", Accent("Employé ajouté avec succès\n\n"));
+		system("PAUSE");
+		system("cls");
+	}
+	else{
+		printf ("%s", Accent("Employé non-ajouté\n\n"));
+		system("PAUSE");
+		system("cls");	
+	}
 }
 
-
+void SupprimerEmploye(){
+	affichageTitre(Accent("Suppression d'un employé"),tailleTitreEmploye);
+}
 
 
 void switchMenuEmploye(int choix){
