@@ -58,7 +58,7 @@ void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait u
 	sousChaine[j + 1] = '\0';
 }
 
-int verifierDate(char saisie[]) { // v?rifier la saisie de date
+int verifierDate(char saisie[]) { // vérifier la saisie de date
 	char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
 	int jour, mois, annee;
 	if(strlen(saisie) != 10) {
@@ -67,26 +67,26 @@ int verifierDate(char saisie[]) { // v?rifier la saisie de date
 	if(saisie[2] != '/' || saisie[5] != '/') {
 		return 0;
 	}
-	// extraction des jours mois et ann?es
+	// extraction des jours mois et années
 	extraire(0, 1, saisie, cJour);
 	extraire(3, 4, saisie, cMois);
 	extraire(6, 9, saisie, cAnnee);
-	// convertion en entiers pour r?cup?rer les possibles erreurs
+	// convertion en entiers pour récupérer les possibles erreurs
 	jour = atoi(cJour);
 	mois = atoi(cMois);
 	annee = atoi(cAnnee);
-	// v?rification du jour (entre 1 et 31), sauf pour f?vrier 
+	// vérification du jour (entre 1 et 31), sauf pour février 
 	if(mois != 2 && jour < 1 || jour > 31) {
 		return 0;
 	}
-	else if(mois == 2 && jour < 1 || jour > 29) { // mois de f?vrier
+	else if(mois == 2 && jour < 1 || jour > 29) { // mois de février
 		return 0;
 	}
 	// v?rification du mois
 	if(mois < 1 || mois > 12) {
 		return 0;
 	}
-	// v?rification de l'ann?e
+	// vérification de l'année
 	if(annee < 2020) {
 		return 0;
 	}

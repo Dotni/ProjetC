@@ -7,7 +7,7 @@
 
 sejour *premierSejour, *sejourCourant, *sejourSuivant;
 char date[11];
-int tailleTitreSejour = 50;
+int tailleTitreSejour = 50, tailleTitreEmplacemement = 63;
 
 void viderSejours(sejour *first){
 	// on libère la mémoire allouée pour "vider" la liste des séjours
@@ -91,7 +91,7 @@ void afficherEmplacementsLibres(char date[]) {
 	int max = 1; // cette variable va placer les indices des emplacelents dans le tableau dédié, elle servira ensuite de limite à la boucle for d'affichage
 	emplacement *empl;
 	
-	affichageTitre("Emplacements libres", tailleTitreSejour);
+	affichageTitre("Emplacements libres", tailleTitreEmplacemement);
 	nbSej = lectureSejours(sejourCourant); // récupération du nombre de séjours
 	nbEmpl = lectureEmplacements(); // récupération du nombre d'emplacements
 	
@@ -111,17 +111,26 @@ void afficherEmplacementsLibres(char date[]) {
 		}
 		sejourCourant = sejourCourant ->nxtSej; // on passe au séjour suivant
 	}
+	max--;
 	
-	// affichage des emplacements libres
-	for(i = 1 ; i < max ; i++) {
-		afficher = 1;
-		for(j = 1 ; j < max ; j++) {
-			if(listeOccupes[j] == i) {
-				afficher = 0; // l'emplacement avec l'id j fait partie des emplacements occupés, on ne l'affche pas
+	affichageTitreColonnes();
+	
+	if(max == nbEmpl) { // tout les emplacements sont occupés
+		printf("||                  Pas d'emplacements libres                  ||\n");
+	}
+	else {
+		// affichage des emplacements libres
+		for(i = 1 ; i <= max ; i++) {
+			afficher = 1;
+			for(j = 1 ; j <= max ; j++) {
+				if(listeOccupes[j] == i) {
+					afficher = 0; // l'emplacement avec l'id j fait partie des emplacements occupés, on ne l'affche pas
+				}
 			}
-		}
-		if(afficher == 1) {
-			
+			if(afficher == 1) {
+				empl = getEmplacement(i);
+				affichageUnEmplacement(empl);
+			}
 		}
 	}
 	system("pause");
