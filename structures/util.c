@@ -53,9 +53,9 @@ void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait u
 		return;
 	}
 	for(i = debut, j = 0 ; i <= fin ; i++, j++) {
-		sousChaine[j] = chaine[i];
+		sousChaine[j] = chaine[i]; // extraction de la sous chaîne
 	}
-	sousChaine[j + 1] = '\0';
+	sousChaine[j + 1] = '\0'; // ajout du caractère de fin de chaîne
 }
 
 int verifierDate(char saisie[]) { // vérifier la saisie de date

@@ -78,8 +78,9 @@ void afficherListeSejours() {
 	afficherTitresColonnes(); // titres
 	// affichage de la liste des séjours
 	for(i = 1 ; i < nb ; i++) {
-		printf("|| %d ", sejourCourant->id);
-		if(sejourCourant->formule == 1) {
+		printf("|| %d | ", sejourCourant->id);
+		affichageTypeEmplacement(sejourCourant->formule);
+		/*if(sejourCourant->formule == 1) {
 			printf("|   Tente  |");
 		}
 		else if(sejourCourant->formule == 2) {
@@ -87,7 +88,7 @@ void afficherListeSejours() {
 		}
 		else {
 			printf("| Bungalow |");
-		}
+		}*/
 		printf("     %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
 		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
 	}
