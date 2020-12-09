@@ -238,7 +238,6 @@ int choixEntier(int inf, int sup,int taille){
 			printf("Veuillez entrer un nombre correct! (compris entre %d et %d)\n Votre choix :",inf,sup);
 		}
 		choix = lire(tmp, taille + 1);
-		printf("%2d",choix);
 		i++;
 	}while(choix < inf || choix > sup);
 	return choix;

@@ -78,42 +78,42 @@ void main(){
 }
 
 int intro(){
-	int choix = 0;
-	short first = 0;
-	char tmp[2];
-	
-	do { //on effectue cette boucle tant que l'utilisateur n'a pas fait de choix valide
-		if(first == 0){ //si l'utilisateur n'a pas fait d'erreur
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROGRAMME DE GESTION D'UN CAMPING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-			sdl();sdl();
-			printf("||                   --------------------------------------------------------                 ||\n");
-			printf("||                   || Bienvenue dans le programme de gestion du camping! ||                 ||\n");
-			printf("||                   --------------------------------------------------------                 ||\n");
-			first = 1;	//permet de dire que ce n'est pas la premiere fois qu'on passe dans la boucle	
-		}
-		else { //si l'utilisateur a fait une erreur
-			system("cls");
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
-			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-		}
+		int choix = 0;
+		short first=0;
+		char tmp[2];
 		
-		//code commun (peut importe si l'utilisateur a fait une erreur ou pas)
-		sdl();sdl();
-		printf("||                                   Que souhaitez-vous faire?                                ||\n");
-		printf ("%s", Accent("||                         (entrez le numéro correspondant à votre choix)                     ||\n"));
-		sdl();sdl();
-		printf ("%s", Accent("||  1.  Accéder au menu principal                                                             ||\n"));
-		printf("||  2.  Mode d'emploi                                                                         ||\n");
-		printf("||  3.  Quitter le programme                                                                  ||\n");
-		sdl();
-		printf("||  Votre choix :  ");
-		choix = lire(tmp, 2);
-	} while(choix < 1 || choix > 3);
-	system("cls");
-	return choix;
+		do { //on effectue cette boucle tant que l'utilisateur n'a pas fait de choix valide
+			if(first==0){ //si l'utilisateur n'a pas fait d'erreur
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PROGRAMME DE GESTION D'UN CAMPING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				sdl();sdl();
+				printf("||                   --------------------------------------------------------                 ||\n");
+				printf("||                   || Bienvenue dans le programme de gestion du camping! ||                 ||\n");
+				printf("||                   --------------------------------------------------------                 ||\n");
+				first = 1;	//permet de dire que ce n'est pas la premiere fois qu'on passe dans la boucle	
+			}
+			else { //si l'utilisateur a fait une erreur
+				system("cls");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+				printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+				printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			}
+			
+			//code commun (peut importe si l'utilisateur a fait une erreur ou pas)
+			sdl();sdl();
+			printf("||                                   Que souhaitez-vous faire?                                ||\n");
+			printf ("%s", Accent("||                         (entrez le numéro correspondant à votre choix)                     ||\n"));
+			sdl();sdl();
+			printf ("%s", Accent("||  1.  Accéder au menu principal                                                             ||\n"));
+			printf("||  2.  Mode d'emploi                                                                         ||\n");
+			printf("||  3.  Quitter le programme                                                                  ||\n");
+			sdl();
+			printf("||  Votre choix :  ");
+			choix = lire(tmp, 2);
+		} while(choix < 1 || choix > 3);
+		system("cls");
+		return choix;
 }
 
 int menuPrincipal(){
@@ -245,7 +245,7 @@ int menuEmploye(){
 		printf ("%s", Accent("||  1.  Liste des employés                                                                    ||\n"));
 		printf ("%s", Accent("||  2.  Ajouter un employé                                                                    ||\n"));
 		printf ("%s", Accent("||  3.  Supprimer un employé                                                                  ||\n"));
-		printf ("%s", Accent("||  4.  Ajouter une journée/demi journée de travail à un employé                              ||\n"));
+		printf ("%s", Accent("||  4.  Ajouter une demi-journée de travail à un employé                                      ||\n"));
 		printf ("%s", Accent("||  5.  Modifier le salaire d'un employé                                                      ||\n"));
 		printf ("%s", Accent("||  6.  Payer Les employés                                                                    ||\n"));	
 		printf("||  7.  Retour                                                                                ||\n");
