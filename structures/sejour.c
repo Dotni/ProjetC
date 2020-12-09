@@ -87,7 +87,7 @@ void afficherListeSejours() {
 
 void afficherEmplacementsLibres(char date[]) {
 	// un emplacement est libre si il n'est pas lié à un séjour pour la date donnée ou si il n'est lié à aucun séjour
-	int i, nbSej, nbEmpl;
+	int i, j, nbSej, nbEmpl, afficher;
 	int max = 1; // cette variable va placer les indices des emplacelents dans le tableau dédié, elle servira ensuite de limite à la boucle for d'affichage
 	emplacement *empl;
 	
@@ -112,7 +112,14 @@ void afficherEmplacementsLibres(char date[]) {
 	}
 	
 	// affichage des emplacements libres
-	
+	for(i = 1 ; i < max ; i++) {
+		afficher = 0;
+		for(j = 1 ; j < max ; j++) {
+			if(listeOccupes[j] == i) {
+				
+			}
+		}
+	}
 	system("pause");
 }
 
