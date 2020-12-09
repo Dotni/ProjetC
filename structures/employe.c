@@ -96,16 +96,14 @@ void ajouterEmploye(){
 	
 	affichageTitre(Accent("Ajout d'un employé"),tailleTitreEmploye);
 	printf ("%s", Accent(" Nom de l'employé : "));
-	lire(nom,30);
+	lireString(nom,30);
 	strcpy(tmp->nom,nom);
-	viderBuffer();
 	system("PAUSE");
 	
 	affichageTitre(Accent("Ajout d'un employé"),tailleTitreEmploye);
 	printf ("%s", Accent(" Prenom de l'employé : "));
-	fgets(prenom,30,stdin);
+	lireString(prenom,30);
 	strcpy(tmp->prenom,prenom);	
-	viderBuffer();
 	system("PAUSE");
 	
 	affichageTitre(Accent("Ajout d'un employé"),tailleTitreEmploye);

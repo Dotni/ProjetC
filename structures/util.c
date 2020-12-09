@@ -9,7 +9,7 @@ void sdl(){
 
 //permet d'afficher les accents
 char * Accent(const char * message) {
-      static char retour[100];
+      static char retour [100];
       CharToOem (message, retour); // API Windows
       return retour;
 }
@@ -53,44 +53,24 @@ void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait u
 		return;
 	}
 	for(i = debut, j = 0 ; i <= fin ; i++, j++) {
-		sousChaine[j] = chaine[i]; // extraction de la sous chaîne
+		sousChaine[j] = chaine[i];
 	}
-	sousChaine[j + 1] = '\0'; // ajout du caractère de fin de chaîne
+	sousChaine[j + 1] = '\0';
 }
 
 int verifierDate(char saisie[]) { // vérifier la saisie de date
 	char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
 	int jour, mois, annee;
-	if(strlen(saisie) != 10) {
-		return 0;
-	}
-	if(saisie[2] != '/' || saisie[5] != '/') {
-		return 0;
-	}
-	// extraction des jours mois et années
 	extraire(0, 1, saisie, cJour);
 	extraire(3, 4, saisie, cMois);
 	extraire(6, 9, saisie, cAnnee);
-	// convertion en entiers pour récupérer les possibles erreurs
-	jour = atoi(cJour);
-	mois = atoi(cMois);
-	annee = atoi(cAnnee);
-	// vérification du jour (entre 1 et 31), sauf pour février 
-	if(mois != 2 && jour < 1 || jour > 31) {
-		return 0;
-	}
-	else if(mois == 2 && jour < 1 || jour > 29) { // mois de février
-		return 0;
-	}
-	// vérification du mois
-	if(mois < 1 || mois > 12) {
-		return 0;
-	}
-	// vérification de l'année
-	if(annee < 2020) {
-		return 0;
-	}
-	return 1;
+	printf("%s\n", cJour);
+	printf("%s\n", cMois);
+	printf("%s\n", cAnnee);
+	/*if(strlen(saisie) == 11) {
+		if()
+	}*/
+	return 0;
 }
 
 void viderBuffer(){
@@ -102,7 +82,6 @@ void viderBuffer(){
 
 int lire(char *chaine, int longueur){
     char *positionln = NULL;
- 	
     // On lit le texte saisi au clavier
 	if (fgets(chaine, longueur, stdin) != NULL) {
         positionln = strchr(chaine, '\n'); 
@@ -123,7 +102,26 @@ int lire(char *chaine, int longueur){
     }
 }
 
-int lireDate(char *chaine, int longueur) {
+char * lireString(char *chaine, int longueur){
+		char *positionln = NULL;
+    // On lit le texte saisi au clavier
+	if (fgets(chaine, longueur, stdin) != NULL) {
+        positionln = strchr(chaine, '\n'); 
+        if (positionln != NULL) {
+            *positionln = '\0'; // On remplace ce caractère par \0
+        }
+        else {
+        	viderBuffer();
+		}
+        return chaine;
+    }
+    else{
+    	viderBuffer();
+        return 0; // On renvoie 0 s'il y a eu une erreur
+    }
+}
+
+char * lireDate(char *chaine, int longueur) {
 	char *positionln = NULL;
  	
     // On lit le texte saisi au clavier
@@ -136,10 +134,9 @@ int lireDate(char *chaine, int longueur) {
         	viderBuffer();
 		}
 		if(verifierDate(chaine) == 0) {
-			return 0;
+ 			return 0;
 		}
-        //return chaine;
-        return 1;
+        return chaine;
     }
     else{
     	viderBuffer();
@@ -189,7 +186,7 @@ void affichageTitre(char titre[], int tailleTitre){
 	for(i = 1 ; i <= gauche ; i++){
 		printf("=");
 	}
-	printf(" %s ", titre);
+	printf(" %s ",titre);
 	for(i = 1 ; i <= droite ; i++){
 		printf("=");
 	}
@@ -200,36 +197,30 @@ void affichageTitre(char titre[], int tailleTitre){
 	printf("\n\n");
 }
 
-void affichageTypeEmplacement(int type){
-	// vérification de la donnée
-	if(type >= 1 && type <= 3) {
-		//affichage du type correspondant 
-		if(type == 1){
-			printf("  Tente  | ");
-		}
-		else if(type == 2){
-			printf("Caravane | ");
-		}
-		else{
-			printf("Bungalow | ");
-		}
+void affichageTypeEmplacement(int i){
+	//affichage du type
+	if(i == 1){
+		printf("  Tente  | ");
 	}
-	else {
-		printf("-------- | ");
+	else if(i == 2){
+		printf("Caravane | ");
+	}
+	else{
+		printf("Bungalow | ");
 	}
 }
 
-int choixEntier(int inf, int sup, int taille){
-	char tmp[taille + 1];		//attention, il y a toujours le char \0 a la fin, donc taille + 1
+int choixEntier(int inf, int sup,int taille){
+	char tmp[taille + 1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
 	int i = 0, choix;
-	do {
+	do{
 		if(i != 0){
-			printf("Veuillez entrer un nombre correct! (compris entre %d et %d)\n Votre choix :", inf, sup);
+			printf("Veuillez entrer un nombre correct! (compris entre %d et %d)\n Votre choix :",inf,sup);
 		}
 		choix = lire(tmp, taille + 1);
-		printf("%2d", choix);
+		printf("%2d",choix);
 		i++;
-	} while(choix < inf || choix > sup);
+	}while(choix < inf || choix > sup);
 	return choix;
 }
 
@@ -237,12 +228,12 @@ float choixReel(float inf, float sup,int taille){
 	char tmp[taille + 1];		//attention, il y a tjrs le char \0 a la fin, donc taille + 1
 	int i = 0;
 	float choix;
-	do {
+	do{
 		if(i != 0){
-			printf("Veuillez entrer un nombre correct! (compris entre %6.2f et %6.2f)\n Votre choix :", inf, sup);
+			printf("Veuillez entrer un nombre correct! (compris entre %6.2f et %6.2f)\n Votre choix :",inf,sup);
 		}
 		choix = lireFloat(tmp, taille + 1);
 		i++;
-	} while(choix < inf || choix > sup);
+	}while(choix < inf || choix > sup);
 	return choix;
 }

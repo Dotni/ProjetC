@@ -56,3 +56,8 @@ CursorCol=1
 CursorRow=1
 TopLine=1
 LeftChar=1
+[Editor_11]
+CursorCol=2
+CursorRow=99
+TopLine=72
+LeftChar=1
