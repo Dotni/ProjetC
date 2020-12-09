@@ -96,15 +96,15 @@ void afficherEmplacementsLibres(char date[]) {
 	nbEmpl = lectureEmplacements(); // récupération du nombre d'emplacements
 	
 	int listeOccupes[nbEmpl + 1]; // car il y aura forcément moins ou autant d'emplacements libres qu'il y a d'emplacements
-	memset(listeOccupes, 0, nbEmpl + 1);
-	// le tableau va stocker les id des emplacelents libre pour pouvooir les afficher
+	memset(listeOccupes, 0, (nbEmpl + 1)*sizeof(listeOccupes[0])); // initialisation du tableau, tout les éléments valent 0
+	// le tableau va stocker les id des emplacelents libre pour pouvoir les afficher
 	
 	sejourCourant = premierSejour;
 	// affichage de la liste des séjours
 	for(i = 1 ; i < nbSej ; i++) {
 		for(j = 1 ; j <= nbEmpl ; j++) {
 			empl = getEmplacement(j);
-			if(sejourCourant->place->id == empl->id) {
+			if(sejourCourant->place->id == empl->id && strcmp(date, sejourCourant->date) == 0) {
 				listeOccupes[max] = j;
 				max++;
 			}
@@ -119,8 +119,10 @@ void afficherEmplacementsLibres(char date[]) {
 		printf("||                  Pas d'emplacements libres                  ||\n");
 	}
 	else {
+		printf("test 1\n");
 		// affichage des emplacements libres
 		for(i = 1 ; i <= max ; i++) {
+			printf("test 2\n");
 			afficher = 1;
 			for(j = 1 ; j <= max ; j++) {
 				if(listeOccupes[j] == i) {
@@ -133,6 +135,7 @@ void afficherEmplacementsLibres(char date[]) {
 			}
 		}
 	}
+	printf("wtf\n");
 	system("pause");
 }
 
