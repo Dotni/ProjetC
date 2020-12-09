@@ -91,13 +91,6 @@ int verifierDate(char saisie[]) { // v?rifier la saisie de date
 		return 0;
 	}
 	return 1;
-	printf("%s\n", cJour);
-	printf("%s\n", cMois);
-	printf("%s\n", cAnnee);
-	/*if(strlen(saisie) == 11) {
-		if()
-	}*/
-	return 0;
 }
 
 void viderBuffer(){
