@@ -7,6 +7,7 @@
 
 sejour *premierSejour, *sejourCourant, *sejourSuivant;
 char date[11];
+int tailleTitreSejour = 50;
 
 void viderSejours(sejour *first){
 	// on libère la mémoire allouée pour "vider" la liste des séjours
@@ -70,9 +71,7 @@ void afficherTitresColonnes() {
 void afficherListeSejours() {
 	int nb, i;
 	system("cls"); // on vide la console
-	printf("====================================================\n");
-	printf("%s", Accent("============== Liste des séjours ===================\n"));
-	printf("====================================================\n");
+	affichageTitre(Accent("Liste des séjours"), tailleTitreSejour);
 	nb = lectureSejours(sejourCourant); // lecture des séjours
 	sejourCourant = premierSejour;
 	afficherTitresColonnes(); // titres
@@ -80,48 +79,36 @@ void afficherListeSejours() {
 	for(i = 1 ; i < nb ; i++) {
 		printf("|| %d | ", sejourCourant->id);
 		affichageTypeEmplacement(sejourCourant->formule);
-		/*if(sejourCourant->formule == 1) {
-			printf("|   Tente  |");
-		}
-		else if(sejourCourant->formule == 2) {
-			printf("| Caravane |");
-		}
-		else {
-			printf("| Bungalow |");
-		}*/
-		printf("     %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
+		printf("    %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
 		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
 	}
 	printf("||================================================||\n");
 }
 
 void afficherEmplacementsLibres(char date[]) {
-	printf("liste des emplacements libres pour %s", date);
-	/*int nbSej, nbEmpl, i, j;
-	emplacement *empl;
-	nbSej = lectureSejours(sejourCourant);
-	nbEmpl = lectureEmplacements();
-	sejourCourant = premierSejour;
-	for(i = 1 ; i < nbSej ; i++) {
-		for(j = 1 ; j <= nbEmpl ; j++) {
-			empl = getEmplacement(j);
-			if(sejourCourant->place->id == empl->id) {
-				
-			}
-		}
-		sejourCourant = sejourCourant->nxtSej;
-	}*/
+	affichageTitre("Emplacements libres", tailleTitreSejour);
 }
 
 char* demanderDate() {
-	char date[11];
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	printf("%s", Accent("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Date recherchée %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n"));
-	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-	sdl();sdl();
-	printf("|| Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
-	lireDate(date, 12);
-	printf("%s\n", date);
+	char date[11] = {0};
+	int first = 0;
+	do {
+		if(first == 0) {
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("%s", Accent("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Date recherchée %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n"));
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			sdl();sdl();
+			printf("|| Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
+		}
+		else {
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                                                                            Veuillez entrer une date valide !                                                                            ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			sdl();sdl();
+		}
+		lireDate(date, 11);
+	} while(date == 0);
+	afficherEmplacementsLibres(date);
 	system("pause");
 }
 
