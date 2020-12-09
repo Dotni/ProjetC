@@ -48,10 +48,15 @@ void main(){
 							} while(choixEmplacement != 5); // 5 = retour au menu principal
 							break;
 						case 2:
+							
 							choixClient = menuClient();
+							
 							break;
 						case 3:
-							choixEmploye = menuEmploye();
+							do{
+								choixEmploye = menuEmploye();
+								switchMenuEmploye(choixEmploye);
+							} while(choixEmploye != 7); // 5 = retour au menu principal
 							break;
 						case 4:
 							do {
