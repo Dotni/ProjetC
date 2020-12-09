@@ -8,10 +8,12 @@
 sejour *premierSejour, *sejourCourant, *sejourSuivant, *sejourIntercale;
 char date[11];
 
-void viderSejours(){
-	while(sejourCourant->nxtSej != NULL) {
-		sejourCourant->id = 0;
-		sejourCourant = sejourCourant->nxtSej;
+void viderSejours(sejour *first){
+	sejour *courant = first;
+	while(courant != NULL && courant->nxtSej != NULL) {
+		sejourSuivant = courant->nxtSej;
+		free(courant);
+		courant = sejourSuivant;
 	}
 }
 
@@ -20,7 +22,7 @@ int lectureSejours(sejour *sejourCourant) {
 	char tmpJour[3], tmpMois[3], tmpAnnee[5], tmpDate[11];
 	emplacement *empl;// pour lier l'emplacement du séjour
 	
-	viderSejours();
+	viderSejours(premierSejour);
 	
 	FILE *fSejour;
 	fSejour = fopen("data/sejour.dat", "r");
@@ -30,7 +32,7 @@ int lectureSejours(sejour *sejourCourant) {
 	
 	while(!feof(fSejour)) {
 		// ignorer le caractère
-		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", &sejourCourant->id, &sejourCourant->nbPersonnes, &jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement); 
+		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", &sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, &jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement);
 		empl = getEmplacement(idEmplacement);
 		sejourCourant->place = empl;
 		// conversion entier -> char pour créer la date

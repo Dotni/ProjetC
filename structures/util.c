@@ -55,11 +55,11 @@ void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait u
 	for(i = debut, j = 0 ; i <= fin ; i++, j++) {
 		sousChaine[j] = chaine[i];
 	}
-	sousChaine[fin + 1] = '\0';
+	sousChaine[j + 1] = '\0';
 }
 
 int verifierDate(char saisie[]) { // vérifier la saisie de date
-	char cJour[3], cMois[3], cAnnee[5];
+	char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
 	int jour, mois, annee;
 	extraire(0, 1, saisie, cJour);
 	extraire(3, 4, saisie, cMois);
