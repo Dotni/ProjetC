@@ -62,11 +62,9 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 	char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
 	int jour, mois, annee;
 	if(strlen(saisie) != 10) {
-		printf("Date invalide. Veuilez entrer une date valide\n");
 		return 0;
 	}
 	if(saisie[2] != '/' || saisie[5] != '/') {
-		printf("Date invalide. Veuilez entrer une date valide\n");
 		return 0;
 	}
 	// extraction des jours mois et années
@@ -79,21 +77,17 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 	annee = atoi(cAnnee);
 	// vérification du jour (entre 1 et 31), sauf pour février 
 	if(mois != 2 && jour < 1 || jour > 31) {
-		printf("Date invalide. Veuilez entrer une date valide\n");
 		return 0;
 	}
 	else if(mois == 2 && jour < 1 || jour > 29) { // mois de février
-		printf("Date invalide. Veuilez entrer une date valide\n");
 		return 0;
 	}
 	// vérification du mois
 	if(mois < 1 || mois > 12) {
-		printf("Date invalide. Veuilez entrer une date valide\n");
 		return 0;
 	}
 	// vérification de l'année
 	if(annee < 2020) {
-		printf("Date invalide. Veuilez entrer une date valide\n");
 		return 0;
 	}
 	return 1;
