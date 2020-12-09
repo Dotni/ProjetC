@@ -5,14 +5,15 @@
 #include "emplacement.h"
 #include "util.h"
 
-sejour *premierSejour, *sejourCourant, *sejourSuivant, *sejourIntercale;
+sejour *premierSejour, *sejourCourant, *sejourSuivant;
 char date[11];
 
 void viderSejours(sejour *first){
+	// on libère la mémoire allouée pour "vider" la liste des séjours
 	sejour *courant = first;
 	while(courant != NULL && courant->nxtSej != NULL) {
 		sejourSuivant = courant->nxtSej;
-		free(courant);
+		free(courant); 
 		courant = sejourSuivant;
 	}
 }
@@ -22,16 +23,16 @@ int lectureSejours(sejour *sejourCourant) {
 	char tmpJour[3], tmpMois[3], tmpAnnee[5], tmpDate[11];
 	emplacement *empl;// pour lier l'emplacement du séjour
 	
-	viderSejours(premierSejour);
+	viderSejours(premierSejour); // on vide la liste au cas où ce ne serait pas la première lecture
 	
-	FILE *fSejour;
-	fSejour = fopen("data/sejour.dat", "r");
+	FILE *fSejour; // déclaration du fichier
+	fSejour = fopen("data/sejour.dat", "r"); // ouverture du fichier
 	
-	sejourCourant = malloc(sizeof(sejour));
+	sejourCourant = malloc(sizeof(sejour)); // allocation de mémoire
 	premierSejour = sejourCourant;
 	
 	while(!feof(fSejour)) {
-		// ignorer le caractère
+		// lecture des données des séjours
 		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", &sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, &jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement);
 		empl = getEmplacement(idEmplacement);
 		sejourCourant->place = empl;
@@ -39,26 +40,25 @@ int lectureSejours(sejour *sejourCourant) {
 		itoa(jour, tmpJour, 10); // on copie tmpJour dans jour, en suivant la base 10
 		itoa(mois, tmpMois, 10);
 		itoa(annee, tmpAnnee, 10);
-		// création de la date
+		// construction de la date
 		strcpy(tmpDate, tmpJour);
 		strcat(tmpDate, "/");
 		strcat(tmpDate, tmpMois);
 		strcat(tmpDate, "/");
 		strcat(tmpDate, tmpAnnee);
-		strcpy(sejourCourant->date, tmpDate);
-		nbSejours++;
-		sejourSuivant = malloc(sizeof(sejour));
+		strcpy(sejourCourant->date, tmpDate); // on l'ajoute dans la structure séjour
+		nbSejours++; // un séjour de plus
+		sejourSuivant = malloc(sizeof(sejour)); // on alloue de la mémoire pour stocker le prochain séjour
 		sejourCourant->nxtSej = sejourSuivant;
    	  	sejourCourant = sejourSuivant;
-		// problème de boucle 
 	}
-	sejourCourant = premierSejour;
+	sejourCourant = premierSejour; // on reprend le début de la liste
 	for(i = 1 ; i < nbSejours - 1 ; i++) {
-		sejourCourant = sejourCourant->nxtSej;
+		sejourCourant = sejourCourant->nxtSej; // on chaîne les séjours
 	}
-	sejourCourant->nxtSej = NULL;
-	free(sejourSuivant);
-	fclose(fSejour);
+	sejourCourant->nxtSej = NULL; // le dernier séjour n'est pas chaîné
+	free(sejourSuivant); // libération de la mémoire non utilisée
+	fclose(fSejour); // fermeture du fichier
 	return nbSejours - 1; // retrun incorrect, corriger. enfin quand je pourrais compiler
 }
 
@@ -73,9 +73,10 @@ void afficherListeSejours() {
 	printf("====================================================\n");
 	printf("%s", Accent("============== Liste des séjours ===================\n"));
 	printf("====================================================\n");
-	nb = lectureSejours(sejourCourant);
+	nb = lectureSejours(sejourCourant); // lecture des séjours
 	sejourCourant = premierSejour;
-	afficherTitresColonnes();
+	afficherTitresColonnes(); // titres
+	// affichage de la liste des séjours
 	for(i = 1 ; i < nb ; i++) {
 		printf("|| %d ", sejourCourant->id);
 		if(sejourCourant->formule == 1) {
@@ -88,7 +89,7 @@ void afficherListeSejours() {
 			printf("| Bungalow |");
 		}
 		printf("     %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
-		sejourCourant = sejourCourant->nxtSej;
+		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
 	}
 	printf("||================================================||\n");
 }
@@ -119,9 +120,6 @@ char* demanderDate() {
 	sdl();sdl();
 	printf("|| Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
 	lireDate(date, 12);
-	// à faire : variante de lire, adapté pour la date
-	// créer fonction vérifier date
-	// vérifier
 	printf("%s\n", date);
 	system("pause");
 }
