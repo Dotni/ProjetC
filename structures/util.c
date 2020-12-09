@@ -63,11 +63,11 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 	int jour, mois, annee;
 	if(strlen(saisie) != 10) {
 		printf("Date invalide. Veuilez entrer une date valide\n");
-		return 1;
+		return 0;
 	}
 	if(saisie[2] != '/' || saisie[5] != '/') {
 		printf("Date invalide. Veuilez entrer une date valide\n");
-		return 1;
+		return 0;
 	}
 	// extraction des jours mois et années
 	extraire(0, 1, saisie, cJour);
@@ -80,23 +80,23 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 	// vérification du jour (entre 1 et 31), sauf pour février 
 	if(mois != 2 && jour < 1 || jour > 31) {
 		printf("Date invalide. Veuilez entrer une date valide\n");
-		return 1;
+		return 0;
 	}
 	else if(mois == 2 && jour < 1 || jour > 29) { // mois de février
 		printf("Date invalide. Veuilez entrer une date valide\n");
-		return 1;
+		return 0;
 	}
 	// vérification du mois
 	if(mois < 1 || mois > 12) {
 		printf("Date invalide. Veuilez entrer une date valide\n");
-		return 1;
+		return 0;
 	}
 	// vérification de l'année
 	if(annee < 2020) {
 		printf("Date invalide. Veuilez entrer une date valide\n");
-		return 1;
+		return 0;
 	}
-	return 0;
+	return 1;
 }
 
 void viderBuffer(){
@@ -129,7 +129,7 @@ int lire(char *chaine, int longueur){
     }
 }
 
-char * lireDate(char *chaine, int longueur) {
+int lireDate(char *chaine, int longueur) {
 	char *positionln = NULL;
  	
     // On lit le texte saisi au clavier
@@ -142,9 +142,10 @@ char * lireDate(char *chaine, int longueur) {
         	viderBuffer();
 		}
 		if(verifierDate(chaine) == 0) {
- 			return 0;
+			return 0;
 		}
-        return chaine;
+        //return chaine;
+        return 1;
     }
     else{
     	viderBuffer();

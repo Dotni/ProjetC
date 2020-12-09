@@ -86,12 +86,25 @@ void afficherListeSejours() {
 }
 
 void afficherEmplacementsLibres(char date[]) {
+	// un emplacement est libre si il n'est pas lié à un séjour pour la date donnée ou si il n'est lié à aucun séjour
+	int i, nb;
+	
 	affichageTitre("Emplacements libres", tailleTitreSejour);
+	nb = lectureSejours(sejourCourant); // lecture des séjours
+	sejourCourant = premierSejour;
+	// affichage de la liste des séjours
+	for(i = 1 ; i < nb ; i++) {
+		if(strcmp(date, sejourCourant->date) == 0) { // la date correspond
+			
+		}
+		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
+	}
+	system("pause");
 }
 
-char* demanderDate() {
+void demanderDate() {
 	char date[11] = {0};
-	int first = 0;
+	int first = 0, ok = 0;
 	do {
 		if(first == 0) {
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
@@ -99,17 +112,19 @@ char* demanderDate() {
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 			sdl();sdl();
 			printf("|| Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
+			first = 1;
 		}
 		else {
+			system("cls");
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
-			printf("||                                                                            Veuillez entrer une date valide !                                                                            ||\n");
+			printf("||                              Veuillez entrer une date valide !                             ||\n");
 			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 			sdl();sdl();
+			printf("|| Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
 		}
-		lireDate(date, 11);
-	} while(date == 0);
+		ok = lireDate(date, 11);
+	} while(ok == 0);
 	afficherEmplacementsLibres(date);
-	system("pause");
 }
 
 void switchMenuSejour(int choix) {
@@ -122,9 +137,7 @@ void switchMenuSejour(int choix) {
 			break;
 		case 2: 
 			// emplacements libre
-			strcpy(date, demanderDate());
-			afficherEmplacementsLibres(date);
-			system("pause");
+			demanderDate();
 			system("cls");
 			break;
 	}
