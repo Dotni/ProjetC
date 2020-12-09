@@ -61,6 +61,10 @@ void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait u
 int verifierDate(char saisie[]) { // vérifier la saisie de date
 	char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
 	int jour, mois, annee;
+	if(saisie[2] != '/' || saisie[5] != '/') {
+		printf("Date invalide. Veuilez entrer une date valide\n");
+		return 1;
+	}
 	extraire(0, 1, saisie, cJour);
 	extraire(3, 4, saisie, cMois);
 	extraire(6, 9, saisie, cAnnee);

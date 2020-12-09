@@ -62,7 +62,7 @@ int lectureSejours(sejour *sejourCourant) {
 	return nbSejours - 1; // retrun incorrect, corriger. enfin quand je pourrais compiler
 }
 
-void affichertitresColonnes() {
+void afficherTitresColonnes() {
 	printf("| ID | Formule  | Personnes |    Date    |   Prix  |\n");
 	printf("||---|----------|-----------|------------|--------||\n");
 }
@@ -75,6 +75,7 @@ void afficherListeSejours() {
 	printf("====================================================\n");
 	nb = lectureSejours(sejourCourant);
 	sejourCourant = premierSejour;
+	afficherTitresColonnes();
 	for(i = 1 ; i < nb ; i++) {
 		printf("|| %d ", sejourCourant->id);
 		if(sejourCourant->formule == 1) {
