@@ -88,7 +88,7 @@ void afficherListeSejours() {
 void afficherEmplacementsLibres(char date[]) {
 	// un emplacement est libre si il n'est pas lié à un séjour pour la date donnée ou si il n'est lié à aucun séjour
 	int i, j, nbSej, nbEmpl, afficher;
-	int max = 1; // cette variable va placer les indices des emplacelents dans le tableau dédié, elle servira ensuite de limite à la boucle for d'affichage
+	int max = 1; // cette variable va placer les indices des emplacements dans le tableau dédié, elle servira ensuite de limite à la boucle for d'affichage
 	emplacement *empl;
 	
 	affichageTitre("Emplacements libres", tailleTitreEmplacemement);
@@ -96,20 +96,21 @@ void afficherEmplacementsLibres(char date[]) {
 	nbEmpl = lectureEmplacements(); // récupération du nombre d'emplacements
 	
 	int listeOccupes[nbEmpl + 1]; // car il y aura forcément moins ou autant d'emplacements libres qu'il y a d'emplacements
-	memset(listeOccupes, 0, (nbEmpl + 1)*sizeof(listeOccupes[0])); // initialisation du tableau, tout les éléments valent 0
+	memset(listeOccupes, 0, (nbEmpl + 1) * sizeof(listeOccupes[0])); // initialisation du tableau, tout les éléments valent 0
 	// le tableau va stocker les id des emplacelents libre pour pouvoir les afficher
 	
 	sejourCourant = premierSejour;
 	// affichage de la liste des séjours
 	for(i = 1 ; i < nbSej ; i++) {
 		for(j = 1 ; j <= nbEmpl ; j++) {
+			printf("encore un test\n");
 			empl = getEmplacement(j);
 			if(sejourCourant->place->id == empl->id && strcmp(date, sejourCourant->date) == 0) {
 				listeOccupes[max] = j;
 				max++;
 			}
 		}
-		sejourCourant = sejourCourant ->nxtSej; // on passe au séjour suivant
+		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
 	}
 	max--;
 	
@@ -120,6 +121,7 @@ void afficherEmplacementsLibres(char date[]) {
 	}
 	else {
 		printf("test 1\n");
+		printf("%d\n", max);
 		// affichage des emplacements libres
 		for(i = 1 ; i <= max ; i++) {
 			printf("test 2\n");
