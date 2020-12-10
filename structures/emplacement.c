@@ -371,9 +371,9 @@ void modifierEmplacement(){
 	}	
 }
 
-emplacement * getEmplacement(int id){
+emplacement * getEmplacement(int ligne){
 	lectureEmplacements(empl, tailleEmplacement);
-	return &(empl[id]);
+	return &(empl[ligne]);
 }
 
 
