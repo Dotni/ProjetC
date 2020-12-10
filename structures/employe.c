@@ -90,13 +90,11 @@ void ajouterEmploye(){
 	printf ("%s", Accent(" Nom de l'employé : "));
 	lireString(nom, 30);
 	strcpy(tmp->nom, nom);
-	system("PAUSE");
 	
 	affichageTitre(Accent("Ajout d'un employé"), tailleTitreEmploye);
 	printf ("%s", Accent(" Prenom de l'employé : "));
 	lireString(prenom, 30);
 	strcpy(tmp->prenom, prenom);	
-	system("PAUSE");
 	
 	affichageTitre(Accent("Ajout d'un employé"), tailleTitreEmploye);
 	printf ("%s", Accent(" Salaire horaire de l'employé (en euros): "));
@@ -273,6 +271,7 @@ void supprimerEmploye(){
 			}
 		}
 		
+		affichageTitre(Accent("Suppression d'un employé"),tailleTitreEmploye);
 		afficherTitresColonnesEmploye();
 		courantEmpl = premierEmpl;
 		while(courantEmpl->nxtEmpl != NULL){
