@@ -8,6 +8,32 @@
 sejour *premierSejour, *sejourCourant, *sejourSuivant;
 char date[11];
 int tailleTitreSejour = 50, tailleTitreEmplacemement = 63;
+const float taxe = 0.4;
+
+sejour * getSejour(int id) {
+	int i = 1, nb, continuer = 1;
+	sejour *sejourReturn;
+	nb = lectureSejours(sejourCourant); // lecture des séjours
+	sejourCourant = premierSejour;
+	// affichage de la liste des séjours
+	while(i <= nb && continuer == 1) {
+		if(id == sejourCourant->id) {
+			sejourReturn = sejourCourant;
+			continuer = 0;
+		}
+		else {
+			sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
+			i++;
+		}
+	}
+	return sejourReturn;
+}
+
+void calculerPrixSejour(int id) {
+	sejour *sejACalculer;
+	sejACalculer = getSejour(id);
+	sejACalculer->prix = sejACalculer->place->prix + taxe;
+}
 
 void viderSejours(sejour *first){
 	// on libère la mémoire allouée pour "vider" la liste des séjours

@@ -14,6 +14,7 @@ typedef struct sejour{
 	struct emplacement *place;
 }sejour;
 
+void calculerPrixSejour(int);
 void afficherListeSejours();
 void afficherEmplacementsLibres(char[]);
 int lectureSejours(sejour*);
