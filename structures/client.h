@@ -11,4 +11,7 @@ typedef struct client {
 	struct client *nxtClient;			//pour la liste chainée des clients
 }client;
 
+void switchMenuClient(int);
+
+
 #endif

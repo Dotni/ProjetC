@@ -7,7 +7,7 @@
 
 sejour *premierSejour, *sejourCourant, *sejourSuivant;
 char date[11];
-int tailleTitreSejour = 50, tailleTitreEmplacemement = 63;
+int tailleTitreSejour = 52, tailleTitreEmplacemement = 63;
 const float taxe = 0.4;
 
 sejour * getSejour(int id) {
@@ -60,7 +60,9 @@ int lectureSejours(sejour *sejourCourant) {
 	
 	while(!feof(fSejour)) {
 		// lecture des données des séjours
-		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", &sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, &jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement);
+		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", 
+		&sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, 
+		&jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement);
 		empl = getEmplacement(idEmplacement);
 		sejourCourant->place = empl;
 		// conversion entier -> char pour créer la date
@@ -90,8 +92,8 @@ int lectureSejours(sejour *sejourCourant) {
 }
 
 void afficherTitresColonnesSejour() {
-	printf("| ID | Formule  | Personnes |    Date    |   Prix  |\n");
-	printf("||---|----------|-----------|------------|--------||\n");
+	printf("|| ID  | Formule  | Personnes |    Date    |   Prix  |\n");
+	printf("||-----|----------|-----------|------------|--------||\n");
 }
 
 void afficherListeSejours() {
@@ -103,12 +105,12 @@ void afficherListeSejours() {
 	afficherTitresColonnesSejour(); // titres
 	// affichage de la liste des séjours
 	for(i = 1 ; i < nb ; i++) {
-		printf("|| %d | ", sejourCourant->id);
+		printf("|| %03d | ", sejourCourant->id);
 		affichageTypeEmplacement(sejourCourant->formule);
 		printf("    %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
 		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
 	}
-	printf("||================================================||\n");
+	printf("||==================================================||\n");
 }
 
 void afficherEmplacementsLibres(char date[]) {
@@ -161,6 +163,7 @@ void afficherEmplacementsLibres(char date[]) {
 			}
 		}
 	}
+	free(listeOccupes);
 	system("pause");
 }
 

@@ -22,6 +22,7 @@ date : 30/11/2020
 
 
 void main(){
+	system("TITLE Gestion du camping");
 	
 	//déclaration des variables
 	int choixMP, choixIntro,choixEmplacement,choixClient,choixEmploye,choixSejour;
@@ -48,9 +49,10 @@ void main(){
 							} while(choixEmplacement != 5); // 5 = retour au menu principal
 							break;
 						case 2:
-							
-							choixClient = menuClient();
-							
+							do{
+								choixClient = menuClient();
+								switchMenuClient(choixClient);
+							} while(choixClient != 4); // 4 = retour au menu principal
 							break;
 						case 3:
 							do{
@@ -208,15 +210,14 @@ int menuClient(){
 		printf ("%s", Accent("|| Entrez le numéro correspondant à votre choix.                                              ||\n"));
 		sdl();sdl();
 		printf ("%s", Accent("||  1.  Liste des clients                                                                     ||\n"));
-		printf("||  2.  Ajouter un client                                                                     ||\n");
-		printf ("%s", Accent("||  3.  Effectuer une réservation                                                             ||\n"));
-		printf ("%s", Accent("||  4.  Modifier une réservation                                                              ||\n"));	
-		printf("||  5.  Retour                                                                                ||\n");
+		printf("||  2.  Nouveau Client                                                                        ||\n");
+		printf ("%s", Accent("||  3.  Client existant                                                                       ||\n"));	
+		printf("||  4.  Retour                                                                                ||\n");
 		sdl();
 		printf("||  Votre choix :  ");
 		choix = lire(tmp, 2);
 		
-	}while(choix < 1 || choix > 5);
+	}while(choix < 1 || choix > 4);
 	system("cls");
 	return choix;	
 }

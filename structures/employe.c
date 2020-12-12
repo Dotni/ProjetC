@@ -4,7 +4,7 @@
 #include "employe.h"
 #include "util.h"
 
-employe *premierEmpl, *courantEmpl, *suivantEmpl, *intercaleEmpl;
+employe *premierEmpl, *courantEmpl, *suivantEmpl;
 int tailleTitreEmploye=106;
 
 void viderEmploye(employe *first){
