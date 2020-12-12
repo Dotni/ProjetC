@@ -582,14 +582,14 @@ void paiementEmployes(){
 		affichageTitre(Accent("Paiement des employés"), tailleTitreEmploye);
 		afficherListeEmploye();
 		
-		printf ("%s", Accent("Entrez l'id de l'employé dont vous voulez modifier le salaire\n\n"));
+		printf ("%s", Accent("Entrez l'id de l'employé que vous voulez payer\n\n"));
 		printf("Votre choix : ");
 		
 		courantEmpl = premierEmpl;
-		while(courantEmpl->nxtEmpl != NULL) {
+		for(i = 1 ; i < nb-1 ; i++) {
 			courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 		}	
-		idMax = courantEmpl->id;
+		idMax=courantEmpl->id;
 		
 		i = 0;	
 		do{
@@ -597,7 +597,7 @@ void paiementEmployes(){
 			if(i != 0){
 				printf("Veuillez entrer un ID valide! Votre choix : ");
 			}
-			choix = lire(tmp, 3);
+			choix = lire(tmp, 2);
 			i++;
 			
 			courantEmpl = premierEmpl;
@@ -609,7 +609,7 @@ void paiementEmployes(){
 			}
 		}while(choix < 1 || choix > idMax || ok == 0);
 		
-		affichageTitre(Accent("Paiement des employés"), tailleTitreEmploye);
+		affichageTitre(Accent("Paiement de l'employé"), tailleTitreEmploye);
 		afficherTitresColonnesEmploye();
 		courantEmpl = premierEmpl;
 		for(i = 1 ; i < nb ; i++) {

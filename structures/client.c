@@ -134,28 +134,138 @@ void ajouterClient(){
 }
 
 
-int selectionClient(){
-	
+client * selectionClient(){
 	//on affiche les clients puis on demande a l'utilisateur d'en choisir un 
-	int choix = 0;
-	return choix;
+	
+	int nb=lectureClient();
+	int i,idMax,ok,j,choix,choix2;
+	char tmp[4];
+	
+	affichageTitre(Accent("Choix du client"), tailleTitreClient);
+	afficherListeClient();
+	
+	courantCli = premierCli;
+	for(i = 1 ; i < nb-1 ; i++) {
+		courantCli = courantCli->nxtClient; // on parcourt les clients
+	}	
+	idMax=courantCli->id;
+	
+	printf ("%s", Accent("Entrez l'id du client que vous voulez sélectionner\n\n"));
+	printf("Votre choix : ");
+
+	i = 0;	
+	do{
+		ok = 0;
+		if(i != 0){
+			printf("Veuillez entrer un ID valide! Votre choix : ");
+		}
+		choix = lire(tmp, 4);
+		i++;
+		
+		courantCli = premierCli;
+		for(j = 1 ; j < nb ; j++){
+			if(courantCli->id == choix){
+				ok = 1;
+			}
+			courantCli = courantCli->nxtClient;
+		}
+	}while(choix < 1 || choix > idMax || ok == 0);
+	
+	affichageTitre(Accent("Choix du client"), tailleTitreClient);
+	afficherTitresColonnesClient();
+	
+	courantCli = premierCli;
+	for(i = 1 ; i < nb ; i++) {
+		if(courantCli->id == choix){
+			affichageUnClient(courantCli);
+			break;
+		}
+		courantCli = courantCli->nxtClient; 
+	}	
+	
+	printf ("%s", Accent("\n\nConfirmez-vous la sélection du client suivant?\n\n"));
+	printf("\n1 : Non \n");
+	printf("2 : Oui \n");
+	printf("Votre choix :");
+	
+	choix2=choixEntier(1, 2, 1);
+
+	if(choix2==2){
+		return courantCli;
+	}
+	return NULL;
 }
 
 
 //menu d'action a effectuer sur un client existant
-int menuClient2(){
-	
-	//on affiche les clients puis on demande a l'utilisateur d'en choisir un 
+int menuClient2(client *cli){
 	int choix = 0;
+	short first = 0;
+	char tmp[2];
+	
+	do{
+		if(first == 0){
+			affichageTitre(Accent("Menu du client"), tailleTitreClient);
+			printf("Nom du client :      %s\n",cli->nom);
+			printf("Prenom du client :   %s\n\n\n",cli->prenom);
+			first=1;	
+		}
+		else{
+			system("cls");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+			printf("||                              Veuillez entrer un nombre valide!                             ||\n");
+			printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
+		}
+		printf ("%s", Accent(" Entrez le numéro correspondant à votre choix. \n\n\n"));
+		printf ("%s", Accent("  1.  Afficher la liste des séjours du client   \n"));
+		printf ("%s", Accent("  2.  Effectuer une nouvelle réservation    \n"));
+		printf ("%s", Accent("  3.  Modifier une réservation du client       \n"));
+		printf ("%s", Accent("  4.  Paiement du client  \n"));
+		printf("  5.  Retour   \n\n");
+		printf("  Votre choix :  ");
+		choix = lire(tmp, 2);
+		
+	}while(choix < 1 || choix > 5);
+	system("cls");
 	return choix;
 }	
 
-
+void afficherReservation(client *cli){
+	
+	sejour *courantSej, *firstSej, *newCourantSej, *newNextSej;
+	int nb = lectureSejours(courantSej); // lecture des séjours
+	int i,j=0,nbSejoursClient=0;
+	
+	
+	courantSej=getPremierSej();
+	for(i = 1 ; i < nb ; i++){
+		if(courantSej->idClient==cli->id){
+			if(nbSejoursClient==0){
+				firstSej=courantSej;
+				firstSej->nxtSej=newCourantSej;
+				nbSejoursClient=1;
+			}
+			else{
+				newCourantSej=courantSej;
+				newCourantSej->nxtSej=newNextSej;
+				newCourantSej=newNextSej;
+			}
+		}
+		courantSej = courantSej->nxtSej;
+	}
+	newCourantSej->nxtSej=NULL;
+	
+	for(i=1;i<nbSejoursClient;i++){
+		
+	}
+	
+}
 
 
 
 void switchMenuClient(int choix){
-	int choixCli,choix2;
+	int choix2;
+	client *choixCli;
 	
 	switch(choix){
 		case 1 :
@@ -165,25 +275,31 @@ void switchMenuClient(int choix){
 			system("cls");
 			break;
 		case 2 : 
-			//ajout d'un client
 			ajouterClient();
 			break;
 		case 3 :
 			choixCli = selectionClient();
-			choix2 =  menuClient2();
-			switch(choix2){
-				case 1 :
-					//afficher les réservations du client
-					break;
-				case 2 :
-					//effectuer une nouvelle réservation
-					break;
-				case 3 :
-					
-					break;
-				case 4 :
-					break;
+			if(choixCli==NULL){
+				system("cls");
+				break;
 			}
-			break;
+			do{
+				choix2 =  menuClient2(choixCli);
+				switch(choix2){
+					case 1 :
+						//afficher les réservations du client
+						afficherReservation(choixCli);
+						break;
+					case 2 :
+						//effectuer une nouvelle réservation
+						break;
+					case 3 :
+						
+						break;
+					case 4 :
+						break;
+				}
+			}while(choix2!=5);
+			break;	
 	}
 }

@@ -10,6 +10,12 @@ char date[11];
 int tailleTitreSejour = 52, tailleTitreEmplacemement = 63;
 const float taxe = 0.4;
 
+sejour *getPremierSej(){
+	return premierSejour;
+}
+
+
+
 sejour * getSejour(int id) {
 	int i = 1, nb, continuer = 1;
 	sejour *sejourReturn;
@@ -83,7 +89,7 @@ int lectureSejours(sejour *sejourCourant) {
 	}
 	sejourCourant = premierSejour; // on reprend le début de la liste
 	for(i = 1 ; i < nbSejours - 1 ; i++) {
-		sejourCourant = sejourCourant->nxtSej; // on chaîne les séjours
+		sejourCourant = sejourCourant->nxtSej; 
 	}
 	sejourCourant->nxtSej = NULL; // le dernier séjour n'est pas chaîné
 	free(sejourSuivant); // libération de la mémoire non utilisée
@@ -96,6 +102,12 @@ void afficherTitresColonnesSejour() {
 	printf("||-----|----------|-----------|------------|--------||\n");
 }
 
+void afficherUnSejour(sejour *sejourCourant){
+		printf("|| %03d | ", sejourCourant->id);
+		affichageTypeEmplacement(sejourCourant->formule);
+		printf("    %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
+}
+
 void afficherListeSejours() {
 	int nb, i;
 	system("cls"); // on vide la console
@@ -105,9 +117,7 @@ void afficherListeSejours() {
 	afficherTitresColonnesSejour(); // titres
 	// affichage de la liste des séjours
 	for(i = 1 ; i < nb ; i++) {
-		printf("|| %03d | ", sejourCourant->id);
-		affichageTypeEmplacement(sejourCourant->formule);
-		printf("    %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
+		afficherUnSejour(sejourCourant);
 		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
 	}
 	printf("||==================================================||\n");

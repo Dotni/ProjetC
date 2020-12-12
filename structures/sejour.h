@@ -21,5 +21,6 @@ int lectureSejours(sejour*);
 void viderSejours(sejour*);
 void switchMenuSejour(int);
 char* demanderdate();
+sejour *getPremierSej();
 
 #endif
