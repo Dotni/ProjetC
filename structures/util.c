@@ -60,12 +60,21 @@ void extraire(int debut, int fin, char *chaine, char *sousChaine) { // extrait u
 
 int verifierDate(char saisie[]) { // vérifier la saisie de date
 	char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
-	int jour, mois, annee;
+	int jour, mois, annee, i;
 	if(strlen(saisie) != 10) {
 		return 0;
 	}
-	if(saisie[2] != '/' || saisie[5] != '/') {
-		return 0;
+	for(i = 0 ; i <= 9 ; i++) {
+		if(i != 2 && i != 5) {
+			if(!isdigit(saisie[i])) {
+				return 0;
+			}
+		}
+		else {
+			if(saisie[i] != '\0') {
+				return 0;
+			}
+		}
 	}
 	// extraction des jours mois et années
 	extraire(0, 1, saisie, cJour);
