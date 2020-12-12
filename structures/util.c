@@ -72,7 +72,7 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 			}
 		}
 		else {
-			if(saisie[i] != '\0') {
+			if(saisie[i] != '/') {
 				return 0;
 			}
 		}
@@ -164,6 +164,7 @@ char * lireDate(char *chaine, int longueur) {
         	viderBuffer();
 		}
 		if(verifierDate(chaine) == 0) {
+			system("pause");
  			return 0;
 		}
         return chaine;

@@ -294,8 +294,6 @@ int menuSejour(){
 
 int modeEmploi() {
 	printf("On le fera en dernier c'est que de l'affichage\n");
-	sdl();
-	sdl();
 	return 0;
 }
 

@@ -3,7 +3,6 @@
 #include "emplacement.h"
 #include "util.h"
 
-
 //déclaration des constantes
 const int tailleEmplacement = 50;
 int tailleTitre = 65;
