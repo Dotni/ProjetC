@@ -366,8 +366,9 @@ void nouvelleReservation(client *cli){
 		printf("%s\n",date);
 		printf ("%s", Accent("\n\nListe des emplacement disponibles a cette date\n\n"));
 		afficherEmplacementsLibres(date,0);
-		system("PAUSE");
 		//choix d'un emplacement
+		
+		printf ("%s", Accent("\n\nEntrez l'ID de l'emplacement que le client a choisi :\n"));
 		
 		//récupération de l'ID le plus élevé des emplacements
 		int idMax = idMaxEmplacement();
@@ -388,10 +389,44 @@ void nouvelleReservation(client *cli){
 			}
 		}while(choix < 1 || choix > getEmplacement(idMax)->id || ok==0);
 		
+		system("cls");
+		affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("\nConfirmez-vous la sélection de l'emplacement suivant?\n\n"));
+		affichageTitreColonnes();
+		affichageUnEmplacement(*getEmplacement(choix));
+		printf("\n\n1 : Non \n");
+		printf("2 : Oui \n");
+		printf("Votre choix :");
+		
+		int choix2=choixEntier(1,2,1);
 		
 		
-		//puis entrer les parametres spécifiques
-		//puis demande de validation
+		
+		if(choix2==2){
+			//puis entrer les parametres spécifiques
+			//nb personnes
+			system("cls");
+			affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+			printf("Indiquez le nombre de personnes pour la réservation\n\n");
+			printf("Votre choix : ");
+			
+			int nbPersonnes = choixEntier(1,99,2);
+			
+			//creerSejour(id);
+			
+			//puis demande de validation
+		}
+		else{
+			system("cls");
+			affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+			printf ("%s", Accent("Annulation!\n"));
+			system("PAUSE");
+			system("cls");
+		}
+		
+		
+		
+		
 	}
 	else{//déja un séjour réservé a cette date
 		system("cls");
