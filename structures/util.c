@@ -64,6 +64,7 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 	if(strlen(saisie) != 10) {
 		return 0;
 	}
+	// on vérifie que le format de la date est bien xx/xx/xxxx
 	for(i = 0 ; i <= 9 ; i++) {
 		if(i != 2 && i != 5) {
 			if(!isdigit(saisie[i])) {
