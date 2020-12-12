@@ -66,9 +66,10 @@ int lectureSejours(sejour *sejourCourant) {
 	
 	while(!feof(fSejour)) {
 		// lecture des données des séjours
-		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", 
+		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d", 
 		&sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, 
-		&jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idSuivant, &idEmplacement);
+		&jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idEmplacement);
+		//printf("%3d %2d   ",sejourCourant->id,idEmplacement);
 		empl = getEmplacement(idEmplacement);
 		sejourCourant->place = empl;
 		// conversion entier -> char pour créer la date
@@ -97,15 +98,17 @@ int lectureSejours(sejour *sejourCourant) {
 	return nbSejours - 1; // retrun incorrect, corriger. enfin quand je pourrais compiler
 }
 
+
 void afficherTitresColonnesSejour() {
 	printf("|| ID  | Formule  | Personnes |    Date    |   Prix  |\n");
 	printf("||-----|----------|-----------|------------|--------||\n");
 }
 
-void afficherUnSejour(sejour *sejourCourant){
-		printf("|| %03d | ", sejourCourant->id);
-		affichageTypeEmplacement(sejourCourant->formule);
-		printf("    %d     | %s | %06.2f ||\n", sejourCourant->nbPersonnes, sejourCourant->date, sejourCourant->prix);
+
+void afficherUnSejour(sejour *sej){
+		printf("|| %03d | ", sej->id);
+		affichageTypeEmplacement(sej->formule);
+		printf("    %d     | %s | %06.2f ||\n", sej->nbPersonnes, sej->date, sej->prix);
 }
 
 void afficherListeSejours() {
@@ -123,17 +126,19 @@ void afficherListeSejours() {
 	printf("||==================================================||\n");
 }
 
-void afficherEmplacementsLibres(char date[]) {
+void afficherEmplacementsLibres(char date[],int ti) {
 	
 	// un emplacement est libre si il n'est pas lié à un séjour pour la date donnée ou si il n'est lié à aucun séjour
 	int i, j, nbSej, nbEmpl, afficher;
 	int max = 1; // cette variable va placer les indices des emplacements dans le tableau dédié, elle servira ensuite de limite à la boucle for d'affichage
 	emplacement *empl;
 	
-	affichageTitre("Emplacements libres", tailleTitreEmplacemement);
 	nbSej = lectureSejours(sejourCourant); // récupération du nombre de séjours
 	nbEmpl = lectureEmplacements(); // récupération du nombre d'emplacements
 	
+	if(ti==1){
+		affichageTitre("Emplacements libres", tailleTitreEmplacemement);
+	}
 	
 	int listeOccupes[nbEmpl + 1]; // car il y aura forcément moins ou autant d'emplacements libres qu'il y a d'emplacements
 	memset(listeOccupes, 0, (nbEmpl + 1) * sizeof(listeOccupes[0])); // initialisation du tableau, tout les éléments valent 0
@@ -173,8 +178,7 @@ void afficherEmplacementsLibres(char date[]) {
 			}
 		}
 	}
-	free(listeOccupes);
-	system("pause");
+	//free(listeOccupes);
 }
 
 void demanderDate() {
@@ -199,8 +203,20 @@ void demanderDate() {
 		}
 		ok = lireDate(date, 11);
 	} while(ok == 0);
-	afficherEmplacementsLibres(date);
+	afficherEmplacementsLibres(date,1);
 }
+
+void copierSejour(sejour *sej1,sejour *sej2){
+	sej1->id=sej2->id;
+	strcpy(sej1->date,sej2->date);
+	sej1->formule =sej2->formule;
+	sej1->idClient=sej2->idClient;
+	sej1->nbPersonnes=sej2->nbPersonnes;
+	sej1->prix=sej2->prix;
+	sej1->place=sej2->place;
+}
+
+
 
 void switchMenuSejour(int choix) {
 	switch(choix) {
@@ -213,6 +229,7 @@ void switchMenuSejour(int choix) {
 		case 2: 
 			// emplacements libre
 			demanderDate();
+			system("pause");
 			system("cls");
 			break;
 	}

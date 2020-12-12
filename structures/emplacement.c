@@ -371,6 +371,11 @@ void modifierEmplacement(){
 	}	
 }
 
+int idMaxEmplacement(){
+	int nb = lectureEmplacements(empl, tailleEmplacement);
+	return empl[nb].id;
+}
+
 emplacement * getEmplacement(int ligne){
 	lectureEmplacements(empl, tailleEmplacement);
 	return &(empl[ligne]);

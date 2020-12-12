@@ -127,7 +127,7 @@ void ajouterClient(){
 		system("cls");
 	}
 	else{
-		printf ("%s", Accent("Employé non-ajouté\n\n"));
+		printf ("%s", Accent("Client non-ajouté\n\n"));
 		system("PAUSE");
 		system("cls");	
 	}
@@ -241,26 +241,168 @@ void afficherReservation(client *cli){
 	for(i = 1 ; i < nb ; i++){
 		if(courantSej->idClient==cli->id){
 			if(nbSejoursClient==0){
-				firstSej=courantSej;
-				firstSej->nxtSej=newCourantSej;
+				newCourantSej = malloc(sizeof(sejour)); // allocation de mémoire
+				firstSej = newCourantSej; //on va copier les valeurs dans une nouvelle liste séparée
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
 				nbSejoursClient=1;
 			}
+			
 			else{
-				newCourantSej=courantSej;
-				newCourantSej->nxtSej=newNextSej;
-				newCourantSej=newNextSej;
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+   	  			nbSejoursClient++;
 			}
 		}
 		courantSej = courantSej->nxtSej;
 	}
-	newCourantSej->nxtSej=NULL;
-	
-	for(i=1;i<nbSejoursClient;i++){
-		
+
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		courantSej = courantSej->nxtSej ; // on parcourt les employés
 	}
+	
+	courantSej->nxtSej = NULL; // le dernier employé n'est pas chaîné
+	free(newNextSej); // libération de la mémoire non utilisée
+	
+	
+	affichageTitre(Accent("Séjours du client"), tailleTitreClient);
+	printf("Nom du client :      %s\n",cli->nom);
+	printf("Prenom du client :   %s\n\n\n",cli->prenom);
+	afficherTitresColonnesSejour();
+	courantSej=firstSej; 
+	for(i=1;i<=nbSejoursClient;i++){
+		afficherUnSejour(courantSej);
+		courantSej=courantSej->nxtSej;
+	}
+	system("PAUSE");
 	
 }
 
+void nouvelleReservation(client *cli){
+	//on récup d'id de choix cli,
+	int id = cli->id;
+	
+	//Récupération de la date 
+	char date[11] = {0};
+	int first = 0, ok = 0;
+	
+	affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+	printf("Nom du client :      %s\n",cli->nom);
+			printf("Prenom du client :   %s\n\n\n",cli->prenom);
+	printf("Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
+	ok=1;
+	do {
+		if(ok == 0) {
+			printf("\nVeuillez entrer une date valide ! format : (jj/mm/aaaa)\n");
+			printf("Votre date : ");
+		}
+		ok = lireDate(date, 11);
+	} while(ok == 0);
+
+	
+	//verification que le client a pas déja réservé a cette date
+	
+		
+	sejour *courantSej, *firstSej, *newCourantSej, *newNextSej;
+	int nb = lectureSejours(courantSej); // lecture des séjours
+	int i,j=0,nbSejoursClient=0;
+	
+	
+	courantSej=getPremierSej();
+	for(i = 1 ; i < nb ; i++){
+		if(courantSej->idClient==cli->id){
+			if(nbSejoursClient==0){
+				newCourantSej = malloc(sizeof(sejour)); // allocation de mémoire
+				firstSej = newCourantSej; //on va copier les valeurs dans une nouvelle liste séparée
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+				nbSejoursClient=1;
+			}
+			
+			else{
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+   	  			nbSejoursClient++;
+			}
+		}
+		courantSej = courantSej->nxtSej;
+	}
+	
+	//libération de la mémoire
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		courantSej = courantSej->nxtSej ; // on parcourt les employés
+	}
+	courantSej->nxtSej = NULL; // le dernier employé n'est pas chaîné
+	free(newNextSej); // libération de la mémoire non utilisée
+	
+	
+	
+	//on parcourt le vecteur pour vérifier si on a pas déja un séjour avec la meme date
+	ok=1;
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		if(strcmp(courantSej->date,date)==0){
+			ok=0;
+			break;
+		}
+		courantSej = courantSej->nxtSej ; // on parcourt les employés
+	}
+
+	//pas de séjour réservé a cette date
+	if(ok==1){
+		//afficher les emplacement dispos a cette date,
+		affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("Date sélectionnée : "));
+		printf("%s\n",date);
+		printf ("%s", Accent("\n\nListe des emplacement disponibles a cette date\n\n"));
+		afficherEmplacementsLibres(date,0);
+		system("PAUSE");
+		//choix d'un emplacement
+		
+		//récupération de l'ID le plus élevé des emplacements
+		int idMax = idMaxEmplacement();
+		char tmp[3];		
+		i = 0;
+		int j,ok,choix;
+		do{
+			ok=0;
+			if(i != 0){
+				printf("Veuillez entrer un ID valide! Votre choix : ");
+			}
+			choix = lire(tmp, 3);
+			i++;
+			for(j=1;j<=nb;j++){
+				if(getEmplacement(j)->id==choix){
+					ok=1;
+				}
+			}
+		}while(choix < 1 || choix > getEmplacement(idMax)->id || ok==0);
+		
+		
+		
+		//puis entrer les parametres spécifiques
+		//puis demande de validation
+	}
+	else{//déja un séjour réservé a cette date
+		system("cls");
+		affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("Ce client a déjà réservé un séjour a cette date!\n"));
+		afficherTitresColonnesSejour();
+		afficherUnSejour(courantSej);
+		system("PAUSE");
+		system("cls");
+	}	
+}
 
 
 void switchMenuClient(int choix){
@@ -292,11 +434,13 @@ void switchMenuClient(int choix){
 						break;
 					case 2 :
 						//effectuer une nouvelle réservation
+						nouvelleReservation(choixCli);
 						break;
 					case 3 :
-						
+						//modifier une réservation
 						break;
 					case 4 :
+						//payer soit une soit toutes les réservations
 						break;
 				}
 			}while(choix2!=5);

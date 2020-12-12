@@ -13,3 +13,6 @@ void switchMenuEmplacement(int);
 emplacement * getEmplacement(int);
 
 #endif
+
+
+
