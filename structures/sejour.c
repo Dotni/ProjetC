@@ -8,7 +8,6 @@
 sejour *premierSejour, *sejourCourant, *sejourSuivant;
 char date[11];
 int tailleTitreSejour = 52, tailleTitreEmplacemement = 63;
-const float taxe = 0.4;
 
 sejour *getPremierSej(){
 	return premierSejour;
@@ -33,12 +32,6 @@ sejour * getSejour(int id) {
 		}
 	}
 	return sejourReturn;
-}
-
-void calculerPrixSejour(int id) {
-	sejour *sejACalculer;
-	sejACalculer = getSejour(id);
-	sejACalculer->prix = sejACalculer->place->prix + taxe;
 }
 
 void viderSejours(sejour *first){

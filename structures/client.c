@@ -8,6 +8,7 @@
 
 client *premierCli, *courantCli, *suivantCli;
 int tailleTitreClient=71;
+const float taxe = 0.4;
 
 void viderClient(client *first){
 	// on libère la mémoire allouée pour "vider" la liste des clients
@@ -420,10 +421,9 @@ void nouvelleReservation(client *cli){
 			sej->idClient=cli->id;
 			sej->nbPersonnes=nbPersonnes;
 			sej->place=getEmplacementId(choix);
-			//float x = calculerPrixSejour(sej);
-			sej->prix=0.0;
+			sej->prix=sej->place->prix + taxe;
 			sej->formule=getEmplacementId(choix)->type;
-		
+			printf("%6.2f ",sej->prix);
 			//puis demande de validation
 			
 			system("cls");
@@ -444,6 +444,7 @@ void nouvelleReservation(client *cli){
 				FILE *fSejour;
 				fSejour = fopen("data/sejour.dat", "w");
 				
+				
 				while(courantSej->nxtSej != NULL){
 					// extraction des jours mois et années
 					char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
@@ -462,6 +463,20 @@ void nouvelleReservation(client *cli){
 					courantSej = courantSej->nxtSej;
 				}
 				courantSej->nxtSej=sej;
+				char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
+				extraire(0, 1, sej->date, cJour);
+				extraire(3, 4, sej->date, cMois);
+				extraire(6, 9, sej->date, cAnnee);
+				int jour = atoi(cJour);
+				int mois = atoi(cMois);
+				int annee = atoi(cAnnee);
+				
+				fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d\n",
+				sej->id,sej->formule,sej->nbPersonnes, 
+				jour, mois, annee, 
+				sej->prix, sej->idClient, sej->place->id);
+				
+				
 				fclose(fSejour);
 				
 				
