@@ -387,13 +387,13 @@ void nouvelleReservation(client *cli){
 					ok=1;
 				}
 			}
-		}while(choix < 1 || choix > getEmplacement(idMax)->id || ok==0);
+		}while(choix < 1 || choix > idMax || ok==0);
 		
 		system("cls");
 		affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
 		printf ("%s", Accent("\nConfirmez-vous la sélection de l'emplacement suivant?\n\n"));
 		affichageTitreColonnes();
-		affichageUnEmplacement(*getEmplacement(choix));
+		affichageUnEmplacement(*getEmplacementId(choix));
 		printf("\n\n1 : Non \n");
 		printf("2 : Oui \n");
 		printf("Votre choix :");
@@ -407,14 +407,78 @@ void nouvelleReservation(client *cli){
 			//nb personnes
 			system("cls");
 			affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
-			printf("Indiquez le nombre de personnes pour la réservation\n\n");
+			printf ("%s", Accent("Indiquez le nombre de personnes pour la réservation\n\n"));
 			printf("Votre choix : ");
 			
 			int nbPersonnes = choixEntier(1,99,2);
 			
-			//creerSejour(id);
-			
+			sejour *sej,*sejCourant;
+			sej = malloc(sizeof(sejour));
+			strcpy(sej->date,date);
+			sej->id=lectureSejours(sejCourant)+1;
+			sej->nxtSej=NULL;
+			sej->idClient=cli->id;
+			sej->nbPersonnes=nbPersonnes;
+			sej->place=getEmplacementId(choix);
+			//float x = calculerPrixSejour(sej);
+			sej->prix=0.0;
+			sej->formule=getEmplacementId(choix)->type;
+		
 			//puis demande de validation
+			
+			system("cls");
+			affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+			printf ("%s", Accent("\nConfirmez-vous l'ajout du séjour suivant pour "));
+			printf("%s %s\n\n",cli->nom,cli->prenom);
+			afficherTitresColonnesSejour();
+			afficherUnSejour(sej);
+			printf("\n\n1 : Non \n");
+			printf("2 : Oui \n");
+			printf("Votre choix :");
+			
+			int choix2=choixEntier(1,2,1);
+			if(choix2==2){
+				
+				sejour *courantSej=getPremierSej();
+
+				FILE *fSejour;
+				fSejour = fopen("data/sejour.dat", "w");
+				
+				while(courantSej->nxtSej != NULL){
+					// extraction des jours mois et années
+					char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
+					extraire(0, 1, courantSej->date, cJour);
+					extraire(3, 4, courantSej->date, cMois);
+					extraire(6, 9, courantSej->date, cAnnee);
+					// convertion en entiers pour récupérer les valeurs
+					int jour = atoi(cJour);
+					int mois = atoi(cMois);
+					int annee = atoi(cAnnee);
+					
+					fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d\n",
+					courantSej->id,courantSej->formule,courantSej->nbPersonnes, 
+					jour, mois, annee, 
+					courantSej->prix, courantSej->idClient, courantSej->place->id);
+					courantSej = courantSej->nxtSej;
+				}
+				courantSej->nxtSej=sej;
+				fclose(fSejour);
+				
+				
+				system("cls");
+				affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+				printf ("%s", Accent("Ajout effectué!\n"));
+				system("PAUSE");
+				system("cls");	
+			}
+			else{
+				system("cls");
+				affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
+				printf ("%s", Accent("Annulation!\n"));
+				system("PAUSE");
+				system("cls");
+			}
+			
 		}
 		else{
 			system("cls");
@@ -423,10 +487,6 @@ void nouvelleReservation(client *cli){
 			system("PAUSE");
 			system("cls");
 		}
-		
-		
-		
-		
 	}
 	else{//déja un séjour réservé a cette date
 		system("cls");

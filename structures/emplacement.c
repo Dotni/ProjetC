@@ -3,6 +3,7 @@
 #include "emplacement.h"
 #include "util.h"
 
+
 //déclaration des constantes
 const int tailleEmplacement = 50;
 int tailleTitre = 65;
@@ -378,6 +379,16 @@ int idMaxEmplacement(){
 emplacement * getEmplacement(int ligne){
 	lectureEmplacements(empl, tailleEmplacement);
 	return &(empl[ligne]);
+}
+
+emplacement * getEmplacementId(int id){
+	int nb = lectureEmplacements(empl, tailleEmplacement),i;
+	for(i=1;i<=nb;i++){
+		if(id==empl[i].id){
+			return &empl[i];
+		}	
+	}
+	return NULL;
 }
 
 

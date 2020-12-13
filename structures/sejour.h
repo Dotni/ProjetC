@@ -15,7 +15,6 @@ typedef struct sejour{
 
 
 void afficherUnSejour(sejour*);
-void calculerPrixSejour(int);
 void afficherListeSejours();
 int lectureSejours(sejour*);
 void viderSejours(sejour*);
