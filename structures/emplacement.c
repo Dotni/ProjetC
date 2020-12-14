@@ -143,6 +143,7 @@ void nouvelEmplacement(){
 	choix=choixEntier(1, 2, 1);
 	
 	if(choix == 2){
+		//écriture dans le fichier
 		FILE *fEmplacement;
 		fEmplacement = fopen("data/emplacements.dat","w");
 		for(i = 1 ; i <=nb ; i++){
@@ -173,6 +174,7 @@ void supprimerEmplacement(){
 	printf ("Entrez l'id de l'emplacement que vous souhaitez supprimer.\n\n");
 	printf("Votre choix : ");
 	
+	//vérification de l'ID
 	char tmp[3];		
 	i = 0;
 	int j, ok;
@@ -209,6 +211,7 @@ void supprimerEmplacement(){
 	choix2=choixEntier(1, 2, 1);
 	
 	if(choix2 == 2){
+		//écriture dans le fichier
 		for(i = choix + 1 ; i <= nb + 1 ; i++){
 			if(empl[i].id != 0)
 			empl[i - 1] = empl[i];
@@ -244,6 +247,7 @@ void modifierEmplacement(){
 	printf ("Entrez l'id de l'emplacement que vous souhaitez modifier.\n\n");
 	printf("Votre choix : ");
 	
+	//vérification de l'Id
 	char tmp[3];		
 	i = 0;
 	int j, ok;
@@ -330,6 +334,7 @@ void modifierEmplacement(){
 		choix=choixEntier(1, 2, 1);
 		
 		if(choix == 2){
+			//écriture dans le fichier
 			empl[indice] = nouvEmpl;
 			FILE *fEmplacement;
 			fEmplacement = fopen("data/emplacements.dat", "w");

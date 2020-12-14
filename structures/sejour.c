@@ -204,6 +204,7 @@ void demanderDate() {
 	afficherEmplacementsLibres(date,1);
 }
 
+//permet de copier les données d'un séjour
 void copierSejour(sejour *sej1, sejour *sej2){
 	sej1->id = sej2->id;
 	strcpy(sej1->date, sej2->date);

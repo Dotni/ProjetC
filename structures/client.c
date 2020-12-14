@@ -51,6 +51,7 @@ int lectureClient() {
 	return nbClient; 
 }
 
+//afficher les titres des colonnes
 void afficherTitresColonnesClient() {
 	printf ("%s", Accent("|| ID  |             Nom               |             Prénom            ||\n"));
 	printf("||-----|-------------------------------|-------------------------------||\n");
@@ -61,6 +62,7 @@ void affichageUnClient(client *cli){
 	printf("|| %03d | %-29s | %-29s ||\n", cli->id, cli->nom, cli->prenom);
 	}
 
+//affiche tous les clients
 void afficherListeClient(){
 	int nb, i;
 	nb = lectureClient(); 
@@ -73,6 +75,7 @@ void afficherListeClient(){
 	printf("||=====================================================================||\n");
 }
 
+//ajout d'un client
 void ajouterClient(){
 	system("cls");
 	int nb = lectureClient() , i;
@@ -89,16 +92,19 @@ void ajouterClient(){
 	}
 	tmp->id = courantCli->id + 1;
 	
+	//nom
 	affichageTitre(Accent("Ajout d'un client"), tailleTitreClient);
 	printf ("%s", Accent(" Nom du client : "));
 	lireString(nom, 30);
 	strcpy(tmp->nom, nom);
 	
+	//prenom
 	affichageTitre(Accent("Ajout d'un client"), tailleTitreClient);
 	printf ("%s", Accent(" Prenom du client : "));
 	lireString(prenom, 30);
 	strcpy(tmp->prenom, prenom);	
 	
+	//confirmation
 	affichageTitre(Accent("Ajout d'un client"), tailleTitreClient);
 	printf ("%s", Accent("Confirmez-vous l'ajout du client suivant?\n\n"));
 	afficherTitresColonnesClient(); 
@@ -110,10 +116,12 @@ void ajouterClient(){
 	int choix=choixEntier(1, 2, 1);	
 	
 	if(choix == 2){
+		//on fait pointer le nouveau vers null
 		tmp->nxtClient = NULL;
 		courantCli->nxtClient = tmp;
 		nb++;
 		
+		//écriture dans le fichier
 		FILE *fEmploye;
 		fEmploye = fopen("data/clients.dat","w");
 		courantCli = premierCli;
@@ -143,6 +151,7 @@ client * selectionClient(){
 	affichageTitre(Accent("Choix du client"), tailleTitreClient);
 	afficherListeClient();
 	
+	//récupération du plus grand ID
 	courantCli = premierCli;
 	for(i = 1 ; i < nb - 1 ; i++) {
 		courantCli = courantCli->nxtClient; // on parcourt les clients
@@ -152,6 +161,7 @@ client * selectionClient(){
 	printf ("%s", Accent("Entrez l'id du client que vous voulez sélectionner\n\n"));
 	printf("Votre choix : ");
 
+	//vérification que l'ID est valide
 	i = 0;	
 	do{
 		ok = 0;
@@ -161,6 +171,7 @@ client * selectionClient(){
 		choix = lire(tmp, 4);
 		i++;
 		
+		//on parcourt la liste pour vérifier s'il est présent dans la liste
 		courantCli = premierCli;
 		for(j = 1 ; j < nb ; j++){
 			if(courantCli->id == choix){
@@ -173,6 +184,7 @@ client * selectionClient(){
 	affichageTitre(Accent("Choix du client"), tailleTitreClient);
 	afficherTitresColonnesClient();
 	
+	//on cherche le client choisit
 	courantCli = premierCli;
 	for(i = 1 ; i < nb ; i++) {
 		if(courantCli->id == choix){
@@ -188,7 +200,8 @@ client * selectionClient(){
 	printf("Votre choix :");
 	
 	choix2=choixEntier(1, 2, 1);
-
+	
+	//on return le client
 	if(choix2==2){
 		return courantCli;
 	}
@@ -232,6 +245,7 @@ void afficherReservation(client *cli){
 	int nb = lectureSejours(courantSej); // lecture des séjours
 	int i,j=0,nbSejoursClient=0;
 	
+	//on crée un nouvelle liste chainée avec les séjours du client
 	courantSej=getPremierSej();
 	for(i = 1 ; i < nb ; i++){
 		if(courantSej->idClient == cli->id){
@@ -257,12 +271,12 @@ void afficherReservation(client *cli){
 
 	courantSej = firstSej; // on reprend le début de la liste
 	for(i = 1 ; i <= nbSejoursClient ; i++) {
-		courantSej = courantSej->nxtSej ; // on parcourt les employés
+		courantSej = courantSej->nxtSej ;
 	}
-	
-	courantSej->nxtSej = NULL; // le dernier employé n'est pas chaîné
+	courantSej->nxtSej = NULL; 
 	free(newNextSej); // libération de la mémoire non utilisée
 	
+	//on affiche la liste
 	printf("Nom du client :      %s\n", cli->nom);
 	printf("Prenom du client :   %s\n\n\n", cli->prenom);
 	afficherTitresColonnesSejour();
@@ -285,6 +299,8 @@ void nouvelleReservation(client *cli){
 	printf("Nom du client :      %s\n", cli->nom);
 	printf("Prenom du client :   %s\n\n\n", cli->prenom);
 	printf("Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
+	
+	//vérification de la liste
 	ok = 1;
 	do {
 		if(ok == 0) {
@@ -298,6 +314,7 @@ void nouvelleReservation(client *cli){
 	int nb = lectureSejours(courantSej); // lecture des séjours
 	int i, j = 0, nbSejoursClient = 0;
 	
+	//on crée une nouvelle liste chainnée avec les séjours du client
 	courantSej=getPremierSej();
 	for(i = 1 ; i < nb ; i++){
 		if(courantSej->idClient == cli->id){
@@ -324,9 +341,9 @@ void nouvelleReservation(client *cli){
 	//libération de la mémoire
 	courantSej = firstSej; // on reprend le début de la liste
 	for(i = 1 ; i <= nbSejoursClient ; i++) {
-		courantSej = courantSej->nxtSej ; // on parcourt les employés
+		courantSej = courantSej->nxtSej ; 
 	}
-	courantSej->nxtSej = NULL; // le dernier employé n'est pas chaîné
+	courantSej->nxtSej = NULL; 
 	free(newNextSej); // libération de la mémoire non utilisée
 	
 	//on parcourt le vecteur pour vérifier si on a pas déja un séjour avec la meme date
@@ -337,7 +354,7 @@ void nouvelleReservation(client *cli){
 			ok = 0;
 			break;
 		}
-		courantSej = courantSej->nxtSej ; // on parcourt les employés
+		courantSej = courantSej->nxtSej ; 
 	}
 
 	//pas de séjour réservé a cette date
@@ -353,6 +370,8 @@ void nouvelleReservation(client *cli){
 		//récupération de l'ID le plus élevé des emplacements
 		int idMax = idMaxEmplacement();
 		char tmp[3];		
+		
+		//vérification de l'ID de l'emplacement
 		i = 0;
 		int j, ok, choix;
 		do{
@@ -369,6 +388,7 @@ void nouvelleReservation(client *cli){
 			}
 		}while(choix < 1 || choix > idMax || ok==0);
 		
+		//confirmation
 		system("cls");
 		affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
 		printf ("%s", Accent("\nConfirmez-vous la sélection de l'emplacement suivant?\n\n"));
@@ -381,7 +401,6 @@ void nouvelleReservation(client *cli){
 		int choix2=choixEntier(1, 2, 1);
 		
 		if(choix2 == 2){
-			//puis entrer les parametres spécifiques
 			//nb personnes
 			system("cls");
 			affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
@@ -390,6 +409,7 @@ void nouvelleReservation(client *cli){
 			
 			int nbPersonnes = choixEntier(1, 99, 2);
 			
+			//création du séjour
 			sejour *sej, *sejCourant;
 			sej = malloc(sizeof(sejour));
 			strcpy(sej->date,date);
@@ -419,7 +439,7 @@ void nouvelleReservation(client *cli){
 
 				FILE *fSejour;
 				fSejour = fopen("data/sejour.dat", "w");
-
+				//on écrit les séjours
 				while(courantSej->nxtSej != NULL){
 					// extraction des jours mois et années
 					char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
@@ -434,6 +454,7 @@ void nouvelleReservation(client *cli){
 					fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d %1d\n", courantSej->id, courantSej->formule, courantSej->nbPersonnes, jour, mois, annee, courantSej->prix, courantSej->idClient, courantSej->place->id, courantSej->paye);
 					courantSej = courantSej->nxtSej;
 				}
+				//on ajoute le nouveau séjour a la fin
 				courantSej->nxtSej = sej;
 				char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
 				extraire(0, 1, sej->date, cJour);
@@ -524,8 +545,7 @@ void supprimerReservation(client *cli){
 	courantSej->nxtSej = NULL; 
 	free(newNextSej); // libération de la mémoire non utilisée
 	
-	idMax=courantSej->id;
-	
+	//on vérifie que l'ID est valide
 	i = 0;	
 	do{
 		ok = 0;
@@ -543,6 +563,8 @@ void supprimerReservation(client *cli){
 		}
 	}while(choix < 1  || ok == 0);
 	
+	//Suppression
+	//confirmation
 	system("cls");
 	affichageTitre(Accent("Suppression d'un séjour"), tailleTitreClient);
 	printf ("%s", Accent("\nConfirmez-vous la suppression du séjour suivant pour "));
@@ -566,11 +588,12 @@ void supprimerReservation(client *cli){
 		int id = courantSej->id;
 		
 		courantSej=getPremierSej();
-
+		//réécriture
 		FILE *fSejour;
 		fSejour = fopen("data/sejour.dat", "w");
 		
 		while(courantSej->nxtSej != NULL){
+			//vérification que le séjour ne soit pas celui qu'on a choisi de supprimer
 			if(courantSej->id != choix){
 				// extraction des jours mois et années
 				char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
@@ -646,8 +669,7 @@ void payerReservation(client *cli){
 	courantSej->nxtSej = NULL; 
 	free(newNextSej); // libération de la mémoire non utilisée
 	
-	idMax=courantSej->id;
-	
+	//vérification de l'id
 	i = 0;	
 	do{
 		ok = 0;
