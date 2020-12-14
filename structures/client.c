@@ -669,7 +669,6 @@ void payerReservation(client *cli){
 		}
 	}while(choix < 1  || ok == 0);
 	
-	system("PAUSE");
 	system("cls");
 	affichageTitre(Accent("Paiement d'un séjour"), tailleTitreClient);
 	printf ("%s", Accent("\nConfirmez-vous le paiement du séjour suivant pour "));
