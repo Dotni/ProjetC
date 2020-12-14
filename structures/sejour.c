@@ -13,6 +13,18 @@ sejour *getPremierSej(){
 	return premierSejour;
 }
 
+int getDernierSej(){
+	sejour *sej;
+	int nb = lectureSejours(sej),i;
+	
+	sejourCourant = premierSejour;
+	for(i = 1 ; i <nb-1 ; i++) {
+		sejourCourant = sejourCourant->nxtSej; // on passe au séjour suivant
+	}	
+	return sejourCourant->id;
+}
+
+
 
 
 sejour * getSejour(int id) {
@@ -59,12 +71,13 @@ int lectureSejours(sejour *sejourCourant) {
 	
 	while(!feof(fSejour)) {
 		// lecture des données des séjours
-		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d", 
-		&sejourCourant->id, &sejourCourant->formule, &sejourCourant->nbPersonnes, 
-		&jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idEmplacement);
-		//printf("%3d %2d   ",sejourCourant->id,idEmplacement);
+		int x,paye; //parce  que lecture du type de séjour bug
+		fscanf(fSejour, "%d %d %d %2d %2d %4d %f %d %d %d", 
+		&sejourCourant->id, &x, &sejourCourant->nbPersonnes, 
+		&jour, &mois, &annee, &sejourCourant->prix, &sejourCourant->idClient, &idEmplacement,&paye);
 		empl = getEmplacement(idEmplacement);
 		sejourCourant->place = empl;
+		sejourCourant->formule=sejourCourant->place->type;
 		// conversion entier -> char pour créer la date
 		itoa(jour, tmpJour, 10); // on copie tmpJour dans jour, en suivant la base 10
 		itoa(mois, tmpMois, 10);
@@ -76,6 +89,7 @@ int lectureSejours(sejour *sejourCourant) {
 		strcat(tmpDate, "/");
 		strcat(tmpDate, tmpAnnee);
 		strcpy(sejourCourant->date, tmpDate); // on l'ajoute dans la structure séjour
+		sejourCourant->paye=paye;
 		nbSejours++; // un séjour de plus
 		sejourSuivant = malloc(sizeof(sejour)); // on alloue de la mémoire pour stocker le prochain séjour
 		sejourCourant->nxtSej = sejourSuivant;
@@ -207,6 +221,7 @@ void copierSejour(sejour *sej1,sejour *sej2){
 	sej1->nbPersonnes=sej2->nbPersonnes;
 	sej1->prix=sej2->prix;
 	sej1->place=sej2->place;
+	sej1->paye=sej2->paye;
 }
 
 

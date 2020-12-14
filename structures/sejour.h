@@ -9,6 +9,7 @@ typedef struct sejour{
 	short nbPersonnes;					//nombre de personnes pour qui
 	char date[11];						//sous le format dd/mm/yyyy
 	float prix;							//prix du séjour
+	short paye;
 	struct sejour *nxtSej;
 	struct emplacement *place;
 }sejour;
@@ -21,5 +22,6 @@ void viderSejours(sejour*);
 void switchMenuSejour(int);
 char* demanderdate();
 sejour * getPremierSej();
+int getDernierSej();
 
 #endif

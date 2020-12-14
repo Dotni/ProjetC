@@ -220,7 +220,7 @@ int menuClient2(client *cli){
 		printf ("%s", Accent(" Entrez le numéro correspondant à votre choix. \n\n\n"));
 		printf ("%s", Accent("  1.  Afficher la liste des séjours du client   \n"));
 		printf ("%s", Accent("  2.  Effectuer une nouvelle réservation    \n"));
-		printf ("%s", Accent("  3.  Modifier une réservation du client       \n"));
+		printf ("%s", Accent("  3.  Supprimer une réservation du client       \n"));
 		printf ("%s", Accent("  4.  Paiement du client  \n"));
 		printf("  5.  Retour   \n\n");
 		printf("  Votre choix :  ");
@@ -271,7 +271,7 @@ void afficherReservation(client *cli){
 	free(newNextSej); // libération de la mémoire non utilisée
 	
 	
-	affichageTitre(Accent("Séjours du client"), tailleTitreClient);
+	
 	printf("Nom du client :      %s\n",cli->nom);
 	printf("Prenom du client :   %s\n\n\n",cli->prenom);
 	afficherTitresColonnesSejour();
@@ -280,8 +280,6 @@ void afficherReservation(client *cli){
 		afficherUnSejour(courantSej);
 		courantSej=courantSej->nxtSej;
 	}
-	system("PAUSE");
-	
 }
 
 void nouvelleReservation(client *cli){
@@ -294,7 +292,7 @@ void nouvelleReservation(client *cli){
 	
 	affichageTitre(Accent("Ajout d'un séjour"), tailleTitreClient);
 	printf("Nom du client :      %s\n",cli->nom);
-			printf("Prenom du client :   %s\n\n\n",cli->prenom);
+	printf("Prenom du client :   %s\n\n\n",cli->prenom);
 	printf("Entrez la date pour laquelle vous rechercher un emplacement (jj/mm/aaaa) : ");
 	ok=1;
 	do {
@@ -416,13 +414,14 @@ void nouvelleReservation(client *cli){
 			sejour *sej,*sejCourant;
 			sej = malloc(sizeof(sejour));
 			strcpy(sej->date,date);
-			sej->id=lectureSejours(sejCourant)+1;
+			sej->id=getDernierSej() +1;
 			sej->nxtSej=NULL;
 			sej->idClient=cli->id;
 			sej->nbPersonnes=nbPersonnes;
 			sej->place=getEmplacementId(choix);
 			sej->prix=sej->place->prix + taxe;
 			sej->formule=getEmplacementId(choix)->type;
+			sej->paye=0;
 			printf("%6.2f ",sej->prix);
 			//puis demande de validation
 			
@@ -456,10 +455,10 @@ void nouvelleReservation(client *cli){
 					int mois = atoi(cMois);
 					int annee = atoi(cAnnee);
 					
-					fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d\n",
+					fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d %1d\n",
 					courantSej->id,courantSej->formule,courantSej->nbPersonnes, 
 					jour, mois, annee, 
-					courantSej->prix, courantSej->idClient, courantSej->place->id);
+					courantSej->prix, courantSej->idClient, courantSej->place->id,courantSej->paye);
 					courantSej = courantSej->nxtSej;
 				}
 				courantSej->nxtSej=sej;
@@ -471,10 +470,10 @@ void nouvelleReservation(client *cli){
 				int mois = atoi(cMois);
 				int annee = atoi(cAnnee);
 				
-				fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d\n",
+				fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d %1d\n",
 				sej->id,sej->formule,sej->nbPersonnes, 
 				jour, mois, annee, 
-				sej->prix, sej->idClient, sej->place->id);
+				sej->prix, sej->idClient, sej->place->id,sej->paye);
 				
 				
 				fclose(fSejour);
@@ -514,6 +513,294 @@ void nouvelleReservation(client *cli){
 	}	
 }
 
+void supprimerReservation(client *cli){
+	affichageTitre(Accent("Suppression d'un séjour"), tailleTitreClient);
+	afficherReservation(cli);
+	
+	sejour *courantSej, *firstSej =getPremierSej() , *newCourantSej, *newNextSej;
+	int nb = lectureSejours(courantSej); // lecture des séjours
+	int i,j=0,ok,nbSejoursClient=0,idMax=0,choix;
+	char tmp[4];
+	
+	printf ("%s", Accent("Entrez l'id du séjour que vous souhaitez supprimer.\n\n"));
+	printf("Votre choix : ");
+	
+	//vérification que le séjour existe bien
+	courantSej=getPremierSej();
+	for(i = 1 ; i < nb ; i++){
+		if(courantSej->idClient==cli->id){
+			if(nbSejoursClient==0){
+				newCourantSej = malloc(sizeof(sejour)); // allocation de mémoire
+				firstSej = newCourantSej; //on va copier les valeurs dans une nouvelle liste séparée
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+				nbSejoursClient=1;
+			}
+			
+			else{
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+   	  			nbSejoursClient++;
+			}
+		}
+		courantSej = courantSej->nxtSej;
+	}
+	
+	
+	//libération de la mémoire
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		courantSej = courantSej->nxtSej ; 
+	}
+	courantSej->nxtSej = NULL; 
+	free(newNextSej); // libération de la mémoire non utilisée
+	
+	idMax=courantSej->id;
+	
+	i = 0;	
+	do{
+		ok = 0;
+		if(i != 0){
+			printf("Veuillez entrer un ID valide! Votre choix : ");
+		}
+		choix = lire(tmp, 4);
+		i++;
+		courantSej = firstSej; 
+		for(j = 1 ; j <= nbSejoursClient ; j++) {
+			if(courantSej->id == choix){
+				ok = 1;
+			}
+			courantSej = courantSej->nxtSej ; 
+		}
+	}while(choix < 1  || ok == 0);
+	
+	system("cls");
+	affichageTitre(Accent("Suppression d'un séjour"), tailleTitreClient);
+	printf ("%s", Accent("\nConfirmez-vous la suppression du séjour suivant pour "));
+	printf("%s %s?\n\n",cli->nom,cli->prenom);
+	afficherTitresColonnesSejour();
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		if(courantSej->id==choix){
+			break;
+		}
+		courantSej = courantSej->nxtSej ; 
+	}
+	afficherUnSejour(courantSej);
+	printf("\n\n1 : Non \n");
+	printf("2 : Oui \n");
+	printf("Votre choix :");
+	
+	int choix2=choixEntier(1,2,1);
+	
+	if(choix2==2){
+		int id = courantSej->id;
+		
+		courantSej=getPremierSej();
+
+		FILE *fSejour;
+		fSejour = fopen("data/sejour.dat", "w");
+		
+		
+		while(courantSej->nxtSej != NULL){
+			if(courantSej->id!=choix){
+			
+				// extraction des jours mois et années
+				char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
+				extraire(0, 1, courantSej->date, cJour);
+				extraire(3, 4, courantSej->date, cMois);
+				extraire(6, 9, courantSej->date, cAnnee);
+				// convertion en entiers pour récupérer les valeurs
+				int jour = atoi(cJour);
+				int mois = atoi(cMois);
+				int annee = atoi(cAnnee);
+				
+				fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d %1d\n",
+				courantSej->id,courantSej->formule,courantSej->nbPersonnes, 
+				jour, mois, annee, 
+				courantSej->prix, courantSej->idClient, courantSej->place->id, courantSej->paye);
+			}
+			courantSej = courantSej->nxtSej;
+		}
+		fclose(fSejour);
+	
+	
+		system("cls");
+		affichageTitre(Accent("Suppression d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("Suppression effectuée!\n"));
+		system("PAUSE");
+		system("cls");
+	}
+	else{
+		system("cls");
+		affichageTitre(Accent("Suppression d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("Suppression annulée!\n"));
+		system("PAUSE");
+		system("cls");
+	}
+}
+
+void payerReservation(client *cli){
+	affichageTitre(Accent("Paiement d'un séjour"), tailleTitreClient);
+	afficherReservation(cli);
+	
+	sejour *courantSej, *firstSej =getPremierSej() , *newCourantSej, *newNextSej;
+	int nb = lectureSejours(courantSej); // lecture des séjours
+	int i,j=0,ok,nbSejoursClient=0,idMax=0,choix;
+	char tmp[4];
+	
+	printf ("%s", Accent("Entrez l'id du séjour que vous souhaitez payer.\n\n"));
+	printf("Votre choix : ");
+	
+	//vérification que le séjour existe bien
+	courantSej=getPremierSej();
+	for(i = 1 ; i < nb ; i++){
+		if(courantSej->idClient==cli->id){
+			if(nbSejoursClient==0){
+				newCourantSej = malloc(sizeof(sejour)); // allocation de mémoire
+				firstSej = newCourantSej; //on va copier les valeurs dans une nouvelle liste séparée
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+				nbSejoursClient=1;
+			}
+			
+			else{
+				copierSejour(newCourantSej,courantSej);
+				newNextSej=malloc(sizeof(sejour));
+				newCourantSej->nxtSej = newNextSej;
+   	  			newCourantSej = newNextSej;
+   	  			nbSejoursClient++;
+			}
+		}
+		courantSej = courantSej->nxtSej;
+	}
+	
+	
+	//libération de la mémoire
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		courantSej = courantSej->nxtSej ; 
+	}
+	courantSej->nxtSej = NULL; 
+	free(newNextSej); // libération de la mémoire non utilisée
+	
+	idMax=courantSej->id;
+	
+	i = 0;	
+	do{
+		ok = 0;
+		if(i != 0){
+			printf("Veuillez entrer un ID valide! Votre choix : ");
+		}
+		choix = lire(tmp, 4);
+		i++;
+		courantSej = firstSej; 
+		for(j = 1 ; j <= nbSejoursClient ; j++) {
+			if(courantSej->id == choix){
+				ok = 1;
+				if(courantSej->paye==1){
+					printf ("%s", Accent("Ce séjour a déja été payé !\n"));	
+					ok=0;
+				}	
+			}
+			courantSej = courantSej->nxtSej ; 
+		}
+	}while(choix < 1  || ok == 0);
+	
+	system("PAUSE");
+	
+	system("cls");
+	affichageTitre(Accent("Paiement d'un séjour"), tailleTitreClient);
+	printf ("%s", Accent("\nConfirmez-vous le paiement du séjour suivant pour "));
+	printf("%s %s?\n\n",cli->nom,cli->prenom);
+	afficherTitresColonnesSejour();
+	courantSej = firstSej; // on reprend le début de la liste
+	for(i = 1 ; i <= nbSejoursClient ; i++) {
+		if(courantSej->id==choix){
+			break;
+		}
+		courantSej = courantSej->nxtSej ; 
+	}
+	afficherUnSejour(courantSej);
+	printf("\n\n1 : Non \n");
+	printf("2 : Oui \n");
+	printf("Votre choix :");
+	
+	int choix2=choixEntier(1,2,1);
+	
+	if(choix2==2){
+
+		FILE *fEmploye;
+		//on lit le solde du camping
+		fEmploye = fopen("data/campingData.dat", "r");
+		float caisse;
+		fscanf(fEmploye, "%f", &caisse);
+		fclose(fEmploye);
+	
+		caisse += courantSej->prix;
+		
+		//on réécrit dans le fichier le solde débité
+		fEmploye = fopen("data/campingData.dat", "w");
+		fprintf(fEmploye, "%10.2f\n", caisse);
+		fclose(fEmploye);
+		
+		courantSej=getPremierSej();
+
+		FILE *fSejour;
+		fSejour = fopen("data/sejour.dat", "w");
+		
+		
+		while(courantSej->nxtSej != NULL){
+			// extraction des jours mois et années
+			char cJour[3] = {0}, cMois[3] = {0}, cAnnee[5] = {0};
+			extraire(0, 1, courantSej->date, cJour);
+			extraire(3, 4, courantSej->date, cMois);
+			extraire(6, 9, courantSej->date, cAnnee);
+			// convertion en entiers pour récupérer les valeurs
+			int jour = atoi(cJour);
+			int mois = atoi(cMois);
+			int annee = atoi(cAnnee);
+			
+			fprintf(fSejour,"%03d %1d %1d %2d%2d%4d %06.2f %03d %02d ",
+			courantSej->id,courantSej->formule,courantSej->nbPersonnes, 
+			jour, mois, annee, 
+			courantSej->prix, courantSej->idClient, courantSej->place->id);
+			if(courantSej->id==choix){
+				fprintf(fSejour,"1\n");
+			}
+			else{
+				fprintf(fSejour,"%1d\n",courantSej->paye);
+			}
+			courantSej = courantSej->nxtSej;
+		}
+		fclose(fSejour);
+		system("cls");
+		affichageTitre(Accent("Paiement d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("Paiement effectué!\n"));
+		system("PAUSE");
+		system("cls");
+	}
+	else{
+		system("cls");
+		affichageTitre(Accent("Paiement d'un séjour"), tailleTitreClient);
+		printf ("%s", Accent("Paiement annulé!\n"));
+		system("PAUSE");
+		system("cls");
+	}
+	
+	
+	
+	
+	
+	
+}
+
 
 void switchMenuClient(int choix){
 	int choix2;
@@ -540,17 +827,21 @@ void switchMenuClient(int choix){
 				switch(choix2){
 					case 1 :
 						//afficher les réservations du client
+						affichageTitre(Accent("Séjours du client"), tailleTitreClient);
 						afficherReservation(choixCli);
+						system("PAUSE");
 						break;
 					case 2 :
 						//effectuer une nouvelle réservation
 						nouvelleReservation(choixCli);
 						break;
 					case 3 :
+						supprimerReservation(choixCli);
 						//modifier une réservation
 						break;
 					case 4 :
 						//payer soit une soit toutes les réservations
+						payerReservation(choixCli);
 						break;
 				}
 			}while(choix2!=5);
