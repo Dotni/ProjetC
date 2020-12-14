@@ -12,8 +12,4 @@ typedef struct emplacement{
 void switchMenuEmplacement(int);
 emplacement * getEmplacement(int);
 emplacement * getEmplacementId(int);
-
 #endif
-
-
-

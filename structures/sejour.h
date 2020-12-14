@@ -14,7 +14,6 @@ typedef struct sejour{
 	struct emplacement *place;
 }sejour;
 
-
 void afficherUnSejour(sejour*);
 void afficherListeSejours();
 int lectureSejours(sejour*);
@@ -23,5 +22,4 @@ void switchMenuSejour(int);
 char* demanderdate();
 sejour * getPremierSej();
 int getDernierSej();
-
 #endif

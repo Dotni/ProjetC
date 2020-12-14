@@ -11,7 +11,5 @@ typedef struct employe{
 	struct employe *nxtEmpl;
 }employe;
 
-//on pourrait faire une liste de tache dans une autre structure, et assigner la tache a un employé
-//a faire dans le futur
 void switchMenuEmploye(int);
 #endif

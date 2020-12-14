@@ -5,11 +5,11 @@
 #include "util.h"
 
 employe *premierEmpl, *courantEmpl, *suivantEmpl;
-int tailleTitreEmploye=106;
+int tailleTitreEmploye = 106;
 
 void viderEmploye(employe *first){
 	// on libère la mémoire allouée pour "vider" la liste des employés
-	employe *courant=first;
+	employe *courant = first;
 	while(courant != NULL && courant->nxtEmpl != NULL) {
 		suivantEmpl = courant->nxtEmpl;
 		free(courant); 
@@ -37,7 +37,6 @@ int lectureEmploye() {
    	  	courantEmpl = suivantEmpl;
 	}
 	nbEmployes--; // un employé de trop
-	
 	courantEmpl = premierEmpl; // on reprend le début de la liste
 	for(i = 1 ; i < nbEmployes ; i++) {
 		courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
@@ -142,7 +141,7 @@ void ajouterEmploye(){
 
 void supprimerEmploye(){
 	int nb = lectureEmploye(), i, j, ok, idMax, choix, choix2, choix3;
-	char nom[30],prenom[30],tmp[3];
+	char nom[30], prenom[30], tmp[3];
 	
 	affichageTitre(Accent("Suppression d'un employé"), tailleTitreEmploye);
 	afficherListeEmploye();
@@ -151,7 +150,7 @@ void supprimerEmploye(){
 	printf("Votre choix : ");
 		
 	courantEmpl = premierEmpl;
-	for(i = 1 ; i < nb-1 ; i++) {
+	for(i = 1 ; i < nb - 1 ; i++) {
 		courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 	}	
 	idMax=courantEmpl->id;
@@ -184,7 +183,6 @@ void supprimerEmploye(){
 		courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 	}	
 	
-	
 	printf ("%s", Accent("\n\nConfirmez-vous la suppression de l'employé suivant?\n\n"));
 	printf("\n1 : Non \n");
 	printf("2 : Oui \n");
@@ -193,7 +191,6 @@ void supprimerEmploye(){
 	choix2=choixEntier(1, 2, 1);
 	
 	if(choix2 == 2){
-		
 		printf ("%s", Accent("\n\nVoulez-vous payer cet employé avant de le supprimer?\n\n"));
 		printf("\n1 : Non \n");
 		printf("2 : Oui \n");
@@ -226,14 +223,12 @@ void supprimerEmploye(){
 			fprintf(fEmploye,"%10.2f\n", caisse);
 			fclose(fEmploye);
 		}
-		
 		courantEmpl = premierEmpl;
 		employe *precedent;
 		//on parcourt la liste
 		for(j = 1 ; j < nb ; j++){
 			//si j>1, il faut "retenir" le précédent pour savoir d'ou pointer
 			if(j > 1){
-				
 				//on part donc avec un décalage de 1
 				if(j == 2){
 					precedent = premierEmpl;
@@ -243,30 +238,25 @@ void supprimerEmploye(){
 				}
 			}
 			
-			//si on a trouvé le bon id
-			if(courantEmpl->id == choix){
-				//si c'est le premier élément de la liste
-				if(j == 1){
+			if(courantEmpl->id == choix){ //si on a trouvé le bon id
+				if(j == 1){ //si c'est le premier élément de la liste
 					premierEmpl = courantEmpl->nxtEmpl;
 					free(courantEmpl);
 					courantEmpl = premierEmpl;
 					break;
 				}
-				//si c'est le dernier élément de la liste
-				else if (courantEmpl->nxtEmpl==NULL){
+				else if (courantEmpl->nxtEmpl == NULL){ //si c'est le dernier élément de la liste
 					precedent->nxtEmpl = NULL;
 					free(courantEmpl);
 					break;
 				}
-				//si c'est un élément a l'intérieur de la liste
-				else {
+				else { //si c'est un élément a l'intérieur de la liste
 					precedent->nxtEmpl = courantEmpl->nxtEmpl;
 					free(courantEmpl);
 					break;
 				}
 			}
-			//si on a pas trouvé le bon ID on avance
-			else{
+			else{ //si on a pas trouvé le bon ID on avance
 				courantEmpl = courantEmpl->nxtEmpl;
 			}
 		}
@@ -348,7 +338,7 @@ void ajouterJourneeTravail(){
 	printf("2 : Oui \n");
 	printf("Votre choix :");
 	
-	choix2=choixEntier(1, 2, 1);
+	choix2 = choixEntier(1, 2, 1);
 	
 	if(choix2 == 2){
 		affichageTitre(Accent("Ajout d'heures de travail à un employé"), tailleTitreEmploye);
@@ -412,7 +402,7 @@ void modifierSalaire(){
 	for(i = 1 ; i < nb - 1 ; i++) {
 		courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 	}	
-	idMax=courantEmpl->id;
+	idMax = courantEmpl->id;
 	
 	i = 0;
 	do{
@@ -422,7 +412,6 @@ void modifierSalaire(){
 		}
 		choix = lire(tmp, 3);
 		i++;
-		
 		courantEmpl = premierEmpl;
 		for(j = 1 ; j < nb ; j++){
 			if(courantEmpl->id == choix){
@@ -477,13 +466,11 @@ void modifierSalaire(){
 				}
 				courantEmpl = courantEmpl->nxtEmpl;
 			}
-			
 			//on réécrit dans le fichier le solde débité
 			fEmploye = fopen("data/campingData.dat", "w");
 			fprintf(fEmploye, "%10.2f\n", caisse);
 			fclose(fEmploye);
 		}
-		
 		courantEmpl = premierEmpl;
 		for(i = 1 ; i < nb ; i++) {
 			if(courantEmpl->id == choix){
@@ -493,9 +480,9 @@ void modifierSalaire(){
 			courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 		}
 		//modification du salaire
-		affichageTitre(Accent("Modification du salaire d'un employé"),tailleTitreEmploye);
+		affichageTitre(Accent("Modification du salaire d'un employé"), tailleTitreEmploye);
 		printf ("%s", Accent("Nouveau Salaire horaire de l'employé (en euros): "));
-		float x = choixReel(0.0,99.99,6);
+		float x = choixReel(0.0, 99.99, 6);
 		nSalaire = x; 
 		
 		affichageTitre(Accent("Modification du salaire d'un employé"), tailleTitreEmploye);
@@ -508,7 +495,7 @@ void modifierSalaire(){
 		printf("\n1 : Non \n");
 		printf("2 : Oui \n");
 		printf("Votre choix :");
-		choix2=choixEntier(1, 2, 1);
+		choix2 = choixEntier(1, 2, 1);
 		
 		if(choix2 == 2){
 			courantEmpl->salaireParHeure=nSalaire;
@@ -562,7 +549,7 @@ void paiementEmployes(){
 		
 		//on réécrit dans le fichier le solde débité
 		fEmploye = fopen("data/campingData.dat", "w");
-		fprintf(fEmploye, "%10.2f\n", caisse-aDebiter);
+		fprintf(fEmploye, "%10.2f\n", caisse - aDebiter);
 		fclose(fEmploye);
 		
 		//on réécrit les heures de travail des employés
@@ -589,7 +576,7 @@ void paiementEmployes(){
 		for(i = 1 ; i < nb-1 ; i++) {
 			courantEmpl = courantEmpl->nxtEmpl; // on parcourt les employés
 		}	
-		idMax=courantEmpl->id;
+		idMax = courantEmpl->id;
 		
 		i = 0;	
 		do{

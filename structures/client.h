@@ -1,7 +1,6 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-
 //définition du client
 typedef struct client {
 	short id;							//id client
@@ -12,6 +11,4 @@ typedef struct client {
 }client;
 
 void switchMenuClient(int);
-
-
 #endif
