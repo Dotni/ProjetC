@@ -85,11 +85,18 @@ int verifierDate(char saisie[]) { // vérifier la saisie de date
 	jour = atoi(cJour);
 	mois = atoi(cMois);
 	annee = atoi(cAnnee);
-	// vérification du jour (entre 1 et 31), sauf pour février 
-	if(mois != 2 && jour < 1 || jour > 31) {
+	
+	if((mois==4||mois==6||mois==9||mois==11)&&jour==31){
 		return 0;
 	}
-	else if(mois == 2 && jour < 1 || jour > 29) { // mois de février
+	
+	// vérification du jour (entre 1 et 31), sauf pour février 
+	if(mois != 2 && (jour < 1 || jour > 31)) {
+		return 0;
+	}
+	else if(mois == 2 && (jour < 1 || jour > 29)) { // mois de février
+		printf("erreuyr");
+		system("pause");
 		return 0;
 	}
 	// v?rification du mois
@@ -164,7 +171,6 @@ char * lireDate(char *chaine, int longueur) {
         	viderBuffer();
 		}
 		if(verifierDate(chaine) == 0) {
-			system("pause");
  			return 0;
 		}
         return chaine;

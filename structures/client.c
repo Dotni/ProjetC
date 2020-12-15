@@ -269,22 +269,29 @@ void afficherReservation(client *cli){
 		courantSej = courantSej->nxtSej;
 	}
 
-	courantSej = firstSej; // on reprend le début de la liste
-	for(i = 1 ; i <= nbSejoursClient ; i++) {
-		courantSej = courantSej->nxtSej ;
+	if(nbSejoursClient==0){
+		printf("Nom du client :      %s\n", cli->nom);
+		printf("Prenom du client :   %s\n\n\n", cli->prenom);
+		printf ("%s", Accent("Pas de séjours pour ce client!\n\n"));
 	}
-	courantSej->nxtSej = NULL; 
-	free(newNextSej); // libération de la mémoire non utilisée
-	
-	//on affiche la liste
-	printf("Nom du client :      %s\n", cli->nom);
-	printf("Prenom du client :   %s\n\n\n", cli->prenom);
-	afficherTitresColonnesSejour();
-	courantSej = firstSej; 
-	for(i = 1 ; i <= nbSejoursClient ; i++){
-		afficherUnSejour(courantSej);
-		courantSej=courantSej->nxtSej;
-	}
+	else{
+		courantSej = firstSej; // on reprend le début de la liste
+		for(i = 1 ; i <= nbSejoursClient ; i++) {
+			courantSej = courantSej->nxtSej ;
+		}
+		courantSej->nxtSej = NULL; 
+		free(newNextSej); // libération de la mémoire non utilisée
+		
+		//on affiche la liste
+		printf("Nom du client :      %s\n", cli->nom);
+		printf("Prenom du client :   %s\n\n\n", cli->prenom);
+		afficherTitresColonnesSejour();
+		courantSej = firstSej; 
+		for(i = 1 ; i <= nbSejoursClient ; i++){
+			afficherUnSejour(courantSej);
+			courantSej=courantSej->nxtSej;
+		}
+	}	
 }
 
 void nouvelleReservation(client *cli){
@@ -381,12 +388,13 @@ void nouvelleReservation(client *cli){
 			}
 			choix = lire(tmp, 3);
 			i++;
-			for(j = 1 ; j <= nb ; j++){
-				if(getEmplacement(j)->id == choix){
+			for(j = 1 ; j <= lectureEmplacements() ; j++){
+				if(getEmplacement(j)->id == choix){	
 					ok = 1;
 				}
 			}
-		}while(choix < 1 || choix > idMax || ok==0);
+		}while(choix < 1 || ok==0);
+		
 		
 		//confirmation
 		system("cls");
