@@ -295,7 +295,7 @@ void modifierEmplacement(){
 		float valeur;
 		emplacement nouvEmpl;
 		nouvEmpl.id = empl[ok].id;
-		nouvEmpl.type = choix2=choixEntier(1, 3, 1);;
+		nouvEmpl.type = choix2=choixEntier(1, 3, 1);
 		
 		//elec
 		affichageTitre("Modification d'un emplacement", tailleTitre);
