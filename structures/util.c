@@ -9,9 +9,9 @@ void sdl(){
 
 //permet d'afficher les accents
 char * Accent(const char * message) {
-      static char retour [100];
-      CharToOem (message, retour); // API Windows
-      return retour;
+    static char retour [100];
+    CharToOem (message, retour); // API Windows
+    return retour;
 }
    
 int verifier(char saisie[]) { // vérifier que la saisie est correcte
