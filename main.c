@@ -372,11 +372,13 @@ void mePrincipal() {
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	sdl();sdl();
 	printf("%s", Accent("|| Le menu principal permet au gestionnaire du camping d'accéder aux différentes parties du   ||\n\
-|| programme en fonction de ses besoins. Il peut donc accéder à 4 différents menus :\          ||\n\
+|| programme en fonction de ses besoins. Il peut donc accéder à 4 différents menus :          ||\n\
+||                                                                                            ||\n\
 ||		1. Le menu emplacement.                                                       ||\n\
 ||		2. Le menu client.                                                            ||\n\
 ||		3. Le menu employé.                                                           ||\n\
 ||		4. Le menu séjour.                                                            ||\n\
+||                                                                                            ||\n\
 || Il peut aussi revenir à l'écran d'accueil s'il souhaite chercher une information dans le   ||\n\
 || mode d'emploi ou s'il souhaite quitter le programme.                                       ||\n\
 ||============================================================================================||\n"));
@@ -388,21 +390,28 @@ void meEmplacement() {
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	sdl();sdl();
 	printf("%s", Accent("|| Depuis ce menu, le gestionnaire peut :                                                     ||\n\
+||                                                                                            ||\n\
 ||		1. Afficher la liste des emplacements.                                        ||\n\
 ||		2. Ajouter un emplacement.                                                    ||\n\
 ||		3. Supprimer un emplacement.                                                  ||\n\
 ||		4. Modifier un emplacement.                                                   ||\n\
 ||		5. Revenir au menu principal.                                                 ||\n\
+||                                                                                            ||\n\
 || L'affichage des emplacements donne, pour chaque emplacement, son ID, si l'emplacement est  ||\n\
 || un emplacement pour tente, caravane ou bungalow, la disponibilité, ou non, d'électricité,  ||\n\
-|| la taille (en m²) et le prix (en euros) de l'emplacement. Pour l'ajout d'un emplacement il ||\n\
-|| suffit de saisir toutes les informations citées ci-dessus, mis à part l'ID, qui est généré ||\n\
-|| automatiquement. Le programme demande ensuite une confirmation pour l'ajout. Si le         ||\n\
-|| gestionnaire souhaite supprimer un emplacement, il lui suffit d'entrer l'ID de             ||\n\
-|| l'emplacement dont la suppression est souhaitée, puis de confirmer son choix. Enfin, la    ||\n\
-|| modification d'emplacement se fait par sélection de l'ID de l'emplacement à modifier. Une  ||\n\
-|| confirmation de ce choix est ensuite demandée. Si le gestionnaire confirme son choix, il   ||\n\
-|| ne lui reste qu'à entrer les nouvelles informations concernant l'emplacement sélectionné.  ||\n\
+|| la taille (en m²) et le prix (en euros) de l'emplacement.                                  ||\n\
+||                                                                                            ||\n\
+|| Pour l'ajout d'un emplacement il suffit de saisir toutes les informations citées ci-dessus ||\n\
+|| , mis à part l'ID, qui est généré automatiquement. Le programme demande ensuite une        ||\n\
+|| confirmation pour l'ajout. Si le gestionnaire souhaite supprimer un emplacement, il lui    ||\n\
+|| suffit d'entrer l'ID de l'emplacement dont la suppression est souhaitée, puis de confirmer ||\n\
+|| son choix.                                                                                 ||\n\
+||                                                                                            ||\n\
+|| Enfin, la modification d'emplacement se fait par sélection de l'ID de l'emplacement à      ||\n\
+|| modifier. Une confirmation de ce choix est ensuite demandée. Si le gestionnaire confirme   ||\n\
+|| son choix, il ne lui reste qu'à entrer les nouvelles informations concernant l'emplacement ||\n\
+|| sélectionné.                                                                               ||\n\
+||                                                                                            ||\n\
 || A noter : pour toutes ces options, le programme vérifie les données entrées. Il est donc   ||\n\
 || impossible de donner une taille ou un prix d'emplacement trop élevé ou trop bas, ainsi que ||\n\
 || d'entrer du texte lorsque c'est un nombre qui est demandé.                                 ||\n\
@@ -414,6 +423,50 @@ void meClients() {
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Le menu clients %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	sdl();sdl();
+	printf("%s", Accent("|| Le menu client permet à l'utilisateur :                                                    ||\n\
+||                                                                                            ||\n\
+||		1. D'afficher la liste des clients.                                           ||\n\
+||		2. Ajouter un nouveau client.                                                 ||\n\
+||		3. Client existant.                                                           ||\n\
+||		4. Revenir au menu principal.                                                 ||\n\
+||                                                                                            ||\n\
+|| La liste des clients contient les ID, noms et prénoms de chaque client. L'ajout d'un       ||\n\
+|| client ne demande que son nom et son prénom. L'ID est ici aussi généré automatiquement.    ||\n\
+|| Lorsque l'utilisateur choisi et confirme un client existant déjà  dans les données du      ||\n\
+|| camping, il accède à un nouveau sous-menu.                                                 ||\n\
+||                                                                                            ||\n\
+|| Menu d'un client :                                                                         ||\n\
+|| Dès que l'utilisateur a choisi un client spécifique, un nouveau menu est affiché pour      ||\n\
+|| traiter ce client. Ce menu permet :                                                        ||\n\
+||		1. D'afficher la liste de séjours du client.                                  ||\n\
+||		2. D'effectuer une nouvelle réservation.                                      ||\n\
+||		3. De modifier une de ses réservations.                                       ||\n\
+||		4. Faire payer le séjour au client.                                           ||\n\
+||		5. Revenir au menu des clients.                                               ||\n\
+||                                                                                            ||\n\
+|| La liste des séjours pour le client choisi contient l'ID du séjour, sa formule (tente,     ||\n\
+|| bungalow, caravane), le nombre de personnes, la date et le prix (en €) de chaque séjour.   ||\n\
+||                                                                                            ||\n\
+|| Ensuite, pour effectuer une nouvelle réservation, l'utilisateur doit entrer la date de     ||\n\
+|| cette réservation. La date permet de vérifier si le client n'a pas déjà un séjour prévu à  ||\n\
+|| cette date. Si c'est le cas, l'utilisateur est prévenu de ce séjour et les détails de      ||\n\
+|| cette réservation sont affichés. Dans le cas contraire, la liste des emplacements libres   ||\n\
+|| est affichée (l'affichage contient les mêmes informations que pour l'affichage de tous les ||\n\
+|| emplacements du camping. Cf. le menu emplacement). L'utilisateur entre l'ID de             ||\n\
+|| l'emplacement souhaité par le client. Après confirmation de l'emplacement, l'utilisateur   ||\n\
+|| entre le nombre de personnes qui vont séjourner. Lorsque c'est fait, si la réservation est ||\n\
+|| confirmée, le séjour est validé et ajouté.                                                 ||\n\
+||                                                                                            ||\n\
+|| La suppression d'un séjour se fait en entrant l'ID du séjour dont la suppression est       ||\n\
+|| souhaitée. La liste des séjours est affichée pour permettre de voir les différents séjours.||\n\
+|| Le séjour est supprimé si l'utilisateur confirme la suppression.                           ||\n\
+||                                                                                            ||\n\
+|| La même logique est suivie pour le paiement d'un séjour, la liste des séjours du client    ||\n\
+|| est affichée et il ne reste à l'utilisateur qu'à entrer l'ID du séjour qu'il souhaite      ||\n\
+|| payer. Le programme prévient l'utilisateur si le séjour a déjà été payé par le client. Si  ||\n\
+|| le séjour n'a pas été payé, le programme attend une confirmation de payement. Lorsque le   ||\n\
+|| payement est effectué, le montant du séjour est ajouté au budget du camping.               ||\n\
+||============================================================================================||\n"));
 }
 
 void meEmployes() {
@@ -422,6 +475,7 @@ void meEmployes() {
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	sdl();sdl();
 	printf("%s", Accent("|| En ce qui concerne la gestion des employés, le gestionnaire du camping peut :              ||\n\
+||                                                                                            ||\n\
 ||		1. Afficher la liste des employés.                                            ||\n\
 ||		2. Ajouter un employé.                                                        ||\n\
 ||		3. Supprimer un employé.                                                      ||\n\
@@ -429,18 +483,26 @@ void meEmployes() {
 ||		5. Modifier le salaire d'un employé.                                          ||\n\
 ||		6. Payer les employés.                                                        ||\n\
 ||		7. Revenir au menu principal.                                                 ||\n\
+||                                                                                            ||\n\
 || L'affichage de la liste des employés indique, pour chaque employé, son ID, ses noms et     ||\n\
 || prénoms, le salaire (en euros) et le nombre d'heures prestées. Ensuite, l'ajout d'employé  ||\n\
-|| requiert les informations citées ci-dessus, mis à part l'ID généré automatiquement. La     ||\n\
-|| suppression d'employé ne demande que son ID et une confirmation de suppression. S'il y a   ||\n\
-|| confirmation, l'utilisateur peut choisir de payer ou non l'employé qu'il supprime. Il est  ||\n\
-|| possible d'ajouter une ou plusieurs demi-journée(s) de travail à un employé. Chaque demi-  ||\n\
-|| journée équivaut à 4h de travail. Le nombre de demi-journée(s) ajoutée(s) est convertit en ||\n\
-|| heures et ces heures sont ajoutées au total d'heures prestées par l'employé. Un salaire    ||\n\
-|| n'est pas fixe, il peut être revu à la baisse ou à la hausse par le gestionnaire. Pour     ||\n\
-|| modifier un salaire, l'utilisateur entre l'ID de l'employé et confirme son choix. Il est   ||\n\
-|| possible de payer l'employé avant de modifier son salaire. En cas de payement avant un     ||\n\
-|| changement de salaire, le total d'heures est remis à 0 puisque ses heures ont été payées.  ||\n\
+|| requiert les informations citées ci-dessus, mis à part l'ID généré automatiquement.        ||\n\
+||                                                                                            ||\n\
+|| La suppression d'employé ne demande que son ID et une confirmation de suppression. S'il y  ||\n\
+|| a confirmation, l'utilisateur peut choisir de payer ou non l'employé qu'il supprime.       ||\n\
+||                                                                                            ||\n\
+|| Il est possible d'ajouter une ou plusieurs demi-journée(s) de travail à un employé. Chaque ||\n\
+|| demi-journée équivaut à 4h de travail. Le nombre de demi-journée(s) ajoutée(s) est         ||\n\
+|| convertit en heures et ces heures sont ajoutées au total d'heures prestées par l'employé.  ||\n\
+||                                                                                            ||\n\
+|| Un salaire n'est pas fixe, il peut être revu à la baisse ou à la hausse par le             ||\n\
+|| gestionnaire. Pour modifier un salaire, l'utilisateur entre l'ID de l'employé et confirme  ||\n\
+|| son choix.                                                                                 ||\n\
+||                                                                                            ||\n\
+|| Il est possible de payer l'employé avant de modifier son salaire. En cas de payement avant ||\n\
+|| un changement de salaire, le total d'heures est remis à 0 puisque ses heures ont été       ||\n\
+|| payées.                                                                                    ||\n\
+||                                                                                            ||\n\
 || Pour terminer, l'utilisateur peut payer les employés. Il peut choisir de payer tous les    ||\n\
 || employés, ou d'en sélectionner un et de le payer. A noter : lors d'un payement de salaire, ||\n\
 || le total payé est déduit du budget du camping.                                             ||\n\
@@ -453,13 +515,16 @@ void meSejour() {
 	printf("||%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%||\n");
 	sdl();sdl();
 	printf("%s", Accent("|| Ce menu permet à l'utilisateur :                                                           ||\n\
+||                                                                                            ||\n\
 ||		1. Afficher la liste des séjours réservés aux camping.                        ||\n\
 ||		2. Voir la liste des emplacements disponibles.                                ||\n\
 ||		3. Revenir au menu principal.                                                 ||\n\
+||                                                                                            ||\n\
 || Si l'utilisateur affiche la liste des séjours, il aura comme information l'ID du séjour,   ||\n\
 || la formule (tente, bungalow, caravane), le nombre de personnes, la date et le prix         ||\n\
-|| (en euros) de chaque séjour. L'utilisateur peut aussi afficher la liste des emplacements   ||\n\
-|| disponibles pour une date choisie. Cf. le menu emplacement pour les informations affichées ||\n\
-|| à l'écran.                                                                                 ||\n\
+|| (en euros) de chaque séjour.                                                               ||\n\
+||                                                                                            ||\n\
+|| L'utilisateur peut aussi afficher la liste des emplacements disponibles pour une date      ||\n\
+|| choisie. Cf. le menu emplacement pour les informations affichées à l'écran.                ||\n\
 ||============================================================================================||\n"));
 }
