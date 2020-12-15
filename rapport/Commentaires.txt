@@ -1,8 +1,0 @@
-1) Faut-il que les changements effectués dans le programme soient sauvegardés? normalement oui
-Donc nous devons A CHAQUE FOIS QUE LE PROGRAMME SE LANCE lire toutes les données, fermer les fichiers
-et les rouvrir en mode écriture si nous voulons les modifier.
-
-2) COMPLEXITE RECHERCHE
-
-3) s'il un pointeur n'a pas de suivant --> 000
-
